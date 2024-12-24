@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2022 Posts</title>
+    <meta property="og:title" content="2022 Posts">
+    <meta property="og:description" content="Blog posts from 2022">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/jl-favicon-32x32.png">
+    <script src="/static/htmx.min.js" hx-preserve="true"></script>
+    <script src="https://unpkg.com/htmx-ext-head-support@2.0.1/head-support.js" hx-preserve="true"></script>
+</head>
+<body hx-ext="head-support">
+    <div class="site-wrapper">
+        <!-- Header Component -->
+        <div id="header-container" 
+             hx-get="/components/header.html" 
+             hx-trigger="load"
+             hx-swap="innerHTML">
+        </div>
+
+        <!-- Navigation Component -->
+        <div id="nav-container" 
+             hx-get="/components/navigation.html" 
+             hx-trigger="load"
+             hx-swap="innerHTML">
+        </div>
+
+        <!-- Main Content Area -->
+        <main id="main-content">
+            <h2>Posts from 2023</h2>
+            <div class="blog-posts">
+                <article class="blog-post-preview">
+                    <h3>Coming Soon</h3>
+                    <p class="excerpt">Plenty from this year yet to be uploaded.</p>
+                </article>
+            </div>
+        </main>
+
+        <!-- Footer Component -->
+        <div id="footer-container" 
+             hx-get="/components/footer.html" 
+             hx-trigger="load"
+             hx-swap="innerHTML">
+        </div>
+    </div>
+</body>
+</html>

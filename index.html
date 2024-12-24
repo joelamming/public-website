@@ -3,30 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Techno</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <script src="/static/htmx.min.js" hx-preserve="true"></script>
+    <script src="/static/head-support.js" hx-preserve="true"></script>
+    
+    <!-- Base head elements -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" hx-preserve="true">
+    <link rel="stylesheet" href="/static/style.css" hx-preserve="true">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/jl-favicon-32x32.png" hx-preserve="true">
+    
+    <!-- Page specific meta -->
+    <title>joe blogs</title>
+    <meta property="og:title" content="joe blogs">
+    <meta property="og:description" content="Personal blog and portfolio">
 </head>
-<body>
-    <header>
-        <a href="index.html" class="title-link"><h1>Techno Optimism</h1></a>
-        <h2>Coming soon to an AI agent near you.</h2>
-    </header>
-    <main>
-        <p>I am a techno-optimist, programmer and engineer. This is my retro blog about non-retro things.</p>
-        <section>
-            <ul>
-                <li><a href="blogs/2024.html">2024 (coming soon)</a></li>
-                <li><a href="blogs/2023.html">2023 (coming soon)</a></li>
-                <li><a href="blogs/2022.html">2022</a></li>
-                <li><a href="blogs/2021.html">2021 (coming soon)</a></li>
-                <li><a href="blogs/2020.html">2020 (coming soon)</a></li>
-            </ul>
-        </section>
-    </main>
-
-<footer>
-    &copy; Joe Lamming 2024. All rights reserved.
-</footer>
+<body hx-ext="head-support">
+    <div id="layout-content"
+         hx-get="/layouts/base.html"
+         hx-trigger="load"
+         hx-swap="outerHTML">
+    </div>
 </body>
 </html>

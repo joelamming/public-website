@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body hx-ext="head-support">
+    <div class="site-wrapper">
+        <!-- Header Component -->
+        <div id="header-container" 
+             hx-get="/components/header.html" 
+             hx-trigger="load"
+             hx-swap="innerHTML">
+        </div>
+
+        <!-- Navigation Component -->
+        <div id="nav-container" 
+             hx-get="/components/navigation.html" 
+             hx-trigger="load"
+             hx-swap="innerHTML">
+        </div>
+
+        <!-- Main content -->
+        <main id="main-content">
+            <article class="post-content">
+                <p>Nothing better than a good old fashioned blog site. Designed from the ground up with HTMX, hosted on GitHub Pages and served from my own domain. Better than grappling with LinkedIn's cursed formatting.</p>
+                <p>I'm a software researcher and consultant by day, focusing largely on enterprise and industrial DataOps and practical applications of AI. Mechanical engineering with sustainable energy systems at Southampton, world famous for its grey buildings and people who invented the internet. I've been building cool stuff since I was a wee lad, but the last decade or so has really focused on software - and since circa 2020, AI.</p>
+                <p>This blog is a place for me to write about whatever I want, obviously taking care to avoid naming names and sharing sensitive details about the great people and companies I work with - and present it however I want within the confines of what browsers in 2024 can do. Daunting.</p>
+            </article>
+        </main>
+
+        <!-- Footer Component -->
+        <div id="footer-container" 
+             hx-get="/components/footer.html" 
+             hx-trigger="load"
+             hx-swap="innerHTML">
+        </div>
+    </div>
+</body>
+</html>
