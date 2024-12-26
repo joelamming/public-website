@@ -2,24 +2,23 @@
 <html lang="en">
 <head>
     <!-- Minimal required scripts for HTMX to function -->
+    <meta charset="utf-8">
     <script src="/static/htmx.min.js"></script>
     <script src="/static/head-support.js"></script>
-    
     <div id="head-base"
          hx-get="/components/head-base.html"
          hx-trigger="load"
          hx-swap="innerHTML">
     </div>
-    
     <!-- Page specific meta tags -->
     <title>An Email To A Relative About AI, Three Weeks Before GPT-3.5</title>
     <meta property="og:title" content="An Email To A Relative About AI, Three Weeks Before GPT-3.5">
     <meta property="og:description" content="An email to a relative about AI, three weeks before GPT-3.5">
     <meta property="article:published_time" content="2022-11-03">
-    
     <meta property="article:modified_time" content="2024-03-24">
     <meta property="article:tag" content="AI">
     <meta property="article:tag" content="GPT-3">
+    <meta property="article:tag" content="personal">
 </head>
 <body hx-ext="head-support">
     <div class="site-wrapper">
@@ -52,11 +51,19 @@
                 <header class="post-header">
                     <h1>An Email To A Relative About AI, Three Weeks Before GPT-3.5</h1>
                     <div class="post-meta">
-                        <time datetime="2022-11-03">November 03, 2022</time>
+                        <div class="post-date">
+                            <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="currentColor" d="M19,4H17V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H5A2,2,0,0,0,3,6V20a2,2,0,0,0,2,2H19a2,2,0,0,0,2-2V6A2,2,0,0,0,19,4ZM19,20H5V9H19Z"/>
+                            </svg>
+                            <time datetime="2022-11-03">November 03, 2022</time>
+                        </div>
                         
-                        <span class="updated-date">
-                            (Updated <time datetime="2024-03-24">March 24, 2024</time>)
-                        </span>
+                        <div class="post-updated">
+                            <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="currentColor" d="M21,11a1,1,0,0,0-1,1,8.05,8.05,0,1,1-2.22-5.5L16,8.32a1,1,0,0,0,1.41,1.41l4.35-4.35a1,1,0,0,0,0-1.41L17.41-.38A1,1,0,0,0,16,1L17.77,2.8A10,10,0,1,0,22,12,1,1,0,0,0,21,11Z"/>
+                            </svg>
+                            <span>Updated <time datetime="2024-03-24">March 24, 2024</time></span>
+                        </div>
                         
                     </div>
                     <div class="tags">
@@ -64,6 +71,8 @@
                         <span class="tag">AI</span>
                         
                         <span class="tag">GPT-3</span>
+                        
+                        <span class="tag">personal</span>
                         
                     </div>
                 </header>
@@ -83,7 +92,7 @@
 <h3>Back to the original question</h3>
 <p>To bring this back to your question on an algorithm able to know us better than we know ourselves -- as said before, the technology is a long way off. Not only must the algorithm first gain a deep understanding of the world we live in, including society, culture, physics and biology, but it must also be exposed to thousands of hours of our conversation with others, text we have written, our drawings and sketches and perhaps even our diary entries. Brains have many similarities from person to person -- you might remember how Cambridge Analytica were able to exploit the deepest fears of millions of Brits and Americans by finding correlations in innocuous data such as their Facebook "likes" and content consumption patterns -- but the unfathomable complexity of the brain means I believe they can be comfortably considered "stochastic" (random, non-repeatable, with certain probabilities) rather than "deterministic" (non-random, following a repeatable algorithm). When you marvel at the glorious colours of autumn, there is an incredible amount of data processing happening. The light from the scene is entering your eyes, focusing on the retina, which converts the photons into electrical signals which travel through multiple layers of processing to detect movement, edges, contrast, textures, clusters of colours -- and eventually towards recognising familiar objects such as leaves, grass, water, clouds, the sky, animals, and their placement within the scene -- which are all processed in context with countless memories, near and distant, evoking emotions, feelings of happiness, sadness or contentedness. Such a storm of processing is going on in a split second compared to GPT-3, yet somehow GPT-3 is able to do so much with so comparatively little.</p>
 <h3>Most people only knew OpenAI from DALLE-2 in early November 2022</h3>
-<p>I'll leave you with one of the most incredible pieces of artificial intelligence-based creativity of 2022. OpenAI, the creators of GPT-3, repurposed some of their algorithm to process natural language text prompts for image captions. For example, "an astronaut riding a horse". The algorithm is trained on millions of images and corresponding captions. Using a complex model architecture based in part on Transformers, this "DALL-E 2" algorithm is able to hallucinate beautiful and completely unique images from this prompt. Here is a link to OpenAI's website containing a few examples: <a href="https://openai.com/dall-e-2/">https://openai.com/dall-e-2/</a>.</p>
+<p>I'll leave you with one of the most incredible pieces of artificial intelligence-based creativity of 2022. OpenAI, the creators of GPT-3, repurposed some of their algorithm to process natural language text prompts for image captions. For example, "an astronaut riding a horse". The algorithm is trained on millions of images and corresponding captions. Using a complex model architecture based in part on Transformers, this "DALL-E 2" algorithm is able to hallucinate beautiful and completely unique images from this prompt. Here is a link to OpenAI's website containing a few examples: <a href="https://openai.com/dall-e-2/">https://openai.com/dall-e-2/</a>.</p>
 <h3>Closing remarks</h3>
 <p>Wishing you the very best, and looking forward to seeing you at some point soon! Lots more interesting AI stuff to talk about, if you're interested. Thanks again for the Christmas pudding! Best regards, Joe</p>
                 </div>

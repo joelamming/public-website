@@ -1,7 +1,7 @@
 /* CSS Custom Properties - Dark Theme */
 :root {
     /* Colors */
-    --color-bg: #1a1e2e;         /* Dark, rich background */
+    --color-bg: #000000;         /* Dark, rich background */
     --color-text: #e2e8f0;       /* Light text for contrast */
     --color-text-muted: #9ca3af; /* Bright muted text */
     --color-primary: #60a5fa;    /* Bright blue */
@@ -70,7 +70,7 @@ body {
 
 /* Blog Post Cards */
 .blog-post-preview {
-    padding: var(--space-lg);
+    padding: var(--space-md);
     margin-bottom: var(--space-lg);
     border: 1px solid var(--color-border);
     border-radius: 0.5rem;
@@ -79,8 +79,6 @@ body {
                 box-shadow var(--transition-standard),
                 background-color var(--transition-standard);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    content-visibility: auto;
-    contain-intrinsic-size: 0 200px;
 }
 
 .blog-post-preview:hover {
@@ -227,14 +225,34 @@ a:focus-visible {
     line-height: 1.2;
 }
 
+/* Post Meta Styling */
 .post-meta {
+    display: flex;
+    gap: var(--space-lg);
+    justify-content: center;
+    align-items: center;
     color: var(--color-text-muted);
     font-size: 0.9rem;
+    margin: var(--space-md) 0;
 }
 
-.updated-date {
-    margin-left: var(--space-sm);
-    font-style: italic;
+.post-date, .post-updated {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: 0.375rem;
+    background-color: var(--color-bg);
+    transition: background-color var(--transition-standard);
+}
+
+.post-updated {
+    color: var(--color-text-muted);
+}
+
+.icon {
+    opacity: 0.7;
+    transition: opacity var(--transition-standard);
 }
 
 /* Tags */
@@ -376,11 +394,13 @@ a:focus-visible {
     border: 1px solid var(--color-border);
     border-radius: 0.25rem;
     transition: all var(--transition-standard);
+    color: var(--color-text);
 }
 
 .back-to-posts:hover {
     background-color: var(--color-card-hover);
     transform: translateY(-1px);
+    color: var(--color-header);
 }
 
 /* Loading Placeholder */
@@ -408,4 +428,99 @@ a:focus-visible {
 @keyframes shimmer {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
+}
+
+/* Blog Post Preview Typography */
+.blog-post-preview h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--color-header);
+    font-weight: 500;
+    margin-bottom: var(--space-sm);
+}
+
+.blog-post-preview time {
+    display: inline-block;
+    background-color: var(--color-card-hover);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-sm);
+}
+
+.blog-post-preview .excerpt {
+    color: var(--color-text);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    margin: var(--space-sm) 0 0;
+}
+
+.preview-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: 0.375rem;
+    background-color: var(--color-bg);
+    width: fit-content;
+    margin-bottom: var(--space-sm);
+    transition: background-color var(--transition-standard);
+}
+
+.blog-post-preview:hover .preview-meta {
+    background-color: var(--color-card-hover);
+}
+
+.preview-meta .icon {
+    opacity: 0.7;
+    color: var(--color-text);
+}
+
+/* Remove the standalone time styling since it's now part of preview-meta */
+.blog-post-preview time {
+    display: inline;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+/* Profile Photo Styles */
+.profile-photo-wrapper {
+    width: 100%;
+    max-width: 768px;
+    aspect-ratio: 768/588;
+    margin: var(--space-lg) 0;
+    position: relative;
+    background-color: var(--color-card-bg);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.profile-photo-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* HTMX indicator styling */
+.htmx-indicator {
+    opacity: 0;
+    transition: opacity var(--transition-standard);
+}
+
+.htmx-request .htmx-indicator {
+    opacity: 1;
+}
+
+.shimmer-effect {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        var(--color-card-bg) 0%,
+        var(--color-card-hover) 50%,
+        var(--color-card-bg) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
 }
