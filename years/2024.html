@@ -1,83 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/static/htmx.min.js"></script>
     <script src="/static/head-support.js"></script>
-    <div id="head-base"
-         hx-get="/components/head-base.html"
-         hx-trigger="load"
-         hx-swap="innerHTML">
-    </div>
 
     <title>2024 Posts</title>
     <meta property="og:title" content="2024 Posts">
     <meta property="og:description" content="Blog posts from 2024">
 </head>
+
 <body hx-ext="head-support">
+    <div hx-get="/components/head-base.html" hx-trigger="load" hx-swap="none"></div>
+
     <div class="site-wrapper">
-        <!-- Header Component -->
-        <div id="header-container" 
-             hx-get="/components/header.html" 
-             hx-trigger="load"
-             hx-swap="innerHTML">
+        <div id="header-container" hx-get="/components/header.html" hx-trigger="load" hx-swap="innerHTML">
         </div>
 
-        <!-- Navigation Component -->
-        <div id="nav-container" 
-             hx-get="/components/navigation.html" 
-             hx-trigger="load"
-             hx-swap="innerHTML">
+        <div id="nav-container" hx-get="/components/navigation.html" hx-trigger="load" hx-swap="innerHTML">
         </div>
 
-        <!-- Main Content Area -->
         <main id="main-content">
             <h2>Posts from 2024</h2>
             <div class="blog-posts">
-                <a href="/posts/2024/notes-on-search-engines-for-enterprise-software.html" 
-                   hx-get="/posts/2024/notes-on-search-engines-for-enterprise-software.html" 
-                   hx-select="#main-content"
-                   hx-target="#main-content"
-                   hx-push-url="true">
-                    <article class="blog-post-preview">
-                        <h3>Notes On Search Engines For Enterprise Software</h3>
-                        <div class="preview-meta">
-                            <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
-                                <path fill="currentColor" d="M19,4H17V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H5A2,2,0,0,0,3,6V20a2,2,0,0,0,2,2H19a2,2,0,0,0,2-2V6A2,2,0,0,0,19,4ZM19,20H5V9H19Z"/>
-                            </svg>
-                            <time datetime="2024-03-28">28 Mar 2024</time>
-                        </div>
-                        <p class="excerpt">Notes from a conference on AI and its use in search engines for enterprise software</p>
-                    </article>
-                </a>
-            </div>
-            <div class="blog-posts">
-                <a href="/posts/2024/openai-o3-changes-the-narrative.html" 
-                   hx-get="/posts/2024/openai-o3-changes-the-narrative.html" 
-                   hx-select="#main-content"
-                   hx-target="#main-content"
-                   hx-push-url="true">
+                <a href="/posts/2024/openai-o3-changes-the-narrative.html"
+                    hx-get="/posts/2024/openai-o3-changes-the-narrative.html" hx-select="#main-content"
+                    hx-target="#main-content" hx-push-url="true">
                     <article class="blog-post-preview">
                         <h3>OpenAI's o3 changes the narrative</h3>
                         <div class="preview-meta">
                             <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
-                                <path fill="currentColor" d="M19,4H17V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H5A2,2,0,0,0,3,6V20a2,2,0,0,0,2,2H19a2,2,0,0,0,2-2V6A2,2,0,0,0,19,4ZM19,20H5V9H19Z"/>
+                                <path fill="currentColor"
+                                    d="M19,4H17V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H5A2,2,0,0,0,3,6V20a2,2,0,0,0,2,2H19a2,2,0,0,0,2-2V6A2,2,0,0,0,19,4ZM19,20H5V9H19Z" />
                             </svg>
                             <time datetime="2024-12-20">20 Dec 2024</time>
                         </div>
-                        <p class="excerpt">Initial thoughts on OpenAI's announcement of its latest so-called thinking model, o3</p>
+                        <p class="excerpt">Initial thoughts on OpenAI's announcement of its latest so-called thinking
+                            model, o3</p>
+                    </article>
+                </a>
+
+                <a href="/posts/2024/notes-on-search-engines-for-enterprise-software.html"
+                    hx-get="/posts/2024/notes-on-search-engines-for-enterprise-software.html" hx-select="#main-content"
+                    hx-target="#main-content" hx-push-url="true">
+                    <article class="blog-post-preview">
+                        <h3>Notes On Search Engines For Enterprise Software</h3>
+                        <div class="preview-meta">
+                            <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                                <path fill="currentColor"
+                                    d="M19,4H17V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H5A2,2,0,0,0,3,6V20a2,2,0,0,0,2,2H19a2,2,0,0,0,2-2V6A2,2,0,0,0,19,4ZM19,20H5V9H19Z" />
+                            </svg>
+                            <time datetime="2024-03-28">28 Mar 2024</time>
+                        </div>
+                        <p class="excerpt">Notes from a conference on AI and its use in search engines for enterprise
+                            software</p>
                     </article>
                 </a>
             </div>
         </main>
 
-        <!-- Footer Component -->
-        <div id="footer-container" 
-             hx-get="/components/footer.html" 
-             hx-trigger="load"
-             hx-swap="innerHTML">
+        <div id="footer-container" hx-get="/components/footer.html" hx-trigger="load" hx-swap="innerHTML">
         </div>
     </div>
 </body>
+
 </html>

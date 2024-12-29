@@ -1,27 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Minimal required scripts for HTMX to function -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/static/htmx.min.js"></script>
     <script src="/static/head-support.js"></script>
-    <div id="head-base"
-         hx-get="/components/head-base.html"
-         hx-trigger="load"
-         hx-swap="innerHTML">
-    </div>
-    <!-- Page specific meta tags -->
+
     <title>An Email To A Relative About AI, Three Weeks Before GPT-3.5</title>
     <meta property="og:title" content="An Email To A Relative About AI, Three Weeks Before GPT-3.5">
     <meta property="og:description" content="An email to a relative about AI, three weeks before GPT-3.5">
     <meta property="article:published_time" content="2022-11-03">
     <meta property="article:modified_time" content="2024-03-24">
-    <meta property="article:tag" content="AI">
     <meta property="article:tag" content="GPT-3">
-    <meta property="article:tag" content="personal">
+    <meta property="article:tag" content="Personal">
 </head>
 <body hx-ext="head-support">
+    <div hx-get="/components/head-base.html" 
+         hx-trigger="load" 
+         hx-swap="none"></div>
     <div class="site-wrapper">
         <div id="header-container" 
              hx-get="/components/header.html" 
@@ -56,14 +52,14 @@
                             <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
                                 <path fill="currentColor" d="M19,4H17V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H5A2,2,0,0,0,3,6V20a2,2,0,0,0,2,2H19a2,2,0,0,0,2-2V6A2,2,0,0,0,19,4ZM19,20H5V9H19Z"/>
                             </svg>
-                            <time datetime="2022-11-03">November 03, 2022</time>
+                            <time datetime="2022-11-03">3 Nov 2022</time>
                         </div>
                         
                         <div class="post-updated">
                             <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
                                 <path fill="currentColor" d="M21,11a1,1,0,0,0-1,1,8.05,8.05,0,1,1-2.22-5.5L16,8.32a1,1,0,0,0,1.41,1.41l4.35-4.35a1,1,0,0,0,0-1.41L17.41-.38A1,1,0,0,0,16,1L17.77,2.8A10,10,0,1,0,22,12,1,1,0,0,0,21,11Z"/>
                             </svg>
-                            <span><time datetime="2024-03-24">March 24, 2024</time></span>
+                            <span><time datetime="2024-03-24">24 Mar 2024</time></span>
                         </div>
                         
                     </div>

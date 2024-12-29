@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Minimal required scripts for HTMX to function -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/static/htmx.min.js"></script>
     <script src="/static/head-support.js"></script>
-    <div id="head-base"
-         hx-get="/components/head-base.html"
-         hx-trigger="load"
-         hx-swap="innerHTML">
-    </div>
-    <!-- Page specific meta tags -->
+    
     <title>Notes On Search Engines For Enterprise Software</title>
     <meta property="og:title" content="Notes On Search Engines For Enterprise Software">
     <meta property="og:description" content="Notes from a conference on AI and its use in search engines for enterprise software">
@@ -23,6 +17,9 @@
     <meta property="article:tag" content="Enterprise Software">
 </head>
 <body hx-ext="head-support">
+    <div hx-get="/components/head-base.html" 
+         hx-trigger="load" 
+         hx-swap="none"></div>
     <div class="site-wrapper">
         <div id="header-container" 
              hx-get="/components/header.html" 
@@ -87,7 +84,7 @@
 <p>I was invited to the conference by an enterprise software firm, beginning with a morning speech from their CEO, setting the tone for 43 intense hours of product demos, actual lectures, panel discussions, customer interviews and in-depth dev team conversations. Contrary to my initial impressions that the vast, opulent venue and hard-hitting speaker list might be papering over the nascent state of LLM-driven and LLM-augmented enterprise software, the event instead effectively demonstrated that GenAI is evolving beyond the X-Twitter/Reddit/hustlebro hype and beginning to deliver productivity to things that actually matter.</p>
 <h3>Enterprise search is where it's at</h3>
 <p>This particular company's vision for the future is enterprise search. Yep – the familiar search box, introduced by AltaVista in 1995, popularised by Yahoo and now known as “Googling”.</p>
-<p>But this unnamed software firm isn't trying to compete with Google or Bing or even Perplexity. Even Google is beginning to drown in SEO-optimised mush flooding the open web. What this firm offers instead is an internal search engine to replace the clunky, keyword-dependent and domain-naïve systems built into Windows Explorer, Finder, Outlook and SharePoint.</p>
+<p>But this unnamed software firm isn't trying to compete with Google or Bing or even Perplexity. Even Google is beginning to drown in SEO mush flooding the open web. What this firm offers instead is an internal search engine to replace the clunky, keyword-dependent and domain-naïve systems built into Windows Explorer, Finder, Outlook and SharePoint.</p>
 <h3>Surely we can just build this ourselves with open-source tools?</h3>
 <p>The AI community will say, “but don’t semantic search engines already exist? FAISS has been around forever. Typesense just added vector search. Open-source embedding models are effective, available and lightweight enough to run fast on my Dell laptop. Hugging Face has everything. I have this great Streamlit frontend so my whole team can make use of this Python backend! Even NVIDIA released a great consumer tool to chat with local docs!”</p>
 <p>Those in industry will know the challenges of scaling enterprise and industrial data search – and DataOps – beyond individual users or small, digital native teams is far harder than pooling, extracting, chunking and indexing. Real-world IT and OT systems won’t have an API with great web documentation. Some might have been installed by a system integrator in 2003 that has since changed names twice. Some are proprietary. Some might even need a $1200 cable and adapter to physically connect to them to your network.  </p>

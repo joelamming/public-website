@@ -1,37 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/static/htmx.min.js"></script>
     <script src="/static/head-support.js"></script>
-    <div id="head-base"
-         hx-get="/components/head-base.html"
-         hx-trigger="load"
-         hx-swap="innerHTML">
-    </div>
 
     <title>2023 Posts</title>
     <meta property="og:title" content="2023 Posts">
     <meta property="og:description" content="Blog posts from 2023">
 </head>
+
 <body hx-ext="head-support">
+    <div hx-get="/components/head-base.html" hx-trigger="load" hx-swap="none"></div>
+
     <div class="site-wrapper">
-        <!-- Header Component -->
-        <div id="header-container" 
-             hx-get="/components/header.html" 
-             hx-trigger="load"
-             hx-swap="innerHTML">
+        <div id="header-container" hx-get="/components/header.html" hx-trigger="load" hx-swap="innerHTML">
         </div>
 
-        <!-- Navigation Component -->
-        <div id="nav-container" 
-             hx-get="/components/navigation.html" 
-             hx-trigger="load"
-             hx-swap="innerHTML">
+        <div id="nav-container" hx-get="/components/navigation.html" hx-trigger="load" hx-swap="innerHTML">
         </div>
 
-        <!-- Main Content Area -->
         <main id="main-content">
             <h2>Posts from 2023</h2>
             <div class="blog-posts">
@@ -42,12 +32,9 @@
             </div>
         </main>
 
-        <!-- Footer Component -->
-        <div id="footer-container" 
-             hx-get="/components/footer.html" 
-             hx-trigger="load"
-             hx-swap="innerHTML">
+        <div id="footer-container" hx-get="/components/footer.html" hx-trigger="load" hx-swap="innerHTML">
         </div>
     </div>
 </body>
+
 </html>

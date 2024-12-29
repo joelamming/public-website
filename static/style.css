@@ -88,6 +88,10 @@ body {
 }
 
 /* Mobile-First Navigation */
+#year-nav {
+    margin-bottom: var(--space-lg);
+}
+
 #year-nav ul {
     list-style: none;
     padding: 0;
