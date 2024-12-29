@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/static/htmx.min.js"></script>
+    <script src="/static/head-support.js"></script>
+    <div id="head-base"
+         hx-get="/components/head-base.html"
+         hx-trigger="load"
+         hx-swap="innerHTML">
+    </div>
+
     <title>2022 Posts</title>
     <meta property="og:title" content="2022 Posts">
     <meta property="og:description" content="Blog posts from 2022">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/style.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="/static/jl-favicon-32x32.png">
-    <script src="/static/htmx.min.js" hx-preserve="true"></script>
-    <script src="https://unpkg.com/htmx-ext-head-support@2.0.1/head-support.js" hx-preserve="true"></script>
 </head>
 <body hx-ext="head-support">
     <div class="site-wrapper">
@@ -43,7 +46,7 @@
                             <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
                                 <path fill="currentColor" d="M19,4H17V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H5A2,2,0,0,0,3,6V20a2,2,0,0,0,2,2H19a2,2,0,0,0,2-2V6A2,2,0,0,0,19,4ZM19,20H5V9H19Z"/>
                             </svg>
-                            <time datetime="2022-11-03">3 November 2022</time>
+                            <time datetime="2022-11-03">3 Nov 2022</time>
                         </div>
                         <p class="excerpt">An email to a relative about AI, three weeks before GPT-3.5</p>
                     </article>

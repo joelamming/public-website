@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2022 Posts</title>
-    <meta property="og:title" content="2022 Posts">
-    <meta property="og:description" content="Blog posts from 2022">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/style.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="/static/jl-favicon-32x32.png">
-    <script src="/static/htmx.min.js" hx-preserve="true"></script>
-    <script src="https://unpkg.com/htmx-ext-head-support@2.0.1/head-support.js" hx-preserve="true"></script>
+    <script src="/static/htmx.min.js"></script>
+    <script src="/static/head-support.js"></script>
+    <div id="head-base"
+         hx-get="/components/head-base.html"
+         hx-trigger="load"
+         hx-swap="innerHTML">
+    </div>
+
+    <title>2023 Posts</title>
+    <meta property="og:title" content="2023 Posts">
+    <meta property="og:description" content="Blog posts from 2023">
 </head>
 <body hx-ext="head-support">
     <div class="site-wrapper">

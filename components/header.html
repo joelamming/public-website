@@ -4,3 +4,18 @@
     </a>
     <h2>Personal blog of a lanky nerd living in London</h2>
 </header>
+<button class="back-to-top"
+        hx-on:click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+        id="back-to-top-button">
+    ↑
+</button>
+<script>
+    document.addEventListener('scroll', function() {
+        const button = document.getElementById('back-to-top-button');
+        if (window.scrollY > 100) {
+            button.classList.add('visible');
+        } else {
+            button.classList.remove('visible');
+        }
+    });
+</script>
