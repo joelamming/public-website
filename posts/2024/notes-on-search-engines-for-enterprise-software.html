@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/static/htmx.min.js"></script>
     <script src="/static/head-support.js"></script>
-    
+
     <title>Notes On Search Engines For Enterprise Software</title>
     <meta property="og:title" content="Notes On Search Engines For Enterprise Software">
-    <meta property="og:description" content="Notes from a conference on AI and its use in search engines for enterprise software">
+    <meta property="og:description"
+        content="Notes from a conference on AI and its use in search engines for enterprise software">
     <meta property="article:published_time" content="2024-03-28">
     <meta property="article:modified_time" content="2024-12-24">
     <meta property="article:tag" content="AI">
@@ -16,15 +18,11 @@
     <meta property="article:tag" content="Search Engines">
     <meta property="article:tag" content="Enterprise Software">
 </head>
+
 <body hx-ext="head-support">
-    <div hx-get="/components/head-base.html" 
-         hx-trigger="load" 
-         hx-swap="none"></div>
+    <div hx-get="/components/head-base.html" hx-trigger="load" hx-swap="none"></div>
     <div class="site-wrapper">
-        <div id="header-container" 
-             hx-get="/components/header.html" 
-             hx-trigger="load"
-             hx-swap="innerHTML">
+        <div id="header-container" hx-get="/components/header.html" hx-trigger="load" hx-swap="innerHTML">
             <header class="header-placeholder">
                 <div class="htmx-indicator">
                     <h1 style="visibility: hidden">Title hasn't loaded yet...</h1>
@@ -32,10 +30,7 @@
                 </div>
             </header>
         </div>
-        <div id="nav-container" 
-             hx-get="/components/navigation.html" 
-             hx-trigger="load"
-             hx-swap="innerHTML">
+        <div id="nav-container" hx-get="/components/navigation.html" hx-trigger="load" hx-swap="innerHTML">
             <div class="htmx-indicator">Navigation hasn't loaded yet...</div>
         </div>
         <main id="main-content">
@@ -52,72 +47,119 @@
                     <div class="post-meta">
                         <div class="post-date">
                             <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
-                                <path fill="currentColor" d="M19,4H17V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H5A2,2,0,0,0,3,6V20a2,2,0,0,0,2,2H19a2,2,0,0,0,2-2V6A2,2,0,0,0,19,4ZM19,20H5V9H19Z"/>
+                                <path fill="currentColor"
+                                    d="M19,4H17V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H5A2,2,0,0,0,3,6V20a2,2,0,0,0,2,2H19a2,2,0,0,0,2-2V6A2,2,0,0,0,19,4ZM19,20H5V9H19Z" />
                             </svg>
                             <time datetime="2024-03-28">28 Mar 2024</time>
                         </div>
-                        
+
                         <div class="post-updated">
                             <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
-                                <path fill="currentColor" d="M21,11a1,1,0,0,0-1,1,8.05,8.05,0,1,1-2.22-5.5L16,8.32a1,1,0,0,0,1.41,1.41l4.35-4.35a1,1,0,0,0,0-1.41L17.41-.38A1,1,0,0,0,16,1L17.77,2.8A10,10,0,1,0,22,12,1,1,0,0,0,21,11Z"/>
+                                <path fill="currentColor"
+                                    d="M21,11a1,1,0,0,0-1,1,8.05,8.05,0,1,1-2.22-5.5L16,8.32a1,1,0,0,0,1.41,1.41l4.35-4.35a1,1,0,0,0,0-1.41L17.41-.38A1,1,0,0,0,16,1L17.77,2.8A10,10,0,1,0,22,12,1,1,0,0,0,21,11Z" />
                             </svg>
-                            <span><time datetime="2024-12-24">24 Dec 2024</time></span>
+                            <span><time datetime="2024-12-29">29 Dec 2024</time></span>
                         </div>
-                        
+
                     </div>
                     <div class="tags">
-                        
+
                         <span class="tag">AI</span>
-                        
+
                         <span class="tag">Knowledge Graphs</span>
-                        
+
                         <span class="tag">Search Engines</span>
-                        
+
                         <span class="tag">Enterprise Software</span>
-                        
+
                     </div>
                 </header>
-                
+
                 <div class="post-content">
                     <h3>Two days in Florida</h3>
-<p>This brief excursion away from the cold, damp darkness of London presented what I believe is the most compelling demonstration of <strong>actually useful</strong> generative AI for enterprise and industry that I've seen yet in 2024.</p>
-<p>I was invited to the conference by an enterprise software firm, beginning with a morning speech from their CEO, setting the tone for 43 intense hours of product demos, actual lectures, panel discussions, customer interviews and in-depth dev team conversations. Contrary to my initial impressions that the vast, opulent venue and hard-hitting speaker list might be papering over the nascent state of LLM-driven and LLM-augmented enterprise software, the event instead effectively demonstrated that GenAI is evolving beyond the X-Twitter/Reddit/hustlebro hype and beginning to deliver productivity to things that actually matter.</p>
-<h3>Enterprise search is where it's at</h3>
-<p>This particular company's vision for the future is enterprise search. Yep – the familiar search box, introduced by AltaVista in 1995, popularised by Yahoo and now known as “Googling”.</p>
-<p>But this unnamed software firm isn't trying to compete with Google or Bing or even Perplexity. Even Google is beginning to drown in SEO mush flooding the open web. What this firm offers instead is an internal search engine to replace the clunky, keyword-dependent and domain-naïve systems built into Windows Explorer, Finder, Outlook and SharePoint.</p>
-<h3>Surely we can just build this ourselves with open-source tools?</h3>
-<p>The AI community will say, “but don’t semantic search engines already exist? FAISS has been around forever. Typesense just added vector search. Open-source embedding models are effective, available and lightweight enough to run fast on my Dell laptop. Hugging Face has everything. I have this great Streamlit frontend so my whole team can make use of this Python backend! Even NVIDIA released a great consumer tool to chat with local docs!”</p>
-<p>Those in industry will know the challenges of scaling enterprise and industrial data search – and DataOps – beyond individual users or small, digital native teams is far harder than pooling, extracting, chunking and indexing. Real-world IT and OT systems won’t have an API with great web documentation. Some might have been installed by a system integrator in 2003 that has since changed names twice. Some are proprietary. Some might even need a $1200 cable and adapter to physically connect to them to your network.  </p>
-<p>But this software firm and others like it has spent years building and refining many such data connectors and offer them, in most cases, as turnkey solutions.</p>
-<h3>Index it all</h3>
-<p>Connecting to everything digital within an organisation and making it accessible – not just to a semantic search engine, but to a domain-specific, context-aware search engine – delivers something Google and Microsoft and Facebook/Meta have had their incentives prevent.</p>
-<p>This new breed of enterprise search knows who you are. It knows what you do. It knows what data you have access to. It knows who your colleagues are, and it can therefore understand “show me all of the backup generators running more than three degrees above spec today”. It visualises complex, contextualised answers from proprietary data. It isn’t Google. It doesn't sell you donuts. This isn’t personal data. This is enterprise data, industrial data, modelled to maximise discoverability based on relevance to you, your work and your query – delivered fast to a web interface making full use of familiar BI visualisations, tables, images and even 3D models with drill-down functionality.</p>
-<p>Search aligned with business operations. SearchOps? It just doesn’t sound right. Industrial and enterprise DataOps might be here to stay. Power users don’t need to be coders. Power users just need to describe what they’re looking for, and the machine does the rest.</p>
-<h3>Out with chatbots, in with backend data curation and decorating</h3>
-<p>Despite my initial scepticism, particularly this firm's history in relational databases, the conversations I had with oil and gas people, manufacturing, military, utilities, cyber, tech people – all contrasted against the “yeah, but chatbots are totally useless in my industry” sentiment I heard throughout 2023. In March 2024, the guidance infrastructure around LLMs are solidifying. Source attribution seems to be a solved problem. LLM hallucinations in the final answer are increasingly rare. Most of all – buyers seem to be convinced.</p>
-<p>A highlight of my experience was – aside from the Apple Vision Pro demo – spending an hour or so in conversation with the product/dev leaders for this firm's generative AI team. We went deep into the product, why the last couple of months have seen a significant turning point in performance, the use of customer-specific LLMs on secure customer infrastructure, source attribution techniques, agent-based retrieval, fine-tuning an open-source LLM to near-perfectly convert natural language queries into the firm's data model and how time series, relational databases, document-oriented databases and even knowledge graphs are used together to perform lightning-fast search at a vast scale.</p>
-<p>Plenty of others in this space are approaching industrial and enterprises data management in a search-focused way. Some use knowledge graphs as the foundation, with time series and relational and document databases where necessary. Others avoid time series. Some established players are adapting their systems in much the way this particular vendor is. I will of course be watching the industry closely.</p>
-<p>2024 is going to be the year of much, much better enterprise and industrial search. And probably also knowledge graphs built with generative AI. Fingers crossed.</p>
+                    <p>This brief excursion away from the cold, damp darkness of London presented what I believe is the
+                        most compelling demonstration of <strong>actually useful</strong> generative AI for enterprise
+                        and industry that I've seen yet in 2024.</p>
+                    <p>I was invited to the conference by an enterprise software firm, beginning with a morning speech
+                        from their CEO, setting the tone for 43 intense hours of product demos, actual lectures, panel
+                        discussions, customer interviews and in-depth dev team conversations. Contrary to my initial
+                        impressions that the vast, opulent venue and hard-hitting speaker list might be papering over
+                        the nascent state of LLM-driven and LLM-augmented enterprise software, the event instead
+                        effectively demonstrated that GenAI is evolving beyond the X-Twitter/Reddit/hustlebro hype and
+                        beginning to deliver productivity to things that actually matter.</p>
+                    <h3>Enterprise search is where it's at</h3>
+                    <p>This particular company's vision for the future is enterprise search. Yep – the familiar search
+                        box, introduced by AltaVista in 1995, popularised by Yahoo and now known as “Googling”.</p>
+                    <p>But this unnamed software firm isn't trying to compete with Google or Bing or even Perplexity.
+                        Even Google is beginning to drown in SEO mush flooding the open web. What this firm offers
+                        instead is an internal search engine to replace the clunky, keyword-dependent and domain-naïve
+                        systems built into Windows Explorer, Finder, Outlook and SharePoint.</p>
+                    <h3>Surely we can just build this ourselves with open-source tools?</h3>
+                    <p>The AI community will say, “but don’t semantic search engines already exist? FAISS has been
+                        around forever. Typesense just added vector search. Open-source embedding models are effective,
+                        available and lightweight enough to run fast on my Dell laptop. Hugging Face has everything. I
+                        have this great Streamlit frontend so my whole team can make use of this Python backend! Even
+                        NVIDIA released a great consumer tool to chat with local docs!”</p>
+                    <p>Those in industry will know the challenges of scaling enterprise and industrial data search – and
+                        DataOps – beyond individual users or small, digital native teams is far harder than pooling,
+                        extracting, chunking and indexing. Real-world IT and OT systems won’t have an API with great web
+                        documentation. Some might have been installed by a system integrator in 2003 that has since
+                        changed names twice. Some are proprietary. Some might even need a $1200 cable and adapter to
+                        physically connect to them to your network. </p>
+                    <p>But this software firm and others like it has spent years building and refining many such data
+                        connectors and offer them, in most cases, as turnkey solutions.</p>
+                    <h3>Index it all</h3>
+                    <p>Connecting to everything digital within an organisation and making it accessible – not just to a
+                        semantic search engine, but to a domain-specific, context-aware search engine – delivers
+                        something Google and Microsoft and Facebook/Meta have had their incentives prevent.</p>
+                    <p>This new breed of enterprise search knows who you are. It knows what you do. It knows what data
+                        you have access to. It knows who your colleagues are, and it can therefore understand “show me
+                        all of the backup generators running more than three degrees above spec today”. It visualises
+                        complex, contextualised answers from proprietary data. It isn’t Google. It doesn't sell you
+                        donuts. This isn’t personal data. This is enterprise data, industrial data, modelled to maximise
+                        discoverability based on relevance to you, your work and your query – delivered fast to a web
+                        interface making full use of familiar BI visualisations, tables, images and even 3D models with
+                        drill-down functionality.</p>
+                    <p>Search aligned with business operations. SearchOps? It just doesn’t sound right. Industrial and
+                        enterprise DataOps might be here to stay. Power users don’t need to be coders. Power users just
+                        need to describe what they’re looking for, and the machine does the rest.</p>
+                    <h3>Out with chatbots, in with backend data curation and decorating</h3>
+                    <p>Despite my initial scepticism, particularly this firm's history in relational databases, the
+                        conversations I had with oil and gas people, manufacturing, military, utilities, cyber, tech
+                        people – all contrasted against the “yeah, but chatbots are totally useless in my industry”
+                        sentiment I heard throughout 2023. In March 2024, the guidance infrastructure around LLMs are
+                        solidifying. Source attribution seems to be a solved problem. LLM hallucinations in the final
+                        answer are increasingly rare. Most of all – buyers seem to be convinced.</p>
+                    <p>A highlight of my experience was – aside from the Apple Vision Pro demo – spending an hour or so
+                        in conversation with the product/dev leaders for this firm's generative AI team. We went deep
+                        into the product, why the last couple of months have seen a significant turning point in
+                        performance, the use of customer-specific LLMs on secure customer infrastructure, source
+                        attribution techniques, agent-based retrieval, fine-tuning an open-source LLM to near-perfectly
+                        convert natural language queries into the firm's data model and how time series, relational
+                        databases, document-oriented databases and even knowledge graphs are used together to perform
+                        lightning-fast search at a vast scale.</p>
+                    <p>Plenty of others in this space are approaching industrial and enterprises data management in a
+                        search-focused way. Some use knowledge graphs as the foundation, with time series and relational
+                        and document databases where necessary. Others avoid time series. Some established players are
+                        adapting their systems in much the way this particular vendor is. I will of course be watching
+                        the industry closely.</p>
+                    <p>2024 is going to be the year of much, much better enterprise and industrial search. And probably
+                        also knowledge graphs built with generative AI. Fingers crossed.</p>
                 </div>
-                
+
                 <footer class="post-footer">
                     <div class="post-navigation">
-                        <a href="/years/2024.html" 
-                           class="back-to-posts"
-                           hx-get="/years/2024.html"
-                           hx-select="#main-content"
-                           hx-target="#main-content"
-                           hx-push-url="true">← Back to 2024 posts</a>
+                        <a href="/years/2024.html" class="back-to-posts" hx-get="/years/2024.html"
+                            hx-select="#main-content" hx-target="#main-content" hx-push-url="true">← Back to 2024
+                            posts</a>
                     </div>
                 </footer>
             </article>
         </main>
-        <div id="footer-container" 
-             hx-get="/components/footer.html" 
-             hx-trigger="load"
-             hx-swap="innerHTML">
+        <div id="footer-container" hx-get="/components/footer.html" hx-trigger="load" hx-swap="innerHTML">
             <div class="htmx-indicator">Footer hasn't loaded yet...</div>
         </div>
     </div>
 </body>
+
 </html>
