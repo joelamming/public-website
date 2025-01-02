@@ -66,21 +66,13 @@
 
                     </div>
                     <div class="tags">
-
                         <span class="tag">OpenAI</span>
-
                         <span class="tag">Mistral</span>
-
                         <span class="tag">Meta</span>
-
                         <span class="tag">DeepSeek AI</span>
-
                         <span class="tag">DeepSeek-V3</span>
-
                         <span class="tag">vLLM</span>
-
                         <span class="tag">Local LLM</span>
-
                     </div>
                 </header>
 
@@ -164,7 +156,8 @@
                         (difficult) some high-quality web-scale datasets (even more difficult, despite efforts from the
                         <a href="https://huggingface.co/allenai">Allen Institute</a>) and is quick to implement the
                         tricks shared in frontier AI research – a start-up with a few million in funding could
-                        conceivably replicate DeepSeek-V3 from the ground up.</p>
+                        conceivably replicate DeepSeek-V3 from the ground up.
+                    </p>
                     <p>But there's a lot more to this story than a frontier-class AI model being trained on what could
                         be the R&amp;D budget of a medium-sized enterprise. To steal a phrase popularised by <a
                             href="https://x.com/MKBHD/status/659455520311529472">MKBHD</a> back in 2015: <em>Small LLMs
@@ -281,7 +274,8 @@
                         models, making the it available for commercial use, so long as it isn't available to more than
                         700 million users (unless you're like Microsoft and <a
                             href="https://blogs.microsoft.com/blog/2023/07/18/microsoft-and-meta-expand-their-ai-partnership-with-llama-2-on-azure-and-windows/">asked</a>
-                        Zuck nicely).</p>
+                        Zuck nicely).
+                    </p>
                     <h3>The floodgates opened for useful open-weight LLMs</h3>
                     <p><a href="https://old.reddit.com/r/LocalLLaMA/">r/LocalLLaMa</a>, X/Twitter and its variants
                         feverishly egged on the community of hobbyists, academics and startups as they pumped out
@@ -370,7 +364,8 @@
                             href="https://arstechnica.com/security/2023/09/hack-of-a-microsoft-corporate-account-led-to-azure-breach-by-chinese-hackers/">secure</a>
                         their tech stack and <a
                             href="https://en.wikipedia.org/wiki/2020_United_States_federal_government_data_breach">supply
-                            chain</a>.</p>
+                            chain</a>.
+                    </p>
                     <p>For truly sensitive data, those consistently targeted the most by sophisticated threats – nuclear
                         facilities, spy agencies, military contractors – the only real options are on-premises
                         deployment or some of the hardened offerings from <a
@@ -497,13 +492,8 @@
                     </ol>
                     <p>The result? See below:</p>
                     <div class="post-image-wrapper">
-                        <img src="/images/tpt-vs-ct-tc_768.png" 
-                             alt="Concurrency Cover" 
-                             loading="lazy" 
-                             width="768" 
-                             height="641" 
-                             onload="this.classList.add('loaded')"
-                             class="post-image">
+                        <img src="/images/tpt-vs-ct-tc_768.png" alt="Concurrency Cover" loading="lazy" width="768"
+                            height="641" onload="this.classList.add('loaded')" class="post-image">
                     </div>
                     <p>Clearly, sequential processing is <strong>slow</strong> when we're trying to maximise overall
                         throughput for batch jobs. We're talking 45 tokens per second with a short, 128-token input –
@@ -519,7 +509,8 @@
                         <a href="https://openai.com/api/pricing/">page</a>, requests through the BatchAPI are $0.075 per
                         million input (prompt) tokens and $0.30 per million output tokens. If we have one million tasks
                         with around 128 prompt tokens and 128 completion (output) tokens on average, it'll cost (1M x
-                        128 x $0.075) + (1M x 128 x $0.30) = $48.00.</p>
+                        128 x $0.075) + (1M x 128 x $0.30) = $48.00.
+                    </p>
                     <p>The A5000 instance hosting Qwen-2.5-7B-Instruct? It's completing about 800 tokens per second – so
                         it'll take about 21 hours to churn through all one million tasks. At $0.40/hr, that's $8. Big
                         saving, assuming we get GPT-4o-mini performance out of Qwen-2.5-7B-Instruct. The truth? I've
