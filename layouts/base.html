@@ -15,6 +15,8 @@
         </div>
 
         <main id="main-content">
+            <div id="latest-post-banner" hx-get="/components/latest-post.html" hx-trigger="load" hx-swap="innerHTML">
+            </div>
             <div id="profile-photo-container" class="profile-photo-wrapper">
                 <img src="/images/jnl2.png" alt="Profile photo" class="profile-photo" loading="lazy" width="768"
                     height="588" onload="this.classList.add('loaded')">
@@ -58,21 +60,26 @@
                 <h3>Who's Joe?</h3>
                 <p>I'm a software researcher and consultant by day, focusing largely on enterprise and industrial
                     DataOps and the practical applications of AI. Background is in mechanical engineering with
-                    sustainable energy systems at Southampton, world famous for its grey buildings, loss of the <a 
-                    href="https://seacitymuseum.co.uk/exhibitions/southamptons-titanic-story/">Titanic</a> and people who
-                    <a href="https://www.southampton.ac.uk/news/2015/12/web-southampton-history.page">invented</a> the internet. 
+                    sustainable energy systems at Southampton, world famous for its grey buildings, loss of the <a
+                        href="https://seacitymuseum.co.uk/exhibitions/southamptons-titanic-story/">Titanic</a> and
+                    people who
+                    <a href="https://www.southampton.ac.uk/news/2015/12/web-southampton-history.page">invented</a> the
+                    internet.
                     On paper, I'm British, although I'm not really from anywhere – growing up
                     moving from China to South Korea to South Africa to the Isle of Man and eventually to London, UK.
                     I've been building cool stuff since I was a wee lad, but the last decade and a half has really
                     focused on software – and since circa 2017, AI. Most of the code I write is Python, although
                     anything requiring a frontend uses HTML/CSS, HTMX and JavaScript. Performant custom backend stuff is
-                    written in Rust or C++.</p>
+                    written in Rust or C++.
+                </p>
                 <p>This blog is a place for me to write about whatever I want – and share the details of fun personal
                     research and build projects, completely separate from my day job. While I work with incredible
                     people and organisations, none of this will be discussed here. The only exceptions will be
                     commentary on current events, stuff that's already public, especially on firms like
-                    Mistral, OpenAI/Microsoft, Google, Meta, Anthropic/Amazon or the interesting players in Asia like Alibaba,
-                    DeepSeek, ByteDance and Tencent. I have the freedom to present things my way – within the confines of what
+                    Mistral, OpenAI/Microsoft, Google, Meta, Anthropic/Amazon or the interesting players in Asia like
+                    Alibaba,
+                    DeepSeek, ByteDance and Tencent. I have the freedom to present things my way – within the confines
+                    of what
                     browsers in 2025 can do. Daunting.</p>
             </article>
         </main>

@@ -599,3 +599,48 @@ a:focus-visible {
 .htmx-request .post-image {
     opacity: 0;
 }
+
+.latest-post-banner {
+    margin: var(--space-md) 0;
+    border-left: 4px solid var(--color-primary);
+    background-color: var(--color-card-bg);
+    transition: all var(--transition-standard);
+}
+
+.latest-post-banner a {
+    display: block;
+    color: var(--color-text);
+    padding: var(--space-md) var(--space-lg);
+}
+
+.latest-post-banner:hover {
+    background-color: var(--color-card-hover);
+    transform: translateX(4px);
+}
+
+.latest-post-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.latest-post-banner h4 {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    color: var(--color-header);
+    font-size: 1.1rem;
+}
+
+.latest-label {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    letter-spacing: 0.05em;
+    font-weight: 500;
+}
+
+.latest-post-banner .preview-meta {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+}
