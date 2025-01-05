@@ -7,21 +7,20 @@
     <script src="/static/htmx.min.js"></script>
     <script src="/static/head-support.js"></script>
 
-    <title>Why everyone can&#39;t run their own DeepSeek-V3</title>
-    <meta property="og:title" content="Why running DeepSeek-V3 locally isn't for everyone">
-    <meta property="og:description"
-        content="A deep-dive on DeepSeek-V3, how we got here - and whether it&#39;s even feasible to run it yourself">
-    <meta property="article:published_time" content="2024-12-31">
-    <meta property="article:modified_time" content="2025-01-01">
-    <meta property="article:tag" content="OpenAI">
-    <meta property="article:tag" content="Mistral">
-    <meta property="article:tag" content="Meta">
-    <meta property="article:tag" content="DeepSeek AI">
-    <meta property="article:tag" content="DeepSeek-V3">
-    <meta property="article:tag" content="vLLM">
-    <meta property="article:tag" content="Local LLM">
-    <meta name="author" content="Joe Lamming">
-    <link rel="author" href="/">
+    <title hx-preserve="true">Why running DeepSeek-V3 locally isn't for everyone</title>
+    <meta property="og:title" content="Why running DeepSeek-V3 locally isn't for everyone" hx-preserve="true">
+    <meta property="og:description" content="A deep-dive on DeepSeek-V3, how we got here - and whether it's even feasible to run it yourself" hx-preserve="true">
+    <meta property="article:published_time" content="2024-12-31" hx-preserve="true">
+    <meta property="article:modified_time" content="2025-01-05" hx-preserve="true">
+    <meta property="article:tag" content="OpenAI" hx-preserve="true">
+    <meta property="article:tag" content="Mistral" hx-preserve="true">
+    <meta property="article:tag" content="Meta" hx-preserve="true">
+    <meta property="article:tag" content="DeepSeek AI" hx-preserve="true">
+    <meta property="article:tag" content="DeepSeek-V3" hx-preserve="true">
+    <meta property="article:tag" content="vLLM" hx-preserve="true">
+    <meta property="article:tag" content="Local LLM" hx-preserve="true">
+    <meta name="author" content="Joe Lamming" hx-preserve="true">
+    <link rel="author" href="/" hx-preserve="true">
 </head>
 
 <body hx-ext="head-support">
@@ -454,7 +453,13 @@
                         October. But my guess is that it won't be enough.</p>
                     <p>Claude 3.5 Sonnet (10/2024 edition) has, according to a recent Microsoft <a
                             href="https://arxiv.org/pdf/2412.19260v1">paper</a>, around 175B parameters, GPT-4o around
-                        200B and GPT-4o-mini 8B. It also mentioned o1-preview having 300B and o1-mini having 100B.</p>
+                        200B and GPT-4o-mini 8B. It also mentioned o1-preview having 300B and o1-mini having 100B.
+                        Distributed inference models like these are almost always MoE, like DeepSeek-V3 – such
+                        architectures give model providers more performance per GPU, so long as they're fed with enough
+                        traffic.
+                        Whether the paper estimates the active parameters during each forward pass or the total number
+                        of
+                        parameters is unclear.</p>
                     <p>Aside from GPT-4o-mini's reported 8B parameters (<a
                             href="https://openai.com/api/pricing/">priced</a> at $0.075 input/$0.30 output per M from
                         the BatchAPI) – the open-weight LLMs are an order of magnitude smaller in terms of compute
@@ -471,21 +476,278 @@
                         Here's why.</p>
                     <h3>Concurrent requests deliver massive overall throughput</h3>
                     <p>My various projects over the years with ML model inferencing have long been done with the
-                        understanding that batched inference delivers much better overall throughput – although I've
-                        never bothered to actually visualise it for today's most popular open-weight LLMs.</p>
-                    <p>DeepSeek-V3 would be fun, although I'd prefer someone else were paying to rent two dozen A40s (or
+                        understanding that batched inference delivers much better overall throughput – although the
+                        optimal batch size depends on model architecture and the type of task. Conventional ML models
+                        are intuitive – input size is fixed and processing time only depends on model architecture,
+                        hardware and batch size.
+                        LLMs are interesting in that throughput depends on a combination of hardware, the number of
+                        concurrent requests, the amount of input (prompt) tokens and the expected number of tokens
+                        generated (which increase the effective input tokens at every generation step).</p>
+                    <p>Therefore, I've devised a test. DeepSeek-V3 would be fun, although I'd prefer someone else were
+                        paying to rent two dozen A40s (or
                         worse, a dozen H100s). So, the heatmap below shows Qwen-2.5-7B(-Instruct, although it doesn't
-                        matter for this experiment) running via vLLM in BF16 on an NVIDIA A5000 (24GB VRAM). Yes, it's a
+                        matter for this experiment) running via vLLM in BF16 on an NVIDIA A5000 (24GB VRAM). Additional
+                        tests on an A6000 (48GB) and H100 (80GB) were also performed. Yes, Qwen2.5 is a
                         dense model rather than DeepSeek's MoE – but the learning outcomes are the same.</p>
-                    <p>The experiment involved:</p>
+                    <p>The experiment began with creating a system prompt guaranteed to generate at least 128 tokens, at
+                        which point vLLM would stop generation:
+                    </p>
+                    <pre><code class="language-python">system_message = """You are a diligent codebreaking assistant.
+I want you to carefully analyse the query provided by the user, which might look like a string of random characters.
+However, this isn't actually the case. This string contains a hidden message that I need you to try to decipher.
+You should begin by carefully discussing what features exist in the string, before providing step-by-step instructions on how to detect patterns related to them."""</code></pre>
+                    <p>Then onto generating random strings after the system message to meet the target input (prompt)
+                        token count for each batch
+                        using simple binary search and a tonne of parallel requests to the <code>/tokenize</code>[sic]
+                        endpoint:</p>
+                    <pre><code class="language-python">def generate_random_query(min_length, max_length):
+    length = random.randint(min_length, max_length)
+    characters = string.ascii_letters + string.digits + ' '
+    return ''.join(random.choice(characters) for _ in range(length))
+
+def format_chat_prompt(messages):
+    formatted = ""
+    for msg in messages:
+        role = msg["role"]
+        content = msg["content"]
+        formatted += f"<|im_start|>{role}\n{content}<|im_end|>\n"
+    return formatted
+
+def generate_tokenised_queries(
+    system_message: str,
+    target_total_tokens: list[int],
+    queries_per_target: list[int],
+    tokeniser_base_url: str = "http://localhost:8000",
+    max_concurrent: int = 50
+) -> dict[int, list[str]]:
+    formatted_prompt = format_chat_prompt([{"role": "system", "content": system_message}])
+    response = requests.post(
+        f"{tokeniser_base_url}/tokenize",
+        json={
+            "model": "Qwen/Qwen2.5-7B-Instruct",
+            "prompt": formatted_prompt
+        }
+    )
+    system_tokens = len(response.json()["tokens"])
+    
+    token_char_ratios = []
+    
+    def update_ratio(chars: int, tokens: int):
+        ratio = chars / tokens
+        token_char_ratios.append(ratio)
+        if len(token_char_ratios) > 100:  # last 100 samples
+            token_char_ratios.pop(0)
+        return np.mean(token_char_ratios)
+    
+    def get_token_count(text: str) -> int:
+        formatted_prompt = format_chat_prompt([{"role": "user", "content": text}])
+        response = requests.post(
+            f"{tokeniser_base_url}/tokenize",
+            json={
+                "model": "Qwen/Qwen2.5-7B-Instruct",
+                "prompt": formatted_prompt
+            }
+        )
+        tokens = len(response.json()["tokens"])
+        update_ratio(len(text), tokens)
+        return tokens
+    
+    def binary_search_length(target_tokens: int, min_length: int = 10, max_length: int = 200) -> tuple[int, int]:
+        min_length = min(min_length, target_tokens // 4)  # estimate based on tokens/chars ratio
+        max_length = max(max_length, target_tokens)  # start target tokens as max
+        
+        min_text = generate_random_query(min_length, min_length)
+        min_tokens = get_token_count(min_text)
+        max_text = generate_random_query(max_length, max_length)
+        max_tokens = get_token_count(max_text)
+        
+        while min_tokens > target_tokens:
+            min_length = max(1, min_length // 2)
+            min_text = generate_random_query(min_length, min_length)
+            min_tokens = get_token_count(min_text)
+            
+        while max_tokens < target_tokens:
+            max_length *= 2
+            max_text = generate_random_query(max_length, max_length)
+            max_tokens = get_token_count(max_text)
+        
+        while max_length - min_length > 5:
+            mid_length = (min_length + max_length) // 2
+            mid_text = generate_random_query(mid_length, mid_length)
+            mid_tokens = get_token_count(mid_text)
+            
+            if mid_tokens < target_tokens:
+                min_length = mid_length
+                min_tokens = mid_tokens
+            else:
+                max_length = mid_length
+                max_tokens = mid_tokens
+        
+        return min_length, max_length
+    
+    queries_dict = {}
+    
+    for target, num_queries in zip(target_total_tokens, queries_per_target):
+        print(f"\nGenerating {num_queries} queries for {target} tokens...")
+        target_prompt_tokens = target - system_tokens
+        queries = set()
+        
+        min_length, max_length = binary_search_length(target_prompt_tokens)
+        print(f"Found length range: {min_length} - {max_length}")
+        
+        with tqdm(total=num_queries, desc=f"Tokens: {target}") as pbar:
+            while len(queries) < num_queries:
+                # increase batch size for higher token counts (this doesn't always work)
+                remaining = num_queries - len(queries)
+                batch_multiplier = 4 if target_prompt_tokens > 512 else 2
+                batch_size = min(max_concurrent, remaining * batch_multiplier)
+                
+                # token/char ratio estimate text length
+                avg_ratio = np.mean(token_char_ratios) if token_char_ratios else 4.0
+                estimated_chars = int(target_prompt_tokens * avg_ratio)
+                estimated_length = min(max_length, max(min_length, estimated_chars))
+                
+                candidates = [
+                    generate_random_query(
+                        max(min_length, estimated_length - 5),
+                        min(max_length, estimated_length + 5)
+                    )
+                    for _ in range(batch_size)
+                ]
+                
+                with ThreadPoolExecutor(max_workers=max_concurrent) as executor:
+                    futures = {
+                        executor.submit(get_token_count, c): c 
+                        for c in candidates
+                    }
+                    
+                    for future in as_completed(futures):
+                        if len(queries) >= num_queries:
+                            for f in futures:
+                                if not f.done():
+                                    f.cancel()
+                            break
+                            
+                        try:
+                            tokens = future.result()
+                            text = futures[future]
+                            
+                            # acceptable token range (within 1% of target)
+                            token_tolerance = max(1, int(target_prompt_tokens * 0.01))
+                            min_acceptable = target_prompt_tokens - token_tolerance
+                            max_acceptable = target_prompt_tokens + token_tolerance
+                            
+                            if min_acceptable <= tokens <= max_acceptable:
+                                if text not in queries:
+                                    queries.add(text)
+                                    pbar.update(1)
+                                    
+                                    if len(queries) >= num_queries:
+                                        break
+                                        
+                        except Exception as e:
+                            print(f"it broke: {e}")
+                            continue
+        
+        queries_dict[target] = list(queries)[:num_queries]
+    
+    return queries_dict</code></pre>
+                    <p>Finally, the parametric sweep:</p>
+                    <pre><code class="language-python">def run_parameter_sweep(
+    batch_sweep,
+    target_tokens,
+    system_message,
+    sequential_completions=100,
+    max_tokens=128,
+):
+    # single test query with first target token count to check it's working (you do NOT want to find this out an hour later)
+    print("Test query...")
+    test_queries = generate_tokenized_queries(
+        system_message,
+        target_total_tokens=[target_tokens[0]],
+        queries_per_target=[1]
+    )
+    test_query = test_queries[target_tokens[0]][0]
+    
+    print("System message:")
+    print(f"'{system_message}'")
+    print("Test query:")
+    print(f"'{test_query}'")
+    
+    chat_response = client.chat.completions.create(
+        model="Qwen/Qwen2.5-7B-Instruct",
+        messages=[
+            {"role": "system", "content": system_message.strip()},
+            {"role": "user", "content": test_query.strip()},
+        ],
+        temperature=0.0,
+        max_tokens=max_tokens,
+    )
+    
+    print("Model out:")
+    print(f"'{chat_response.choices[0].message.content}'")
+    print(f"Prompt tokens: {chat_response.usage.prompt_tokens}")
+    print(f"Completion tokens: {chat_response.usage.completion_tokens}")
+    print(f"Total tokens: {chat_response.usage.total_tokens}")
+    
+    heatmap_data = np.zeros((len(batch_sweep), len(target_tokens)))
+    latency_data = np.zeros((len(batch_sweep), len(target_tokens)))
+
+    for i, batch_size in enumerate(batch_sweep):
+        for j, target in enumerate(target_tokens):
+            print(f"Testing batch size {batch_size}, target tokens {target}...")
+            
+            # fresh queries for this specific test to avoid cache
+            queries_dict = generate_tokenized_queries(
+                system_message,
+                [target],
+                [batch_size * sequential_completions]
+            )
+            queries = queries_dict[target]
+            
+            total_tokens = 0
+            completion_times = []  # individual completion times
+            start_time = time.time()
+            
+            with ThreadPoolExecutor(max_workers=batch_size) as executor:
+                futures = [
+                    executor.submit(
+                        send_request,
+                        client,
+                        system_message,
+                        query,
+                        max_tokens,
+                    )
+                    for query in queries
+                ]
+                
+                for future in as_completed(futures):
+                    try:
+                        latency, tokens_used, _ = future.result()
+                        total_tokens += tokens_used
+                        completion_times.append(latency)
+                    except Exception as e:
+                        print(f"Error: {e}")
+            
+            total_time = time.time() - start_time
+            avg_latency = statistics.mean(completion_times)
+            throughput = total_tokens / total_time
+            
+            print(f"Average latency: {avg_latency:.2f}s")
+            print(f"Total throughput: {throughput:.2f} tokens/s")
+            heatmap_data[i, j] = throughput
+            latency_data[i, j] = avg_latency
+    
+    plot_heatmap(heatmap_data, latency_data, batch_sweep, target_tokens)</code></pre>
+    <p>What we're doing with the above is basically:</p>
                     <ol>
                         <li>Query generation:
                             <ul>
                                 <li>Creates random text queries of specific lengths (chars)</li>
                                 <li>Uses a binary search algorithm to find queries that will result in exact target
                                     token counts</li>
-                                <li>Ensures each query is unique and meets the desired token length requirements (we
-                                    don't want to hit that prefix cache and skew our results)</li>
+                                <li>Ensures each query (excluding system message) is unique and meets the desired token
+                                    length requirements (we don't want to hit that prefix cache and skew our results)</li>
                                 <li>This is performed before each test to ensure the server is kept fed with a precise
                                     number of workers (via <a
                                         href="https://docs.python.org/3/library/concurrent.futures.html">ThreadPoolExecutor</a>)
@@ -506,30 +768,38 @@
                                 <li>Measures the server's throughput (tokens processed per second) for each combination
                                 </li>
                                 <li>vLLM delivers continuous batching, so the results represent the average throughput
-                                    at each concurrency level for completing a set total number of requests (e.g. 1000
-                                    total completions at a batch size of 10, 10000 total completions at a batch size of
+                                    at each concurrency level for completing a set total number of requests (e.g. 1,000
+                                    total completions at a batch size of 10 and 15,000 total completions at a batch size of
                                     150)</li>
                             </ul>
                         </li>
                     </ol>
                     <p>The result of this experiment is shown below:</p>
+                    <h3>Overall throughput with batch size and input (prompt) token count</h3>
                     <div class="post-image-wrapper">
-                        <img src="/images/tpt-vs-ct-tc_768.png" alt="Concurrency Cover" loading="lazy" width="768"
-                            height="641" onload="this.classList.add('loaded')" class="post-image">
+                        <img src="/images/throughput_A5000_Qwen25-7B.png" alt="Concurrency Cover" loading="lazy" width="768"
+                            height="727" onload="this.classList.add('loaded')" class="post-image">
                     </div>
+                    <p class="image-caption">Throughput measured with NVIDIA A5000 (24GB VRAM) with Qwen2.5-7B-Instruct</p>
                     <p>Clearly, sequential processing is <strong>slow</strong> when we're trying to maximise overall
                         throughput for batch jobs. We're talking 45 tokens per second with a short, 128-token input –
-                        and all the way down to 35 when inputting a more substantial 2048 tokens (the context limit for
+                        and down to 40 when inputting a more substantial 2048 tokens (the context limit for
                         February 2023's Llama-1, if you'd believe it).</p>
                     <p>As soon as we're pushing more parallel requests through this A5000 server, results look more
-                        promising. At a concurrency of 10, overall throughput hits 330 per second for the short prompt
-                        and 147 for the long prompt. With 50 parallel requests, we're looking at 728 and 147. The peak
-                        overall throughput occurs with the shortest prompt and 120 concurrent requests, at a solid
-                        <strong>806 tokens per second</strong>. Not bad for a GPU instance that costs $0.40/hr to rent?
+                        promising. At a concurrency of 10, overall throughput hits 389 per second for the short prompt
+                        and 191 for the long prompt. With 50 parallel requests, we're seeing a much larger difference between the short and long prompts, with 1196 and 256 respectively. The peak
+                        overall throughput occurs with the shortest prompt and 120 concurrent requests, at a massive
+                        <strong>1821 tokens per second</strong>. Not bad for a GPU instance that costs $0.40/hr to rent?
                         With longer input lengths, however, performance definitely suffers – delivering a peak
-                        throughput of 171 tokens per second with 50 concurrent requests.
+                        throughput of 246 tokens per second with 50 concurrent requests. Once we start redlining the VRAM, vLLM just queues up surplus requests and performance plateaus.
                     </p>
-                    <p>Let's compare this with an arguably equivalent model, GPT-4o-mini, this time served from OpenAI
+                    <p>But does increasing VRAM make a difference? The more mighty A6000 GPU, with 48GB VRAM, didn't fare much better – also plateuing around 1950 tokens per second after 150 concurrent requests with 128 input tokens.
+                        What about the holy grail, the H100 SXM? A whole generation newer, a whopping 80GB VRAM, surely it'll blow the A5000 out of the water?
+                        To be clear, it does – delivering just over <strong>5000 tokens per second</strong> with 128 input tokens.
+                        Even with 2048 input tokens, the H100 pumps out around 1600 Qwen2.5-7B-Instruct tokens per second.
+                        But at $3/hr? The little A5000, at $0.40/hr, is better value for money for both short and long input token use cases. The insane 900GB/s memory bandwidth of the H100 is just wasted on such a small, dense model.
+                    </p>
+                    <p>But let's compare our Qwen-2.5-7B-Instruct on the A5000 with OpenAI's cheapest closed model, GPT-4o-mini, this time served from <code>api.openai.com</code>
                         or their Azure OpenAI Service wrapper. As mentioned in their pricing
                         <a href="https://openai.com/api/pricing/">page</a>, requests through the BatchAPI are $0.075 per
                         million input (prompt) tokens and $0.30 per million output tokens. If we have one million tasks
@@ -538,16 +808,33 @@
                         shoots up to $192 for the 1M batch.
                     </p>
                     <p>The A5000 instance hosting Qwen-2.5-7B-Instruct? For the 128 token input use case, it's
-                        completing about 800 tokens per second – so a single A500 instance will take
-                        about 21 hours to churn through all one million tasks. If we want it done faster, we
+                        completing about 1800 tokens per second – so a single A5000 instance will take
+                        about 20 hours to churn through all one million tasks. If we want it done faster, we
                         can simply scale up the number of A5000 inference nodes (or go for a more powerful GPU). At
                         $0.40/hr for a single A5000 instance, that's $8 to complete the 1M batch. For the 2048 input
-                        token use case, we're talking $39 to blast through the 1M. Big
+                        token use case, we're talking $60 to blast through the 1M. Big
                         saving, assuming we get GPT-4o-mini performance out of Qwen-2.5-7B-Instruct.
                     </p>
                     <p>And yes, I've found in testing over the past couple of months that Qwen delivers pretty
                         similar reliability in medium-intelligence tag/categorise/etc. enterprise data processing tasks
                         compared to GPT-4o-mini.
+                    </p>
+                    <p>One more aspect to consider with concurrent LLM inferencing is the per-request latency.
+                        vLLM does a great job at continuous batching. This does, however, obviously result in almost linear increases in latency as the number of concurrent requests and input token counts increase.
+                        The chart below shows how latency varies with concurrency and input token count for the A5000 instance.
+                    </p>
+                    <h3>Overall latency with batch size and input (prompt) token count</h3>
+                    <div class="post-image-wrapper">
+                        <img src="/images/latency_A5000_Qwen25-7B.png" alt="Concurrency Cover" loading="lazy" width="768"
+                            height="742" onload="this.classList.add('loaded')" class="post-image">
+                    </div>
+                    <p class="image-caption">Latency measured with NVIDIA A5000 (24GB VRAM) with Qwen2.5-7B-Instruct</p>
+                    <p>When the server is close to idle, the time to complete 128 tokens is around 3 seconds, regardles of input token count.
+                        At our 120 concurrency and 128 input token count, the per-request latency is around around 8 seconds.
+                        Not too bad – but once we start redlining VRAM, we're talking 30 seconds, 60 seconds, all the way to 73 seconds for the 150 concurrency/2048 input scenario.
+                        While this isn't an issue for batch processing, it's a dealbreaker for consumer and enterprise applications.
+                        For reference, the H100 SXM fares much better here – delivering a per-request latency of 12 seconds for the 150/2048 scenario.
+                        Even if we want to keep latency to around 5 seconds, we're still beating GPT-4o-mini with the A5000 and Qwen-2.5-7B-Instruct on price.
                     </p>
                     <h3>Compute-heavy models like DeepSeek-V3 are economically viable if you're strictly batch
                         processing</h3>

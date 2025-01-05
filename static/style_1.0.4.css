@@ -1,6 +1,6 @@
 :root {
     --color-bg: #000000;
-    --color-text: #e2e8f0;
+    --color-text: #ffffff;
     --color-text-muted: #9ca3af;
     --color-primary: #60a5fa;
     --color-border: #374151;
@@ -119,7 +119,7 @@ body {
 
 .post-content {
     font-size: clamp(1rem, 2.5vw, 1.1rem);
-    line-height: 1.8;
+    line-height: 1.5;
 }
 
 @media (max-width: 640px) {
@@ -347,8 +347,9 @@ a:focus-visible {
 
 .post-content code {
     font-family: var(--font-mono);
-    font-size: 0.9em;
-    line-height: 1.5;
+    font-size: 0.85em;
+    line-height: 1.4;
+    color: var(--color-text);
 }
 
 .code-block-header {
@@ -361,8 +362,10 @@ a:focus-visible {
     padding: var(--space-xs) var(--space-sm);
     background-color: var(--color-card-bg);
     border-radius: 0 0.5rem 0 0.5rem;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    border-left: 1px solid var(--color-border);
 }
 
 .copy-button {
@@ -397,6 +400,9 @@ a:focus-visible {
     background-color: var(--color-bg);
     padding: 0.2em 0.1em;
     border-radius: 0.25rem;
+    font-size: 0.85em;
+    color: var(--color-primary);
+    word-break: break-word;
 }
 
 .post-content blockquote {
@@ -572,7 +578,7 @@ a:focus-visible {
 .post-image-wrapper {
     width: 100%;
     max-width: 768px;
-    margin: var(--space-lg) 0;
+    margin: var(--space-sm) 0;
     position: relative;
     background: linear-gradient(90deg,
             var(--color-card-bg) 0%,
@@ -644,3 +650,19 @@ a:focus-visible {
     padding: 0;
     background-color: transparent;
 }
+
+.image-caption {
+    text-align: left;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin: var(--space-sm) 0 0;
+    font-style: italic;
+}
+
+/* Basic syntax highlighting */
+.post-content code .keyword { color: #ff79c6; }     /* Pink */
+.post-content code .string { color: #f1fa8c; }      /* Yellow */
+.post-content code .comment { color: #6272a4; }     /* Blue-grey */
+.post-content code .function { color: #50fa7b; }    /* Green */
+.post-content code .number { color: #bd93f9; }      /* Purple */
+.post-content code .operator { color: #ff79c6; }    /* Pink */
