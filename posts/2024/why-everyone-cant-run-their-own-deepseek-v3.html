@@ -485,8 +485,7 @@
                         generated (which increase the effective input tokens at every generation step).</p>
                     <p>Therefore, I've devised a test. DeepSeek-V3 would be fun, although I'd prefer someone else were
                         paying to rent two dozen A40s (or
-                        worse, a dozen H100s). So, the heatmap below shows Qwen-2.5-7B(-Instruct, although it doesn't
-                        matter for this experiment) running via vLLM in BF16 on an NVIDIA A5000 (24GB VRAM). Additional
+                        worse, a dozen H100s). So, the heatmap below shows Qwen-2.5-7B(-Instruct, although the architecture is the same for both versions) running via vLLM in BF16 on an NVIDIA A5000 (24GB VRAM). Additional
                         tests on an A6000 (48GB) and H100 (80GB) were also performed. Yes, Qwen2.5 is a
                         dense model rather than DeepSeek's MoE – but the learning outcomes are the same.</p>
                     <p>The experiment began with creating a system prompt guaranteed to generate at least 128 tokens, at
@@ -796,10 +795,10 @@ def generate_tokenised_queries(
                     <p>But does increasing VRAM make a difference? The more mighty A6000 GPU, with 48GB VRAM, didn't fare much better – also plateuing around 1950 tokens per second after 150 concurrent requests with 128 input tokens.
                         What about the holy grail, the H100 SXM? A whole generation newer, a whopping 80GB VRAM, surely it'll blow the A5000 out of the water?
                         To be clear, it does – delivering just over <strong>5000 tokens per second</strong> with 128 input tokens.
-                        Even with 2048 input tokens, the H100 pumps out around 1600 Qwen2.5-7B-Instruct tokens per second.
+                        Even with 2048 input tokens, the H100 pumps out around 1600 Qwen2.5-7B tokens per second.
                         But at $3/hr? The little A5000, at $0.40/hr, is better value for money for both short and long input token use cases. The insane 900GB/s memory bandwidth of the H100 is just wasted on such a small, dense model.
                     </p>
-                    <p>But let's compare our Qwen-2.5-7B-Instruct on the A5000 with OpenAI's cheapest closed model, GPT-4o-mini, this time served from <code>api.openai.com</code>
+                    <p>But let's compare our Qwen-2.5-7B on the A5000 with OpenAI's cheapest closed model, GPT-4o-mini, this time served from <code>api.openai.com</code>
                         or their Azure OpenAI Service wrapper. As mentioned in their pricing
                         <a href="https://openai.com/api/pricing/">page</a>, requests through the BatchAPI are $0.075 per
                         million input (prompt) tokens and $0.30 per million output tokens. If we have one million tasks
@@ -807,7 +806,7 @@ def generate_tokenised_queries(
                         128 x $0.075) + (1M x 128 x $0.30) = $48. If we have 2048 input tokens per task, the cost
                         shoots up to $192 for the 1M batch.
                     </p>
-                    <p>The A5000 instance hosting Qwen-2.5-7B-Instruct? For the 128 token input use case, it's
+                    <p>The A5000 instance hosting Qwen-2.5-7B? For the 128 token input use case, it's
                         completing about 1800 tokens per second – so a single A5000 instance will take
                         about 20 hours to churn through all one million tasks. If we want it done faster, we
                         can simply scale up the number of A5000 inference nodes (or go for a more powerful GPU). At
