@@ -62,7 +62,7 @@
                                 <path fill="currentColor"
                                     d="M21,11a1,1,0,0,0-1,1,8.05,8.05,0,1,1-2.22-5.5L16,8.32a1,1,0,0,0,1.41,1.41l4.35-4.35a1,1,0,0,0,0-1.41L17.41-.38A1,1,0,0,0,16,1L17.77,2.8A10,10,0,1,0,22,12,1,1,0,0,0,21,11Z" />
                             </svg>
-                            <span><time datetime="2025-01-02">02 Jan 2025</time></span>
+                            <span><time datetime="2025-01-05">05 Jan 2025</time></span>
                         </div>
 
                     </div>
@@ -820,7 +820,7 @@ def generate_tokenised_queries(
                         compared to GPT-4o-mini.
                     </p>
                     <p>One more aspect to consider with concurrent LLM inferencing is the per-request latency.
-                        vLLM does a great job at continuous batching. This does, however, obviously result in almost linear increases in latency as the number of concurrent requests and input token counts increase.
+                        While vLLM does a great job at continuous batching, it does, however, obviously result in almost linear increases in latency as the number of concurrent requests and input token counts increase.
                         The chart below shows how latency varies with concurrency and input token count for the A5000 instance.
                     </p>
                     <h3>Overall latency with batch size and input (prompt) token count</h3>
@@ -829,7 +829,7 @@ def generate_tokenised_queries(
                             height="742" onload="this.classList.add('loaded')" class="post-image">
                     </div>
                     <p class="image-caption">Latency measured with NVIDIA A5000 (24GB VRAM) with Qwen2.5-7B-Instruct</p>
-                    <p>When the server is close to idle, the time to complete 128 tokens is around 3 seconds, regardles of input token count.
+                    <p>When the server is close to idle, the time to complete 128 tokens is around 3 seconds, regardless of input token count.
                         At our 120 concurrency and 128 input token count, the per-request latency is around around 8 seconds.
                         Not too bad – but once we start redlining VRAM, we're talking 30 seconds, 60 seconds, all the way to 73 seconds for the 150 concurrency/2048 input scenario.
                         While this isn't an issue for batch processing, it's a dealbreaker for consumer and enterprise applications.
@@ -845,8 +845,8 @@ def generate_tokenised_queries(
                         wikis – and even populating something that looks a bit like a knowledge graph. Just make sure
                         you're starting up and shutting down fast and keeping it as saturated as possible while online.
                     </p>
-                    <p>So yes, not every organisation can have a private DeepSeek-V3 available all day, every day. But
-                        we're getting there fast. In the meantime, we can run such models as intermittent batch
+                    <p>So yes, every organisation can't have a truly private DeepSeek-V3 instance available all day, every day. But
+                        we're getting there fast – <em>Small LLMs are getting good. And giant LLMs are getting cheap</em>. In the meantime, we can run such models as intermittent batch
                         processors. All without sending our data to people we know will try to sell it back to us one
                         day.</p>
                 </div>
