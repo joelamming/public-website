@@ -149,8 +149,8 @@
                         communication between GPUs via NVLink and between nodes via <a
                             href="https://en.wikipedia.org/wiki/InfiniBand">InfiniBand</a> during training. Basically,
                         DeepSeek have delivered a frontier model on technically inferior hardware. And they did at at a
-                        <em>much</em> low cost. They
-                        estimated the retail cost to rent an H800 at $2/hr. This checks out, considering eight A100s
+                        <em>much</em> lower cost. They
+                        estimated the retail rate to rent an H800 at $2/hr. This checks out, considering eight A100s
                         apparently <a
                             href="https://arstechnica.com/information-technology/2024/09/nvidias-ai-chips-are-cheaper-to-rent-in-china-than-us/#:~:text=%246%20an%20hour%20to%20use%20a%20server%20with%20eight%20Nvidia%20A100%20processors">cost</a>
                         around $6/hour in China. This means the compute spend on training for 2.8
@@ -662,7 +662,7 @@ def generate_tokenised_queries(
 ):
     # single test query with first target token count to check it's working (you do NOT want to find this out an hour later)
     print("Test query...")
-    test_queries = generate_tokenized_queries(
+    test_queries = generate_tokenised_queries(
         system_message,
         target_total_tokens=[target_tokens[0]],
         queries_per_target=[1]
@@ -698,7 +698,7 @@ def generate_tokenised_queries(
             print(f"Testing batch size {batch_size}, target tokens {target}...")
             
             # fresh queries for this specific test to avoid cache
-            queries_dict = generate_tokenized_queries(
+            queries_dict = generate_tokenised_queries(
                 system_message,
                 [target],
                 [batch_size * sequential_completions]
