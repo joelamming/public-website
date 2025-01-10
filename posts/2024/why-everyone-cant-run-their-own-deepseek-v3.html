@@ -140,7 +140,7 @@
                             href="https://github.com/deepseek-ai/DeepSeek-V3#:~:text=V3%20requires%20only-,2.788M%20H800,-GPU%20hours%20for">2.8
                             million</a> H800 GPU hours. Compare that to Llama-3.1-405B's <a
                             href="https://huggingface.co/meta-llama/Llama-3.1-405B-Instruct#:~:text=Llama%203.1%20405B-,30.84M,-700">31
-                            million</a> H100 GPU hours. Yes, DeepSeek-V3 has 66% more trainable parameters than Meta's
+                            million</a> H100 GPU hours. Yes, DeepSeek-V3 has 66% more trainable parameters (MoE complicates this comparison, I know) than Meta's
                         girthiest Llama – making it more <a href="https://arxiv.org/pdf/2001.08361">sample-efficient</a>
                         – but they also did it on the <a
                             href="https://www.reuters.com/technology/biden-cut-china-off-more-nvidia-chips-expand-curbs-more-countries-2023-10-17/#:~:text=ability%20to%20communicate%20with%20other%20chips">restrictions</a>-compliant
@@ -158,7 +158,7 @@
                         parallelism", allowing their 2048 H800s to reduce pipeline bottlenecks and minimise
                         communication between GPUs via NVLink and between nodes via <a
                             href="https://en.wikipedia.org/wiki/InfiniBand">InfiniBand</a> during training. Basically,
-                        DeepSeek have delivered a frontier model on technically inferior hardware. And they did at at a
+                        DeepSeek have delivered a frontier model on technically inferior hardware. And they did it at a
                         <em>much</em> lower cost. They
                         estimated the retail rate to rent an H800 at $2/hr. This checks out, considering eight A100s
                         apparently <a
@@ -168,9 +168,9 @@
                         frontier AI labs they didn't talk about staff costs or compute resources consumed in preparation
                         for the final run. They did note that throughout the final run of pre-training and
                         post-training, the team "did not experience any irrecoverable loss spikes or perform any
-                        rollbacks".
+                        rollbacks". It's also worth mentioning that dense models pack more of a punch than MoE on a VRAM usage basis. But MoEs are optimised for overall throughput – getting the most out of your hardware in production. More on this later.
                     </p>
-                    <p>Exciting for anyone who isn't operating at the scale of OpenAI or Anthropic. Assuming a team has
+                    <p>Training any model this strong on such a tight budget is exciting for anyone who isn't operating at the scale of OpenAI or Anthropic. Assuming a team has
                         some experience with training large models, has access to vast amounts of RLHF/preference data
                         (difficult) some high-quality web-scale datasets (even more difficult, despite efforts from the
                         <a href="https://huggingface.co/allenai">Allen Institute</a>) and is quick to implement the
