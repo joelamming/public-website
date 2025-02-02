@@ -14,7 +14,7 @@
             min-height: 100vh;
         }
     </style>
-    <link rel="stylesheet" href="/static/style_1.0.5.css" hx-preserve="true">
+    <link rel="stylesheet" href="/static/style_1.0.6.css" hx-preserve="true">
 
     <script src="/static/htmx.min.js"></script>
     <script src="/static/head-support.js"></script>
@@ -33,6 +33,7 @@
 </head>
 
 <body hx-ext="head-support">
+    <div id="top" style="display: block; height: 0; margin: 0; padding: 0;"></div>
     <div hx-get="/components/head-base.html" hx-trigger="load" hx-swap="none"></div>
     <div class="site-wrapper">
         <div id="header-container" hx-get="/components/header.html" hx-trigger="load" hx-swap="innerHTML">
