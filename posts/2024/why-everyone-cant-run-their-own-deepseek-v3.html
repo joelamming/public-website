@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        html, body, #layout-content {
+        html,
+        body,
+        #layout-content {
             background-color: #000000 !important;
             margin: 0;
             min-height: 100vh;
@@ -140,7 +142,8 @@
                             href="https://github.com/deepseek-ai/DeepSeek-V3#:~:text=V3%20requires%20only-,2.788M%20H800,-GPU%20hours%20for">2.8
                             million</a> H800 GPU hours. Compare that to Llama-3.1-405B's <a
                             href="https://huggingface.co/meta-llama/Llama-3.1-405B-Instruct#:~:text=Llama%203.1%20405B-,30.84M,-700">31
-                            million</a> H100 GPU hours. Yes, DeepSeek-V3 has 66% more trainable parameters (MoE complicates this comparison, I know) than Meta's
+                            million</a> H100 GPU hours. Yes, DeepSeek-V3 has 66% more trainable parameters (MoE
+                        complicates this comparison, I know) than Meta's
                         girthiest Llama – making it more <a href="https://arxiv.org/pdf/2001.08361">sample-efficient</a>
                         – but they also did it on the <a
                             href="https://www.reuters.com/technology/biden-cut-china-off-more-nvidia-chips-expand-curbs-more-countries-2023-10-17/#:~:text=ability%20to%20communicate%20with%20other%20chips">restrictions</a>-compliant
@@ -168,9 +171,12 @@
                         frontier AI labs they didn't talk about staff costs or compute resources consumed in preparation
                         for the final run. They did note that throughout the final run of pre-training and
                         post-training, the team "did not experience any irrecoverable loss spikes or perform any
-                        rollbacks". It's also worth mentioning that dense models pack more of a punch than MoE on a VRAM usage basis. But MoEs are optimised for overall throughput – getting the most out of your hardware in production. More on this later.
+                        rollbacks". It's also worth mentioning that dense models pack more of a punch than MoE on a VRAM
+                        usage basis. But MoEs are optimised for overall throughput – getting the most out of your
+                        hardware in production. More on this later.
                     </p>
-                    <p>Training any model this strong on such a tight budget is exciting for anyone who isn't operating at the scale of OpenAI or Anthropic. Assuming a team has
+                    <p>Training any model this strong on such a tight budget is exciting for anyone who isn't operating
+                        at the scale of OpenAI or Anthropic. Assuming a team has
                         some experience with training large models, has access to vast amounts of RLHF/preference data
                         (difficult) some high-quality web-scale datasets (even more difficult, despite efforts from the
                         <a href="https://huggingface.co/allenai">Allen Institute</a>) and is quick to implement the
@@ -503,253 +509,259 @@
                     <p>The experiment began with creating a system prompt guaranteed to generate at least 128 tokens, at
                         which point vLLM would stop generation:
                     </p>
-                    <pre><code class="language-python">system_message = """You are a diligent codebreaking assistant.
-I want you to carefully analyse the query provided by the user, which might look like a string of random characters.
-However, this isn't actually the case. This string contains a hidden message that I need you to try to decipher.
-You should begin by carefully discussing what features exist in the string, before providing step-by-step instructions on how to detect patterns related to them."""</code></pre>
+                    <pre><code class="language-python"><div class="pyg-code"><span class="n">system_message</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;You are a diligent codebreaking assistant.</span>
+<span class="s2">I want you to carefully analyse the query provided by the user, which might look like a string of random characters.</span>
+<span class="s2">However, this isn&#39;t actually the case. This string contains a hidden message that I need you to try to decipher.</span>
+<span class="s2">You should begin by carefully discussing what features exist in the string, before providing step-by-step instructions on how to detect patterns related to them.&quot;&quot;&quot;</span>
+</div></code></pre>
                     <p>Then onto generating random strings after the system message to meet the target input (prompt)
                         token count for each batch
                         using simple binary search and a tonne of parallel requests to the <code>/tokenize</code>[sic]
                         endpoint:</p>
-                    <pre><code class="language-python">def generate_random_query(min_length, max_length):
-    length = random.randint(min_length, max_length)
-    characters = string.ascii_letters + string.digits + ' '
-    return ''.join(random.choice(characters) for _ in range(length))
+                    <pre><code class="language-python"><div class="pyg-code"><span class="k">def</span><span class="w"> </span><span class="nf">generate_random_query</span><span class="p">(</span><span class="n">min_length</span><span class="p">,</span> <span class="n">max_length</span><span class="p">):</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">min_length</span><span class="p">,</span> <span class="n">max_length</span><span class="p">)</span>
+    <span class="n">characters</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">characters</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">))</span>
 
-def format_chat_prompt(messages):
-    formatted = ""
-    for msg in messages:
-        role = msg["role"]
-        content = msg["content"]
-        formatted += f"<|im_start|>{role}\n{content}<|im_end|>\n"
-    return formatted
+<span class="k">def</span><span class="w"> </span><span class="nf">format_chat_prompt</span><span class="p">(</span><span class="n">messages</span><span class="p">):</span>
+    <span class="n">formatted</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">messages</span><span class="p">:</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="s2">&quot;role&quot;</span><span class="p">]</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span>
+        <span class="n">formatted</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;&lt;|im_start|&gt;</span><span class="si">{</span><span class="n">role</span><span class="si">}</span>
+<span class="si">{</span><span class="n">content</span><span class="si">}</span><span class="s2">&lt;|im_end|&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">formatted</span>
 
-def generate_tokenised_queries(
-    system_message: str,
-    target_total_tokens: list[int],
-    queries_per_target: list[int],
-    tokeniser_base_url: str = "http://localhost:8000",
-    max_concurrent: int = 50
-) -> dict[int, list[str]]:
-    formatted_prompt = format_chat_prompt([{"role": "system", "content": system_message}])
-    response = requests.post(
-        f"{tokeniser_base_url}/tokenize",
-        json={
-            "model": "Qwen/Qwen2.5-7B-Instruct",
-            "prompt": formatted_prompt
-        }
-    )
-    system_tokens = len(response.json()["tokens"])
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_tokenised_queries</span><span class="p">(</span>
+    <span class="n">system_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">target_total_tokens</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">queries_per_target</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">tokeniser_base_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;http://localhost:8000&quot;</span><span class="p">,</span>
+    <span class="n">max_concurrent</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+    <span class="n">formatted_prompt</span> <span class="o">=</span> <span class="n">format_chat_prompt</span><span class="p">([{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">system_message</span><span class="p">}])</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tokeniser_base_url</span><span class="si">}</span><span class="s2">/tokenize&quot;</span><span class="p">,</span>
+        <span class="n">json</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;Qwen/Qwen2.5-7B-Instruct&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="n">formatted_prompt</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">system_tokens</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;tokens&quot;</span><span class="p">])</span>
     
-    token_char_ratios = []
+    <span class="n">token_char_ratios</span> <span class="o">=</span> <span class="p">[]</span>
     
-    def update_ratio(chars: int, tokens: int):
-        ratio = chars / tokens
-        token_char_ratios.append(ratio)
-        if len(token_char_ratios) > 100:  # last 100 samples
-            token_char_ratios.pop(0)
-        return np.mean(token_char_ratios)
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_ratio</span><span class="p">(</span><span class="n">chars</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">tokens</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="n">chars</span> <span class="o">/</span> <span class="n">tokens</span>
+        <span class="n">token_char_ratios</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ratio</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">token_char_ratios</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>  <span class="c1"># last 100 samples</span>
+            <span class="n">token_char_ratios</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">token_char_ratios</span><span class="p">)</span>
     
-    def get_token_count(text: str) -> int:
-        formatted_prompt = format_chat_prompt([{"role": "user", "content": text}])
-        response = requests.post(
-            f"{tokeniser_base_url}/tokenize",
-            json={
-                "model": "Qwen/Qwen2.5-7B-Instruct",
-                "prompt": formatted_prompt
-            }
-        )
-        tokens = len(response.json()["tokens"])
-        update_ratio(len(text), tokens)
-        return tokens
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_token_count</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">formatted_prompt</span> <span class="o">=</span> <span class="n">format_chat_prompt</span><span class="p">([{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">text</span><span class="p">}])</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tokeniser_base_url</span><span class="si">}</span><span class="s2">/tokenize&quot;</span><span class="p">,</span>
+            <span class="n">json</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;Qwen/Qwen2.5-7B-Instruct&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="n">formatted_prompt</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;tokens&quot;</span><span class="p">])</span>
+        <span class="n">update_ratio</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">),</span> <span class="n">tokens</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tokens</span>
     
-    def binary_search_length(target_tokens: int, min_length: int = 10, max_length: int = 200) -> tuple[int, int]:
-        min_length = min(min_length, target_tokens // 4)  # estimate based on tokens/chars ratio
-        max_length = max(max_length, target_tokens)  # start target tokens as max
+    <span class="k">def</span><span class="w"> </span><span class="nf">binary_search_length</span><span class="p">(</span><span class="n">target_tokens</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">max_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="n">min_length</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_length</span><span class="p">,</span> <span class="n">target_tokens</span> <span class="o">//</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># estimate based on tokens/chars ratio</span>
+        <span class="n">max_length</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_length</span><span class="p">,</span> <span class="n">target_tokens</span><span class="p">)</span>  <span class="c1"># start target tokens as max</span>
         
-        min_text = generate_random_query(min_length, min_length)
-        min_tokens = get_token_count(min_text)
-        max_text = generate_random_query(max_length, max_length)
-        max_tokens = get_token_count(max_text)
+        <span class="n">min_text</span> <span class="o">=</span> <span class="n">generate_random_query</span><span class="p">(</span><span class="n">min_length</span><span class="p">,</span> <span class="n">min_length</span><span class="p">)</span>
+        <span class="n">min_tokens</span> <span class="o">=</span> <span class="n">get_token_count</span><span class="p">(</span><span class="n">min_text</span><span class="p">)</span>
+        <span class="n">max_text</span> <span class="o">=</span> <span class="n">generate_random_query</span><span class="p">(</span><span class="n">max_length</span><span class="p">,</span> <span class="n">max_length</span><span class="p">)</span>
+        <span class="n">max_tokens</span> <span class="o">=</span> <span class="n">get_token_count</span><span class="p">(</span><span class="n">max_text</span><span class="p">)</span>
         
-        while min_tokens > target_tokens:
-            min_length = max(1, min_length // 2)
-            min_text = generate_random_query(min_length, min_length)
-            min_tokens = get_token_count(min_text)
+        <span class="k">while</span> <span class="n">min_tokens</span> <span class="o">&gt;</span> <span class="n">target_tokens</span><span class="p">:</span>
+            <span class="n">min_length</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">min_length</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">min_text</span> <span class="o">=</span> <span class="n">generate_random_query</span><span class="p">(</span><span class="n">min_length</span><span class="p">,</span> <span class="n">min_length</span><span class="p">)</span>
+            <span class="n">min_tokens</span> <span class="o">=</span> <span class="n">get_token_count</span><span class="p">(</span><span class="n">min_text</span><span class="p">)</span>
             
-        while max_tokens < target_tokens:
-            max_length *= 2
-            max_text = generate_random_query(max_length, max_length)
-            max_tokens = get_token_count(max_text)
+        <span class="k">while</span> <span class="n">max_tokens</span> <span class="o">&lt;</span> <span class="n">target_tokens</span><span class="p">:</span>
+            <span class="n">max_length</span> <span class="o">*=</span> <span class="mi">2</span>
+            <span class="n">max_text</span> <span class="o">=</span> <span class="n">generate_random_query</span><span class="p">(</span><span class="n">max_length</span><span class="p">,</span> <span class="n">max_length</span><span class="p">)</span>
+            <span class="n">max_tokens</span> <span class="o">=</span> <span class="n">get_token_count</span><span class="p">(</span><span class="n">max_text</span><span class="p">)</span>
         
-        while max_length - min_length > 5:
-            mid_length = (min_length + max_length) // 2
-            mid_text = generate_random_query(mid_length, mid_length)
-            mid_tokens = get_token_count(mid_text)
+        <span class="k">while</span> <span class="n">max_length</span> <span class="o">-</span> <span class="n">min_length</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="n">mid_length</span> <span class="o">=</span> <span class="p">(</span><span class="n">min_length</span> <span class="o">+</span> <span class="n">max_length</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="n">mid_text</span> <span class="o">=</span> <span class="n">generate_random_query</span><span class="p">(</span><span class="n">mid_length</span><span class="p">,</span> <span class="n">mid_length</span><span class="p">)</span>
+            <span class="n">mid_tokens</span> <span class="o">=</span> <span class="n">get_token_count</span><span class="p">(</span><span class="n">mid_text</span><span class="p">)</span>
             
-            if mid_tokens < target_tokens:
-                min_length = mid_length
-                min_tokens = mid_tokens
-            else:
-                max_length = mid_length
-                max_tokens = mid_tokens
+            <span class="k">if</span> <span class="n">mid_tokens</span> <span class="o">&lt;</span> <span class="n">target_tokens</span><span class="p">:</span>
+                <span class="n">min_length</span> <span class="o">=</span> <span class="n">mid_length</span>
+                <span class="n">min_tokens</span> <span class="o">=</span> <span class="n">mid_tokens</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">max_length</span> <span class="o">=</span> <span class="n">mid_length</span>
+                <span class="n">max_tokens</span> <span class="o">=</span> <span class="n">mid_tokens</span>
         
-        return min_length, max_length
+        <span class="k">return</span> <span class="n">min_length</span><span class="p">,</span> <span class="n">max_length</span>
     
-    queries_dict = {}
+    <span class="n">queries_dict</span> <span class="o">=</span> <span class="p">{}</span>
     
-    for target, num_queries in zip(target_total_tokens, queries_per_target):
-        print(f"\nGenerating {num_queries} queries for {target} tokens...")
-        target_prompt_tokens = target - system_tokens
-        queries = set()
+    <span class="k">for</span> <span class="n">target</span><span class="p">,</span> <span class="n">num_queries</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">target_total_tokens</span><span class="p">,</span> <span class="n">queries_per_target</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Generating </span><span class="si">{</span><span class="n">num_queries</span><span class="si">}</span><span class="s2"> queries for </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2"> tokens...&quot;&quot;&quot;</span><span class="p">)</span>
+        <span class="n">target_prompt_tokens</span> <span class="o">=</span> <span class="n">target</span> <span class="o">-</span> <span class="n">system_tokens</span>
+        <span class="n">queries</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         
-        min_length, max_length = binary_search_length(target_prompt_tokens)
-        print(f"Found length range: {min_length} - {max_length}")
+        <span class="n">min_length</span><span class="p">,</span> <span class="n">max_length</span> <span class="o">=</span> <span class="n">binary_search_length</span><span class="p">(</span><span class="n">target_prompt_tokens</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found length range: </span><span class="si">{</span><span class="n">min_length</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">max_length</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         
-        with tqdm(total=num_queries, desc=f"Tokens: {target}") as pbar:
-            while len(queries) < num_queries:
-                # increase batch size for higher token counts (this doesn't always work)
-                remaining = num_queries - len(queries)
-                batch_multiplier = 4 if target_prompt_tokens > 512 else 2
-                batch_size = min(max_concurrent, remaining * batch_multiplier)
+        <span class="k">with</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="n">num_queries</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Tokens: </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">pbar</span><span class="p">:</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">queries</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_queries</span><span class="p">:</span>
+                <span class="c1"># increase batch size for higher token counts (this doesn&#39;t always work)</span>
+                <span class="n">remaining</span> <span class="o">=</span> <span class="n">num_queries</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">queries</span><span class="p">)</span>
+                <span class="n">batch_multiplier</span> <span class="o">=</span> <span class="mi">4</span> <span class="k">if</span> <span class="n">target_prompt_tokens</span> <span class="o">&gt;</span> <span class="mi">512</span> <span class="k">else</span> <span class="mi">2</span>
+                <span class="n">batch_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_concurrent</span><span class="p">,</span> <span class="n">remaining</span> <span class="o">*</span> <span class="n">batch_multiplier</span><span class="p">)</span>
                 
-                # token/char ratio estimate text length
-                avg_ratio = np.mean(token_char_ratios) if token_char_ratios else 4.0
-                estimated_chars = int(target_prompt_tokens * avg_ratio)
-                estimated_length = min(max_length, max(min_length, estimated_chars))
+                <span class="c1"># token/char ratio estimate text length</span>
+                <span class="n">avg_ratio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">token_char_ratios</span><span class="p">)</span> <span class="k">if</span> <span class="n">token_char_ratios</span> <span class="k">else</span> <span class="mf">4.0</span>
+                <span class="n">estimated_chars</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">target_prompt_tokens</span> <span class="o">*</span> <span class="n">avg_ratio</span><span class="p">)</span>
+                <span class="n">estimated_length</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_length</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">min_length</span><span class="p">,</span> <span class="n">estimated_chars</span><span class="p">))</span>
                 
-                candidates = [
-                    generate_random_query(
-                        max(min_length, estimated_length - 5),
-                        min(max_length, estimated_length + 5)
-                    )
-                    for _ in range(batch_size)
-                ]
+                <span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">generate_random_query</span><span class="p">(</span>
+                        <span class="nb">max</span><span class="p">(</span><span class="n">min_length</span><span class="p">,</span> <span class="n">estimated_length</span> <span class="o">-</span> <span class="mi">5</span><span class="p">),</span>
+                        <span class="nb">min</span><span class="p">(</span><span class="n">max_length</span><span class="p">,</span> <span class="n">estimated_length</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+                <span class="p">]</span>
                 
-                with ThreadPoolExecutor(max_workers=max_concurrent) as executor:
-                    futures = {
-                        executor.submit(get_token_count, c): c 
-                        for c in candidates
-                    }
+                <span class="k">with</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">max_concurrent</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+                    <span class="n">futures</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">get_token_count</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span> <span class="n">c</span> 
+                        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">candidates</span>
+                    <span class="p">}</span>
                     
-                    for future in as_completed(futures):
-                        if len(queries) >= num_queries:
-                            for f in futures:
-                                if not f.done():
-                                    f.cancel()
-                            break
+                    <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">as_completed</span><span class="p">(</span><span class="n">futures</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">queries</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">num_queries</span><span class="p">:</span>
+                            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">futures</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="n">f</span><span class="o">.</span><span class="n">done</span><span class="p">():</span>
+                                    <span class="n">f</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+                            <span class="k">break</span>
                             
-                        try:
-                            tokens = future.result()
-                            text = futures[future]
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">tokens</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+                            <span class="n">text</span> <span class="o">=</span> <span class="n">futures</span><span class="p">[</span><span class="n">future</span><span class="p">]</span>
                             
-                            # acceptable token range (within 1% of target)
-                            token_tolerance = max(1, int(target_prompt_tokens * 0.01))
-                            min_acceptable = target_prompt_tokens - token_tolerance
-                            max_acceptable = target_prompt_tokens + token_tolerance
+                            <span class="c1"># acceptable token range (within 1% of target)</span>
+                            <span class="n">token_tolerance</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">target_prompt_tokens</span> <span class="o">*</span> <span class="mf">0.01</span><span class="p">))</span>
+                            <span class="n">min_acceptable</span> <span class="o">=</span> <span class="n">target_prompt_tokens</span> <span class="o">-</span> <span class="n">token_tolerance</span>
+                            <span class="n">max_acceptable</span> <span class="o">=</span> <span class="n">target_prompt_tokens</span> <span class="o">+</span> <span class="n">token_tolerance</span>
                             
-                            if min_acceptable <= tokens <= max_acceptable:
-                                if text not in queries:
-                                    queries.add(text)
-                                    pbar.update(1)
+                            <span class="k">if</span> <span class="n">min_acceptable</span> <span class="o">&lt;=</span> <span class="n">tokens</span> <span class="o">&lt;=</span> <span class="n">max_acceptable</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="n">text</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">queries</span><span class="p">:</span>
+                                    <span class="n">queries</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                                    <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
                                     
-                                    if len(queries) >= num_queries:
-                                        break
+                                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">queries</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">num_queries</span><span class="p">:</span>
+                                        <span class="k">break</span>
                                         
-                        except Exception as e:
-                            print(f"it broke: {e}")
-                            continue
+                        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;it broke: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                            <span class="k">continue</span>
         
-        queries_dict[target] = list(queries)[:num_queries]
+        <span class="n">queries_dict</span><span class="p">[</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">queries</span><span class="p">)[:</span><span class="n">num_queries</span><span class="p">]</span>
     
-    return queries_dict</code></pre>
+    <span class="k">return</span> <span class="n">queries_dict</span>
+</div></code></pre>
                     <p>Finally, the parametric sweep:</p>
-                    <pre><code class="language-python">def run_parameter_sweep(
-    batch_sweep,
-    target_tokens,
-    system_message,
-    sequential_completions=100,
-    max_tokens=128,
-):
-    # single test query with first target token count to check it's working (you do NOT want to find this out an hour later)
-    print("Test query...")
-    test_queries = generate_tokenised_queries(
-        system_message,
-        target_total_tokens=[target_tokens[0]],
-        queries_per_target=[1]
-    )
-    test_query = test_queries[target_tokens[0]][0]
+                    <pre><code class="language-python"><div class="pyg-code"><span></span><span class="k">def</span><span class="w"> </span><span class="nf">run_parameter_sweep</span><span class="p">(</span>
+    <span class="n">batch_sweep</span><span class="p">,</span>
+    <span class="n">target_tokens</span><span class="p">,</span>
+    <span class="n">system_message</span><span class="p">,</span>
+    <span class="n">sequential_completions</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="c1"># single test query with first target token count to check it&#39;s working (you do NOT want to find this out an hour later)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test query...&quot;</span><span class="p">)</span>
+    <span class="n">test_queries</span> <span class="o">=</span> <span class="n">generate_tokenised_queries</span><span class="p">(</span>
+        <span class="n">system_message</span><span class="p">,</span>
+        <span class="n">target_total_tokens</span><span class="o">=</span><span class="p">[</span><span class="n">target_tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+        <span class="n">queries_per_target</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">test_query</span> <span class="o">=</span> <span class="n">test_queries</span><span class="p">[</span><span class="n">target_tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
     
-    print("System message:")
-    print(f"'{system_message}'")
-    print("Test query:")
-    print(f"'{test_query}'")
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;System message:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">system_message</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test query:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">test_query</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
     
-    chat_response = client.chat.completions.create(
-        model="Qwen/Qwen2.5-7B-Instruct",
-        messages=[
-            {"role": "system", "content": system_message.strip()},
-            {"role": "user", "content": test_query.strip()},
-        ],
-        temperature=0.0,
-        max_tokens=max_tokens,
-    )
+    <span class="n">chat_response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;Qwen/Qwen2.5-7B-Instruct&quot;</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">system_message</span><span class="o">.</span><span class="n">strip</span><span class="p">()},</span>
+            <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">test_query</span><span class="o">.</span><span class="n">strip</span><span class="p">()},</span>
+        <span class="p">],</span>
+        <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">max_tokens</span><span class="o">=</span><span class="n">max_tokens</span><span class="p">,</span>
+    <span class="p">)</span>
     
-    print("Model out:")
-    print(f"'{chat_response.choices[0].message.content}'")
-    print(f"Prompt tokens: {chat_response.usage.prompt_tokens}")
-    print(f"Completion tokens: {chat_response.usage.completion_tokens}")
-    print(f"Total tokens: {chat_response.usage.total_tokens}")
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model out:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">chat_response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prompt tokens: </span><span class="si">{</span><span class="n">chat_response</span><span class="o">.</span><span class="n">usage</span><span class="o">.</span><span class="n">prompt_tokens</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Completion tokens: </span><span class="si">{</span><span class="n">chat_response</span><span class="o">.</span><span class="n">usage</span><span class="o">.</span><span class="n">completion_tokens</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total tokens: </span><span class="si">{</span><span class="n">chat_response</span><span class="o">.</span><span class="n">usage</span><span class="o">.</span><span class="n">total_tokens</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     
-    heatmap_data = np.zeros((len(batch_sweep), len(target_tokens)))
-    latency_data = np.zeros((len(batch_sweep), len(target_tokens)))
+    <span class="n">heatmap_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">batch_sweep</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_tokens</span><span class="p">)))</span>
+    <span class="n">latency_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">batch_sweep</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_tokens</span><span class="p">)))</span>
 
-    for i, batch_size in enumerate(batch_sweep):
-        for j, target in enumerate(target_tokens):
-            print(f"Testing batch size {batch_size}, target tokens {target}...")
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">batch_size</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batch_sweep</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">target_tokens</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Testing batch size </span><span class="si">{</span><span class="n">batch_size</span><span class="si">}</span><span class="s2">, target tokens </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
             
-            # fresh queries for this specific test to avoid cache
-            queries_dict = generate_tokenised_queries(
-                system_message,
-                [target],
-                [batch_size * sequential_completions]
-            )
-            queries = queries_dict[target]
+            <span class="c1"># fresh queries for this specific test to avoid cache</span>
+            <span class="n">queries_dict</span> <span class="o">=</span> <span class="n">generate_tokenised_queries</span><span class="p">(</span>
+                <span class="n">system_message</span><span class="p">,</span>
+                <span class="p">[</span><span class="n">target</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">batch_size</span> <span class="o">*</span> <span class="n">sequential_completions</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">queries</span> <span class="o">=</span> <span class="n">queries_dict</span><span class="p">[</span><span class="n">target</span><span class="p">]</span>
             
-            total_tokens = 0
-            completion_times = []  # individual completion times
-            start_time = time.time()
+            <span class="n">total_tokens</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">completion_times</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># individual completion times</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
             
-            with ThreadPoolExecutor(max_workers=batch_size) as executor:
-                futures = [
-                    executor.submit(
-                        send_request,
-                        client,
-                        system_message,
-                        query,
-                        max_tokens,
-                    )
-                    for query in queries
-                ]
+            <span class="k">with</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+                <span class="n">futures</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                        <span class="n">send_request</span><span class="p">,</span>
+                        <span class="n">client</span><span class="p">,</span>
+                        <span class="n">system_message</span><span class="p">,</span>
+                        <span class="n">query</span><span class="p">,</span>
+                        <span class="n">max_tokens</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="k">for</span> <span class="n">query</span> <span class="ow">in</span> <span class="n">queries</span>
+                <span class="p">]</span>
                 
-                for future in as_completed(futures):
-                    try:
-                        latency, tokens_used, _ = future.result()
-                        total_tokens += tokens_used
-                        completion_times.append(latency)
-                    except Exception as e:
-                        print(f"Error: {e}")
+                <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">as_completed</span><span class="p">(</span><span class="n">futures</span><span class="p">):</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">latency</span><span class="p">,</span> <span class="n">tokens_used</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+                        <span class="n">total_tokens</span> <span class="o">+=</span> <span class="n">tokens_used</span>
+                        <span class="n">completion_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">latency</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             
-            total_time = time.time() - start_time
-            avg_latency = statistics.mean(completion_times)
-            throughput = total_tokens / total_time
+            <span class="n">total_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+            <span class="n">avg_latency</span> <span class="o">=</span> <span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">completion_times</span><span class="p">)</span>
+            <span class="n">throughput</span> <span class="o">=</span> <span class="n">total_tokens</span> <span class="o">/</span> <span class="n">total_time</span>
             
-            print(f"Average latency: {avg_latency:.2f}s")
-            print(f"Total throughput: {throughput:.2f} tokens/s")
-            heatmap_data[i, j] = throughput
-            latency_data[i, j] = avg_latency
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average latency: </span><span class="si">{</span><span class="n">avg_latency</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total throughput: </span><span class="si">{</span><span class="n">throughput</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> tokens/s&quot;</span><span class="p">)</span>
+            <span class="n">heatmap_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">throughput</span>
+            <span class="n">latency_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">avg_latency</span>
     
-    plot_heatmap(heatmap_data, latency_data, batch_sweep, target_tokens)</code></pre>
+    <span class="n">plot_heatmap</span><span class="p">(</span><span class="n">heatmap_data</span><span class="p">,</span> <span class="n">latency_data</span><span class="p">,</span> <span class="n">batch_sweep</span><span class="p">,</span> <span class="n">target_tokens</span><span class="p">)</span>
+</div></code></pre>
                     <p>What we're doing with the above is basically:</p>
                     <ol>
                         <li>Query generation:

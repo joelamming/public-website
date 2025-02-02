@@ -1,3 +1,6 @@
+/*----------------------------------------------------------------------------
+  Yes I've left comments in my CSS. Fight me.
+----------------------------------------------------------------------------*/
 :root {
     --color-bg: #000000;
     --color-text: #ffffff;
@@ -7,6 +10,7 @@
     --color-card-bg: #242937;
     --color-card-hover: #2d3548;
     --color-header: #ffffff;
+    --color-link: #8a2be2; /* deep purple */
 
     --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', Menlo, Monaco, Consolas, monospace;
@@ -20,6 +24,25 @@
     --transition-standard: 0.2s ease-in-out;
 }
 
+/*----------------------------------------------------------------------------
+  Global link reset
+----------------------------------------------------------------------------*/
+a {
+    text-decoration: none;
+    background-image: none;
+}
+
+/*----------------------------------------------------------------------------
+  Title link styles to avoid unwanted underlines or backgrounds
+----------------------------------------------------------------------------*/
+a.title-link {
+    text-decoration: none;
+    background-image: none;
+}
+
+/*----------------------------------------------------------------------------
+  Base styles
+----------------------------------------------------------------------------*/
 body {
     margin: 0;
     padding: 0;
@@ -29,8 +52,7 @@ body {
     font-family: 'IBM Plex Serif', serif;
     font-weight: 400;
     line-height: 1.6;
-    transition: background-color var(--transition-standard),
-        color var(--transition-standard);
+    transition: background-color var(--transition-standard), color var(--transition-standard);
 }
 
 .site-wrapper {
@@ -41,11 +63,13 @@ body {
     box-sizing: border-box;
 }
 
+/*----------------------------------------------------------------------------
+  Header
+----------------------------------------------------------------------------*/
 #site-header {
     padding: var(--space-lg) 0;
     text-align: center;
 }
-
 #site-header h1 {
     font-family: 'Orbitron', sans-serif;
     margin: 0;
@@ -54,7 +78,6 @@ body {
     transition: color var(--transition-standard);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 #site-header h2 {
     margin: var(--space-sm) 0 0;
     font-size: clamp(0.875rem, 3vw, 1.2rem);
@@ -62,107 +85,12 @@ body {
     color: var(--color-text-muted);
 }
 
-.latest-post-banner {
-    margin: var(--space-md) 0;
-    border-left: 4px solid var(--color-primary);
-    background-color: var(--color-card-bg);
-    transition: all var(--transition-standard);
-}
-
-.latest-post-banner a {
-    display: block;
-    color: var(--color-text);
-    padding: var(--space-md) var(--space-lg);
-}
-
-.latest-post-banner:hover {
-    background-color: var(--color-card-hover);
-    transform: translateX(4px);
-}
-
-.latest-post-content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-}
-
-.latest-post-banner h4 {
-    margin: 0;
-    font-family: 'Orbitron', sans-serif;
-    color: var(--color-header);
-    font-size: 1.1rem;
-}
-
-.latest-label {
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    color: var(--color-primary);
-    letter-spacing: 0.05em;
-    font-weight: 500;
-}
-
-.latest-post-banner .preview-meta {
-    margin: 0;
-    padding: 0;
-    background-color: transparent;
-}
-
-a .blog-post-preview {
-    margin: var(--space-md) 0;
-    border-left: 4px solid var(--color-card-bg);
-    background-color: var(--color-card-bg);
-    transition: all var(--transition-standard);
-    padding: var(--space-md) var(--space-md);
-}
-
-a:hover .blog-post-preview {
-    background-color: var(--color-card-hover);
-    transform: translateX(2px);
-}
-
-.blog-post-preview h3 {
-    font-family: 'Orbitron', sans-serif;
-    color: var(--color-header);
-    font-weight: 500;
-    margin-bottom: var(--space-sm);
-}
-
-.blog-post-preview time {
-    display: inline-block;
-    background-color: var(--color-card-hover);
-    padding: var(--space-xs) var(--space-sm);
-    border-radius: 0.25rem;
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
-    margin-bottom: var(--space-sm);
-}
-
-.blog-post-preview .excerpt {
-    color: var(--color-text);
-    font-family: 'IBM Plex Serif', serif;
-    font-size: 1rem;
-    margin-top: var(--space-md);
-}
-
-.preview-meta {
-    background-color: transparent;
-    padding: 0;
-    margin: 0;
-}
-
-.preview-meta .icon {
-    opacity: 0.7;
-    color: var(--color-text);
-}
-
-.blog-posts > a + a {
-    margin-top: var(--space-md);
-}
-
+/*----------------------------------------------------------------------------
+  Year navigation
+----------------------------------------------------------------------------*/
 #year-nav {
     margin-bottom: var(--space-lg);
 }
-
 #year-nav ul {
     list-style: none;
     padding: 0;
@@ -172,7 +100,6 @@ a:hover .blog-post-preview {
     gap: var(--space-sm);
     justify-content: center;
 }
-
 #year-nav a {
     color: var(--color-text);
     text-decoration: none;
@@ -180,50 +107,122 @@ a:hover .blog-post-preview {
     border-radius: 0.25rem;
     transition: background-color var(--transition-standard);
 }
-
 #year-nav a:hover {
     background-color: var(--color-card-hover);
 }
 
-.htmx-indicator {
-    display: none;
-    opacity: 0;
-    transition: opacity var(--transition-standard);
+/*----------------------------------------------------------------------------
+  Latest post banner
+----------------------------------------------------------------------------*/
+.latest-post-banner {
+    margin: var(--space-md) 0;
+    border-left: 4px solid var(--color-primary);
+    background-color: var(--color-card-bg);
+    transition: all var(--transition-standard);
 }
-
-.htmx-request .htmx-indicator {
+.latest-post-banner a {
     display: block;
-    opacity: 1;
+    color: var(--color-text);
+    padding: var(--space-md) var(--space-lg);
+}
+.latest-post-banner:hover {
+    background-color: var(--color-card-hover);
+    transform: translateX(4px);
+}
+.latest-post-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+.latest-post-banner h4 {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    color: var(--color-header);
+    font-size: 1.1rem;
+}
+.latest-label {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    letter-spacing: 0.05em;
+    font-weight: 500;
+}
+.latest-post-banner .preview-meta {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
 }
 
-.post-content {
-    font-size: clamp(1rem, 2.5vw, 1.1rem);
-    line-height: 1.5;
+/*----------------------------------------------------------------------------
+  Blog post metadata styles
+----------------------------------------------------------------------------*/
+a > .blog-post-preview {
+    margin: var(--space-md) 0;
+    border-left: 4px solid var(--color-card-bg);
+    background-color: var(--color-card-bg);
+    transition: all var(--transition-standard);
+    padding: var(--space-md) var(--space-md);
+}
+a:hover > .blog-post-preview {
+    background-color: var(--color-card-hover);
+    transform: translateX(2px);
+}
+.blog-post-preview h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--color-header);
+    font-weight: 500;
+    margin-bottom: var(--space-sm);
+}
+.blog-post-preview time {
+    display: inline-block;
+    background-color: var(--color-card-hover);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-sm);
+}
+.blog-post-preview .excerpt {
+    color: var(--color-text);
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 1rem;
+    margin-top: var(--space-md);
 }
 
-@media (max-width: 640px) {
-    .blog-post-preview {
-        padding: var(--space-md);
-    }
-
-    #site-header {
-        padding: var(--space-md) 0;
-    }
-
-    .post-header {
-        margin: var(--space-lg) 0;
-    }
+/*----------------------------------------------------------------------------
+  Preview stuff
+----------------------------------------------------------------------------*/
+.preview-meta {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+.preview-meta .icon {
+    opacity: 0.7;
+    color: var(--color-text);
 }
 
+/*----------------------------------------------------------------------------
+  Blog posts list styles
+----------------------------------------------------------------------------*/
+.blog-posts > a + a {
+    margin-top: var(--space-md);
+}
+
+/*----------------------------------------------------------------------------
+  Main content
+----------------------------------------------------------------------------*/
 #main-content {
     opacity: 1;
     transition: opacity var(--transition-standard);
 }
-
 .htmx-request #main-content {
     opacity: 0.7;
 }
 
+/*----------------------------------------------------------------------------
+  Error whoopsies
+----------------------------------------------------------------------------*/
 .error-message {
     padding: var(--space-md);
     margin: var(--space-md) 0;
@@ -233,22 +232,9 @@ a:hover .blog-post-preview {
     text-align: center;
 }
 
-a {
-    color: var(--color-primary);
-    text-decoration: none;
-    transition: color var(--transition-standard);
-}
-
-a:hover {
-    color: var(--color-text);
-}
-
-@media (prefers-color-scheme: dark) {
-    #site-header h1 {
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-}
-
+/*----------------------------------------------------------------------------
+  Footer
+----------------------------------------------------------------------------*/
 #site-footer {
     text-align: center;
     padding: var(--space-xl) var(--space-md);
@@ -256,7 +242,6 @@ a:hover {
     color: var(--color-text-muted);
     font-size: 0.9rem;
 }
-
 #site-footer .footer-quote {
     font-size: 0.75em;
     color: var(--color-text-muted);
@@ -267,11 +252,17 @@ a:hover {
     font-weight: 300;
 }
 
+/*----------------------------------------------------------------------------
+  Focus hover shit
+----------------------------------------------------------------------------*/
 a:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
 }
 
+/*----------------------------------------------------------------------------
+  Back-to-top button
+----------------------------------------------------------------------------*/
 .back-to-top {
     position: fixed;
     bottom: var(--space-lg);
@@ -293,20 +284,30 @@ a:focus-visible {
     transition: all var(--transition-standard);
     z-index: 100;
 }
-
 .back-to-top.visible {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
+/*----------------------------------------------------------------------------
+  Responsive for tiny screens
+----------------------------------------------------------------------------*/
 @media (min-width: 640px) {
     .back-to-top {
         right: max(var(--space-lg), calc((100vw - 768px) / 2 - 4rem));
     }
 }
-
 @media (max-width: 640px) {
+    .blog-post-preview {
+        padding: var(--space-md);
+    }
+    #site-header {
+        padding: var(--space-md) 0;
+    }
+    .post-header {
+        margin: var(--space-lg) 0;
+    }
     .back-to-top {
         bottom: var(--space-md);
         right: var(--space-md);
@@ -315,19 +316,25 @@ a:focus-visible {
         font-size: 1rem;
     }
 }
+@media (prefers-color-scheme: dark) {
+    #site-header h1 {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+}
 
+/*----------------------------------------------------------------------------
+  Random shit
+----------------------------------------------------------------------------*/
 .blog-post {
     padding: var(--space-lg);
     background-color: var(--color-card-bg);
     border-radius: 0.5rem;
     margin-bottom: var(--space-xl);
 }
-
 .post-header {
     margin-bottom: var(--space-xl);
     text-align: left;
 }
-
 .post-header h1 {
     font-family: 'Orbitron', sans-serif;
     font-size: clamp(2rem, 5vw, 3rem);
@@ -335,7 +342,6 @@ a:focus-visible {
     color: var(--color-header);
     line-height: 1.2;
 }
-
 .post-meta {
     display: flex;
     gap: var(--space-md);
@@ -345,7 +351,6 @@ a:focus-visible {
     font-size: 0.9rem;
     margin: var(--space-md) 0;
 }
-
 .post-date,
 .post-updated {
     display: inline-flex;
@@ -354,16 +359,13 @@ a:focus-visible {
     font-size: 0.85rem;
     color: var(--color-text-muted);
 }
-
 .post-updated {
     color: var(--color-text-muted);
 }
-
 .icon {
     opacity: 0.7;
     transition: opacity var(--transition-standard);
 }
-
 .tags {
     margin-top: var(--space-md);
     display: flex;
@@ -371,7 +373,6 @@ a:focus-visible {
     justify-content: flex-start;
     flex-wrap: wrap;
 }
-
 .tag {
     background-color: transparent;
     color: var(--color-text-muted);
@@ -381,56 +382,47 @@ a:focus-visible {
     font-size: 0.8rem;
     transition: all var(--transition-standard);
 }
-
 .tag:hover {
     background-color: var(--color-card-hover);
     border-color: var(--color-primary);
     color: var(--color-text);
 }
-
 .post-content {
     max-width: 65ch;
     margin: 0 auto;
 }
-
 .post-content h2 {
     color: var(--color-header);
     margin-top: var(--space-xl);
     font-size: 1.5rem;
 }
-
 .post-content h3 {
     color: var(--color-header);
     margin-top: var(--space-lg);
     font-size: 1.25rem;
 }
-
 .post-content ul,
 .post-content ol {
     padding-left: var(--space-lg);
     margin: var(--space-md) 0;
 }
-
 .post-content li+li {
     margin-top: var(--space-sm);
 }
-
 .post-content pre {
     position: relative;
     background-color: var(--color-bg);
     padding: var(--space-md);
     border-radius: 0.3rem;
     overflow-x: auto;
-    margin: var(--space-lg) 0;
+    margin: var(--space-md) 0;
 }
-
 .post-content code {
     font-family: var(--font-mono);
-    font-size: 0.85em;
+    font-size: 0.8em;
     line-height: 1.4;
     color: var(--color-text);
 }
-
 .code-block-header {
     position: absolute;
     top: 0;
@@ -446,7 +438,6 @@ a:focus-visible {
     border-bottom: 1px solid var(--color-border);
     border-left: 1px solid var(--color-border);
 }
-
 .copy-button {
     background: none;
     border: 1px solid var(--color-border);
@@ -458,23 +449,19 @@ a:focus-visible {
     font-size: 0.8rem;
     transition: all var(--transition-standard);
 }
-
 .copy-button:hover {
     background-color: var(--color-card-hover);
     color: var(--color-text);
 }
-
 .copy-button.copied {
     background-color: var(--color-primary);
     color: var(--color-bg);
     border-color: var(--color-primary);
 }
-
 .code-language {
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
 }
-
 .post-content p code {
     background-color: var(--color-bg);
     padding: 0.2em 0.1em;
@@ -483,7 +470,6 @@ a:focus-visible {
     color: var(--color-primary);
     word-break: break-word;
 }
-
 .post-content blockquote {
     border-left: 4px solid var(--color-primary);
     margin: var(--space-lg) 0;
@@ -491,17 +477,14 @@ a:focus-visible {
     background-color: var(--color-bg);
     font-style: italic;
 }
-
 .post-footer {
     margin-top: var(--space-xl);
     padding-top: var(--space-lg);
     border-top: 1px solid var(--color-border);
 }
-
 .post-navigation {
     text-align: center;
 }
-
 .back-to-posts {
     display: inline-block;
     padding: var(--space-sm) var(--space-md);
@@ -510,18 +493,19 @@ a:focus-visible {
     transition: all var(--transition-standard);
     color: var(--color-text);
 }
-
 .back-to-posts:hover {
     background-color: var(--color-card-hover);
     transform: translateY(-1px);
     color: var(--color-header);
 }
 
+/*----------------------------------------------------------------------------
+  Loading placeholder, shimmer effects
+----------------------------------------------------------------------------*/
 .loading-placeholder {
     text-align: center;
     padding: var(--space-xl) 0;
 }
-
 .shimmer-line {
     height: 1rem;
     background-color: var(--color-card-bg);
@@ -529,32 +513,27 @@ a:focus-visible {
     width: 80%;
     border-radius: 0.25rem;
     animation: shimmer 1.5s infinite linear;
-    background: linear-gradient(90deg,
-            var(--color-card-bg) 0%,
-            var(--color-card-hover) 50%,
-            var(--color-card-bg) 100%);
+    background: linear-gradient(90deg, var(--color-card-bg) 0%, var(--color-card-hover) 50%, var(--color-card-bg) 100%);
     background-size: 200% 100%;
 }
-
 @keyframes shimmer {
     0% {
         background-position: -200% 0;
     }
-
     100% {
         background-position: 200% 0;
     }
 }
 
+/*----------------------------------------------------------------------------
+  Profile/post image stuff
+----------------------------------------------------------------------------*/
 .profile-photo-wrapper {
     width: 100%;
     max-width: 768px;
     margin: var(--space-lg) 0;
     position: relative;
-    background: linear-gradient(90deg,
-            var(--color-card-bg) 0%,
-            var(--color-card-hover) 50%,
-            var(--color-card-bg) 100%);
+    background: linear-gradient(90deg, var(--color-card-bg) 0%, var(--color-card-hover) 50%, var(--color-card-bg) 100%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite linear;
     border-radius: 0.5rem;
@@ -562,7 +541,6 @@ a:focus-visible {
     aspect-ratio: 768/588;
     transition: background var(--transition-standard);
 }
-
 .profile-photo {
     width: 100%;
     height: 100%;
@@ -573,49 +551,22 @@ a:focus-visible {
     opacity: 0;
     transition: opacity var(--transition-standard);
 }
-
 .profile-photo.loaded {
     opacity: 1;
 }
-
 .htmx-request .profile-photo {
     opacity: 0;
 }
-
-.htmx-indicator {
-    opacity: 0;
-    transition: opacity var(--transition-standard);
-}
-
-.htmx-request .htmx-indicator {
-    opacity: 1;
-}
-
-.shimmer-effect {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg,
-            var(--color-card-bg) 0%,
-            var(--color-card-hover) 50%,
-            var(--color-card-bg) 100%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite linear;
-}
-
 .post-image-wrapper {
     width: 100%;
     max-width: 768px;
     margin: var(--space-sm) 0;
     position: relative;
-    background: linear-gradient(90deg,
-            var(--color-card-bg) 0%,
-            var(--color-card-hover) 50%,
-            var(--color-card-bg) 100%);
+    background: linear-gradient(90deg, var(--color-card-bg) 0%, var(--color-card-hover) 50%, var(--color-card-bg) 100%);
     background-size: 200% 100%;
     border-radius: 0.5rem;
     overflow: hidden;
 }
-
 .post-image {
     width: 100%;
     height: auto;
@@ -624,17 +575,12 @@ a:focus-visible {
     opacity: 0;
     transition: opacity var(--transition-standard);
 }
-
 .post-image.loaded {
     opacity: 1;
 }
-
 .htmx-request .post-image {
     opacity: 0;
 }
-
-
-
 .image-caption {
     text-align: left;
     color: var(--color-text-muted);
@@ -643,10 +589,119 @@ a:focus-visible {
     font-style: italic;
 }
 
-/* Basic syntax highlighting */
-.post-content code .keyword { color: #ff79c6; }     /* Pink */
-.post-content code .string { color: #f1fa8c; }      /* Yellow */
-.post-content code .comment { color: #6272a4; }     /* Blue-grey */
-.post-content code .function { color: #50fa7b; }    /* Green */
-.post-content code .number { color: #bd93f9; }      /* Purple */
-.post-content code .operator { color: #ff79c6; }    /* Pink */
+/*----------------------------------------------------------------------------
+  HTMX indicator stuff
+----------------------------------------------------------------------------*/
+.htmx-indicator {
+    display: none;
+    opacity: 0;
+    transition: opacity var(--transition-standard);
+}
+.htmx-request .htmx-indicator {
+    display: block;
+    opacity: 1;
+}
+
+/*----------------------------------------------------------------------------
+  Link styles for blog post content only
+----------------------------------------------------------------------------*/
+.post-content a,
+.post-content a:visited {
+    color: var(--color-text);
+    text-decoration: none;
+    background-image: linear-gradient(var(--color-link), var(--color-link));
+    background-repeat: no-repeat;
+    background-size: 100% 2px;
+    background-position: 0 100%;
+    transition: background-size 0.1s ease;
+}
+
+.post-content a:hover,
+.post-content a:focus {
+    background-size: 100% 100%;
+    background-position: 0 100%;
+}
+
+/*----------------------------------------------------------------------------
+  Code colours
+----------------------------------------------------------------------------*/
+
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.pyg-code .hll { background-color: rgba(79, 66, 76, 0.3); }
+.pyg-code { color: #e7e9db; }
+.pyg-code .c { color: #776e71 }
+.pyg-code .err { color: #ef6155 }
+.pyg-code .k { color: #815ba4 }
+.pyg-code .l { color: #f99b15 }
+.pyg-code .n { color: #e7e9db }
+.pyg-code .o { color: #5bc4bf }
+.pyg-code .p { color: #e7e9db }
+.pyg-code .ch { color: #776e71 }
+.pyg-code .cm { color: #776e71 }
+.pyg-code .cp { color: #776e71 }
+.pyg-code .cpf { color: #776e71 }
+.pyg-code .c1 { color: #776e71 }
+.pyg-code .cs { color: #776e71 }
+.pyg-code .gd { color: #ef6155 }
+.pyg-code .ge { font-style: italic }
+.pyg-code .ges { font-weight: bold; font-style: italic }
+.pyg-code .gh { color: #e7e9db; font-weight: bold }
+.pyg-code .gi { color: #48b685 }
+.pyg-code .gp { color: #776e71; font-weight: bold }
+.pyg-code .gs { font-weight: bold }
+.pyg-code .gu { color: #5bc4bf; font-weight: bold }
+.pyg-code .kc { color: #815ba4 }
+.pyg-code .kd { color: #815ba4 }
+.pyg-code .kn { color: #5bc4bf }
+.pyg-code .kp { color: #815ba4 }
+.pyg-code .kr { color: #815ba4 }
+.pyg-code .kt { color: #fec418 }
+.pyg-code .ld { color: #48b685 }
+.pyg-code .m { color: #f99b15 }
+.pyg-code .s { color: #48b685 }
+.pyg-code .na { color: #06b6ef }
+.pyg-code .nb { color: #e7e9db }
+.pyg-code .nc { color: #fec418 }
+.pyg-code .no { color: #ef6155 }
+.pyg-code .nd { color: #5bc4bf }
+.pyg-code .ni { color: #e7e9db }
+.pyg-code .ne { color: #ef6155 }
+.pyg-code .nf { color: #06b6ef }
+.pyg-code .nl { color: #e7e9db }
+.pyg-code .nn { color: #fec418 }
+.pyg-code .nx { color: #06b6ef }
+.pyg-code .py { color: #e7e9db }
+.pyg-code .nt { color: #5bc4bf }
+.pyg-code .nv { color: #ef6155 }
+.pyg-code .ow { color: #5bc4bf }
+.pyg-code .pm { color: #e7e9db }
+.pyg-code .w { color: #e7e9db }
+.pyg-code .mb { color: #f99b15 }
+.pyg-code .mf { color: #f99b15 }
+.pyg-code .mh { color: #f99b15 }
+.pyg-code .mi { color: #f99b15 }
+.pyg-code .mo { color: #f99b15 }
+.pyg-code .sa { color: #48b685 }
+.pyg-code .sb { color: #48b685 }
+.pyg-code .sc { color: #e7e9db }
+.pyg-code .dl { color: #48b685 }
+.pyg-code .sd { color: #776e71 }
+.pyg-code .s2 { color: #48b685 }
+.pyg-code .se { color: #f99b15 }
+.pyg-code .sh { color: #48b685 }
+.pyg-code .si { color: #f99b15 }
+.pyg-code .sx { color: #48b685 }
+.pyg-code .sr { color: #48b685 }
+.pyg-code .s1 { color: #48b685 }
+.pyg-code .ss { color: #48b685 }
+.pyg-code .bp { color: #e7e9db }
+.pyg-code .fm { color: #06b6ef }
+.pyg-code .vc { color: #ef6155 }
+.pyg-code .vg { color: #ef6155 }
+.pyg-code .vi { color: #ef6155 }
+.pyg-code .vm { color: #ef6155 }
+.pyg-code .il { color: #f99b15 }
