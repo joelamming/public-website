@@ -18,4 +18,17 @@
             button.classList.remove('visible');
         }
     });
+
+    window.scrollToTop = window.scrollToTop || function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    if (!window.htmxScrollListenerAdded) {
+        window.htmxScrollListenerAdded = true;
+        document.body.addEventListener('htmx:afterSwap', function(event) {
+            if (event.detail.target && event.detail.target.id === 'main-content') {
+                window.scrollToTop();
+            }
+        });
+    }
 </script>

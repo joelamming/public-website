@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        html, body, #layout-content {
+        html,
+        body,
+        #layout-content {
             background-color: #000000 !important;
             margin: 0;
             min-height: 100vh;
@@ -29,7 +31,6 @@
 
 <body hx-ext="head-support">
     <div hx-get="/components/head-base.html" hx-trigger="load" hx-swap="none"></div>
-    <div id="top" style="position: absolute; top: 0;"></div>
     <div class="site-wrapper">
         <div id="header-container" hx-get="/components/header.html" hx-trigger="load" hx-swap="innerHTML">
             <header class="header-placeholder">
