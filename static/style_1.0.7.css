@@ -305,9 +305,6 @@ a:focus-visible {
     #site-header {
         padding: var(--space-md) 0;
     }
-    .post-header {
-        margin: var(--space-lg) 0;
-    }
     .back-to-top {
         bottom: var(--space-md);
         right: var(--space-md);
