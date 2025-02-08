@@ -4,31 +4,3 @@
     </a>
     <h2>Personal blog of a technology optimist</h2>
 </header>
-<button class="back-to-top"
-        hx-on:click="window.scrollTo({ top: 0, behavior: 'smooth' })"
-        id="back-to-top-button">
-    ↑
-</button>
-<script>
-    document.addEventListener('scroll', function() {
-        const button = document.getElementById('back-to-top-button');
-        if (window.scrollY > 100) {
-            button.classList.add('visible');
-        } else {
-            button.classList.remove('visible');
-        }
-    });
-
-    window.scrollToTop = window.scrollToTop || function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
-    if (!window.htmxScrollListenerAdded) {
-        window.htmxScrollListenerAdded = true;
-        document.body.addEventListener('htmx:afterSwap', function(event) {
-            if (event.detail.target && event.detail.target.id === 'main-content') {
-                window.scrollToTop();
-            }
-        });
-    }
-</script>

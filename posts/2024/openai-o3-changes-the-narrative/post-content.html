@@ -1,0 +1,74 @@
+<div class="post-content">
+    <h3>12 days of Shipmas was underwhelming at first</h3>
+    <p>Google trumped Sora with <a href="https://deepmind.google/technologies/veo/veo-2/">Veo 2</a>,
+        Search still grapples with the challenges of web search result quality (ala Perplexity and
+        Google's own AI Overviews) and everything else was fodder for a slow news day. But OpenAI's o3
+        model announced on Friday 20th December was unexpected. They surprised most of the AI world by
+        publishing results of its latest "thinking" model, o3.</p>
+    <h3>o1 vs. Claude 3.5 Sonnet (new)</h3>
+    <p>Back in September they made o1 available as a preview to developers, alongside a smaller
+        code-focused o1-mini. People liked it, despite how slow it often was to respond. However
+        Anthropic released Claude 3.5 Sonnet (October edition) shortly afterwards – and matched or
+        exceeded o1 capabilities without the downside of waiting around for the model to finish thinking
+        and respond.</p>
+    <h3>Timing</h3>
+    <p>OpenAI's o3 (they skipped o2 for <a href="https://youtu.be/SKBG1sqdyIU?t=33">boring</a> reasons)
+        seems like a direct response to this, aiming to wow investors and media and social media before
+        they go home to talk to family about it during the holidays (eerily similar to the original
+        ChatGPT launch timeline in late 2022).</p>
+    <h3>o1 just wasn't good enough</h3>
+    <p>But it is justified. So many discussions I've had with AI software vendors and corporates since
+        o1 was released have been about how frontier AI models just aren't good yet. They misunderstand
+        instructions, ignore them, randomly refuse benign requests, make stuff <em>up all the time</em>.
+        To confound auditors, they still frequently produce elaborate explanations to nonsense answers.
+        This is all rooted in the fundamental truth that all machine learning models (including frontier
+        LLMs) simply imitate their training data. Novel inputs get cleaned up in the latent space such
+        that crucial nuance is ignored and "best fit" wrong answers are produced. This is why AI
+        products often disappoint outside narrow data management and low-risk "chatbot" use cases.</p>
+    <h3>o3 changes the narrative</h3>
+    <p>But Francois Chollet's ARC Prize has just been bested by OpenAI's new o3. This is one of those AI
+        benchmarks introduced back in 2019 frontier models in 2024 still failed at. This benchmark is
+        about spatial reasoning – requiring candidates to understand and produce novel solutions.
+        Basically any human can pass the test (60-85%), even those who have never seen it before (try it
+        here: <a href="https://arcprize.org/">https://arcprize.org/</a>).</p>
+    <h3>o3 passed the ARC Challenge – at massive cost</h3>
+    <p>OpenAI worked with those behind the ARC Prize to fine-tune the model – <a
+            href="https://arcprize.org/blog/oai-o3-pub-breakthrough">details</a> on exactly how is
+        unclear. However it still scored 87.5% on the private dataset (not trained on). Completing this
+        task comprising 100 such puzzles, however, would cost the typical retail buyer (via the API)
+        around $350k. This involved the model generating 1024 candidate responses comprising around 43
+        million words of internal "thinking". Each task took around 14 minutes of thinking. $3460 for an
+        AI system to complete one the puzzles above? We can see the gap between AI and human reasoning
+        is still vast.</p>
+    <h3>Why does this matter?</h3>
+    <p>Because it shows massive gains from reinforcement learning alone. No need for more data, no need
+        for OpenAI to employ an army of domain experts to carefully rate and rewrite responses from
+        ChatGPT. The model simply generates a bunch of possible reasoning steps, tries to validate the
+        reasoning, selects the best one, moves forward one step, repeat by generating a bunch more next
+        steps, etc. – until it gets at a selection of possible final answers (whole stack looks like
+        tree search). If one out of the selection of final answers happens to be correct, the entire
+        chain of correct reasoning is then used as training data for the model. Researchers have been
+        trying to do this for years. OpenAI appear to have done it. They went from o1 to o3 in a couple
+        of months. Nothing changed except that the model had been trained for longer, gradually training
+        itself to produce more robust reasoning steps.</p>
+    <h3>2025 will see reasoning models get much, much better</h3>
+    <p>My opinion has completely changed on reasoning models. Alibaba Cloud <a
+            href="https://huggingface.co/AIDC-AI/Marco-o1">open-sourced</a> its Marco-o1 reasoning model
+        last month. We now have stronger proof than ever that models can self-learn to become better.
+        2024 was all about scaling laws no longer working because people were running out of data,
+        overwhelming power grids with monster data centres, algorithmic improvements slowing down.</p>
+    <p>But one critical element of that seems to be no longer relevant. Labs theoretically only need
+        more time, not even more compute. Just let the same model grind away at the existing training
+        data, getting better and better at reasoning towards harder and harder problems. Then if more
+        compute becomes available, train a larger model bootstrapped from the existing best model (e.g.
+        logprobs from a diverse subset of the pre-training corpus) and so on. Bigger models are more
+        sample <a href="https://arxiv.org/pdf/2001.08361">efficient</a>, so the intuition is that
+        feeding it frontier AI labs' vast, carefully curated pre-training corpus, RLHF chains and
+        best-of-best reasoning chains will result in a model improving even faster, creating more
+        robust, more generalisable reasoning chains to bootstrap an even larger model until... <a
+            href="https://users.ece.cmu.edu/~gamvrosi/thelastq.html#:~:text=And%20AC%20said%2C%20%22-,LET%20THERE%20BE%20LIGHT!,-%22">god</a>?
+    </p>
+    <p>2025 will look like 2023 all over again – but this time we already have valuable use cases for
+        existing models. We'll also <strong><em>actually</em></strong> have what most people could call
+        superintelligence, I bet.</p>
+</div>

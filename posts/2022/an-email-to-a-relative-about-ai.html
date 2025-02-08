@@ -13,7 +13,7 @@
             min-height: 100vh;
         }
     </style>
-    <link rel="stylesheet" href="/static/style_1.0.6.css" hx-preserve="true">
+    <link rel="stylesheet" href="/static/style_1.0.7.css" hx-preserve="true">
     <script src="/static/htmx.min.js"></script>
     <script src="/static/head-support.js"></script>
 
@@ -30,7 +30,7 @@
 </head>
 
 <body hx-ext="head-support">
-    <div hx-get="/components/head-base.html" hx-trigger="load" hx-swap="none"></div>
+    <div hx-get="/components/head-base.html" hx-trigger="revealed" hx-swap="none"></div>
     <div class="site-wrapper">
         <div id="header-container" hx-get="/components/header.html" hx-trigger="load" hx-swap="innerHTML">
             <header class="header-placeholder">
@@ -40,9 +40,16 @@
                 </div>
             </header>
         </div>
-        <div id="nav-container" hx-get="/components/navigation.html" hx-trigger="load" hx-swap="innerHTML">
+        <div id="nav-container" hx-get="/components/navigation.html" hx-trigger="revealed" hx-swap="innerHTML">
             <div class="htmx-indicator">Navigation hasn't loaded yet...</div>
         </div>
+        <noscript>
+            <div class="no-js-warning">
+                <h2>Yep, HTMX is a JavaScript library</h2>
+                <p>It's extremely lightweight, but it's still a JavaScript library. My site requires HTMX to function.
+                    You'll need to enable it, sorry.</p>
+            </div>
+        </noscript>
         <main id="main-content">
             <div class="htmx-indicator">
                 <div class="loading-placeholder">
@@ -51,162 +58,13 @@
                     <div class="shimmer-line"></div>
                 </div>
             </div>
+
             <article class="blog-post">
-                <header class="post-header">
-                    <h1>An email to a relative about AI, three weeks before GPT-3.5</h1>
-                    <div class="post-meta">
-                        <div class="post-date">
-                            <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
-                                <path fill="currentColor"
-                                    d="M19,4H17V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H5A2,2,0,0,0,3,6V20a2,2,0,0,0,2,2H19a2,2,0,0,0,2-2V6A2,2,0,0,0,19,4ZM19,20H5V9H19Z" />
-                            </svg>
-                            <time datetime="2022-11-03">3 Nov 2022</time>
-                        </div>
+                <div hx-get="/posts/2022/an-email-to-a-relative-about-ai/post-header.html" hx-trigger="load"
+                    hx-swap="innerHTML"></div>
 
-                        <div class="post-updated">
-                            <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
-                                <path fill="currentColor"
-                                    d="M21,11a1,1,0,0,0-1,1,8.05,8.05,0,1,1-2.22-5.5L16,8.32a1,1,0,0,0,1.41,1.41l4.35-4.35a1,1,0,0,0,0-1.41L17.41-.38A1,1,0,0,0,16,1L17.77,2.8A10,10,0,1,0,22,12,1,1,0,0,0,21,11Z" />
-                            </svg>
-                            <span><time datetime="2024-03-24">24 Mar 2024</time></span>
-                        </div>
-
-                    </div>
-                    <div class="tags">
-
-                        <span class="tag">AI</span>
-
-                        <span class="tag">GPT-3</span>
-
-                        <span class="tag">personal</span>
-
-                    </div>
-                </header>
-
-                <div class="post-content">
-                    <h3>Yuval Noah Harari: "Organisms are algorithms, and life is data processing"</h3>
-                    <p>This is the quote that triggered a mini essay to a dear relative in early November 2022.</p>
-                    <h3>Begin with apologies for the British postal system:</h3>
-                    <p>Many thanks for sending the Christmas pudding via post! Unfortunately, the business on the ground
-                        floor wasn't able to receive the parcel today or the delivery person decided to take a shortcut
-                        (likely the latter) - so we'll have to collect the parcel from the post office tomorrow morning.
-                        Fingers crossed it'll be there.</p>
-                    <h3>My relative read Homo Deus (great book)</h3>
-                    <p>Glad to hear you've read Homo Deus more than once. That book and its predecessor, Sapiens, were
-                        some of my favourite throughout university. I totally agree with his idea that organisms are
-                        algorithms and life is data processing. And you've heard right -- I've been experimenting with
-                        algorithms for a while now.</p>
-                    <p>Beyond some Python projects in Blender, in about 2014 when my first university computer class gave everyone an Arduino Uno
-                        digital microcontroller kit, I began writing computer code to perform simple functions such as
-                        reading data from a temperature sensor or a digital compass and accelerometer. This project grew
-                        to the point of leading an Unmanned Aerial Vehicle (UAV) team to win a university competition
-                        for autonomous flying. After that, I experimented with algorithms to convert a colour image file
-                        into a series of lines for a robotic drawing machine to sketch out on paper, as you may recall
-                        from discussions in 2018. Unfortunately, the programming language used to write and run the
-                        algorithm (MATLAB) was so poorly optimised for the specific task I had devised that I put some
-                        effort into getting access to the University's supercomputer resources to speed things up. It is
-                        fascinating how matching the computer equipment and software together properly is critical to
-                        achieving fast algorithms. Revisiting this drawing machine algorithm a couple of years later, I
-                        managed to improve the programming efficiency by around one million times. Instead of taking
-                        twelve hours on a supercomputer, the algorithm took around five minutes to run on my laptop.
-                        Massive advances in the power of algorithms haven't really come from faster computers -- they
-                        have instead been driven by improvements in programming efficiency and algorithm design.</p>
-                    <p>Pushing the point further on algorithmic design, 2018 also saw my first tinkering with artificial
-                        intelligence and “deep learning” -- where I attempted to design a computer programme capable of
-                        recognising cartoon characters from a TV show my friends and I were into at the time. Deep
-                        learning attempts to mimic some of the biological data processing characteristics of human and
-                        animal vision systems and the brain itself -- where data passes through multiple layers of
-                        processing ("deep" refers to many layers of processing) towards an eventual output (such as the
-                        category number corresponding to the cartoon character). In 2020, I began more intense evening
-                        studying with industry standard open-access AI and machine learning programming tools such as
-                        TensorFlow, developed by Google. These tools include pre-built pieces of programming to assemble
-                        into a wide variety of AI algorithms, including machine learning and deep learning. Having
-                        continued working with TensorFlow until the present day, I have a reasonable understanding of
-                        the capabilities of contemporary powerful algorithms and where they might be headed in the
-                        future. At present, we're quite a few years away from creating an artificial intelligence
-                        capable of knowing more about an individual person more than that person knows himself or
-                        herself. However, humans have already developed artificial intelligences with the ability to
-                        closely approximate the thoughts and feelings of the gigantic hive mind that is the internet in
-                        2022.</p>
-                    <p>A US-based software company, OpenAI, in 2020 introduced a very large "Generative Pretrained
-                        Transformer", deep learning (96 layers deep, to be precise) language model known as GPT-3. This
-                        can be thought of as a large artificial brain consisting of around 200 billion individually
-                        “trainable” weights and biases (think of these as tuning knobs on a radio). This model is
-                        trained on basically the entire written corpus of text on the world wide web (trillions of
-                        words). While the complexity of this artificial brain is still far below the human brain (which
-                        has hundreds of trillions of trainable weights and biases), its performance after training on
-                        such a large text corpus resulted in a startlingly deep understanding of multiple human
-                        languages and popular cultural concepts. This algorithm can summarise long reports, write
-                        original poems and even provide somewhat compelling answers to big questions, for example:
-                        [Question to GPT-3]: "What is the purpose of life?" [Answer from GPT-3]: "Life is a beautiful
-                        miracle. Life evolves through time into greater forms of beauty". These aren't necessarily
-                        blocks of text it has seen during training, but actually demonstrate understanding of the
-                        question by the algorithm through its ability to select a sequence of words with the highest
-                        probability of matching the context provided by the input.</p>
-                    <h3>My limited 2022 understanding of training LLMs</h3>
-                    <p>The training process for this artificial model is actually very simple -- the developers had it
-                        predict the next word in the sentence, given the prior dozen or so words, and use a
-                        sophisticated prediction error calculation called "categorical cross-entropy" to make
-                        adjustments to the model to attempt to improve the prediction for the next set of words.
-                        Extensive filtering was performed on the trillions of words to help improve training
-                        performance, resulting in the model actually only seeing around 300 billion sentences during
-                        training. Powered by millions of dollars of specialised computer equipment, OpenAI now had their
-                        powerful, somewhat artificially-intelligent Large Language Model (LLM). The model is
-                        sufficiently complex to be able to boil down natural human language into a series of
-                        probabilities, a "line of best fit" -- in essence, simply drawing a smooth line through dots
-                        plotted on a chart. The specific architecture of this novel GPT artificial neural network with
-                        so-called "multi-head attention" means it can very efficiently learn the meaning of words based
-                        on context from the specific order of words within an input sentence. Transformer neural
-                        networks are currently dominating language tasks in artificial intelligence, and even finding
-                        applications in image and video processing through Vision Transformers (ViTs). Several leaders
-                        in the field agree the Transformer is a magnificent neural network architecture because it is a
-                        "general-purpose differentiable computer", with applications that could rapidly steepen the
-                        trajectory of artificial intelligence development. Again, the GPT-3 was trained on billions of
-                        words downloaded from the public internet. Such vast knowledge has been "distilled", allowing
-                        this algorithm to exhibit an extremely generic persona with plenty of contradictions and
-                        character flaws. You could ask it who the president of the United States is, and it would
-                        usually answer correctly. However, if I asked it a question requiring specific knowledge not
-                        extensively covered (or covered at all) on the public internet -- such as my home address, it
-                        would provide a nonsensical or inaccurate answer. GPT-3, and other LLMs by Google or Amazon, are
-                        fantastic BSers. They will regurgitate answers with strongly apparent confidence, giving the
-                        appearance of genuine intelligence -- but on closer inspection, most of the answer could have
-                        been written by a partially misinformed know-it-all child (me, aged 10, as you might recall).
-                    </p>
-                    <h3>Back to the original question</h3>
-                    <p>To bring this back to your question on an algorithm able to know us better than we know ourselves
-                        -- as said before, the technology is a long way off. Not only must the algorithm first gain a
-                        deep understanding of the world we live in, including society, culture, physics and biology, but
-                        it must also be exposed to thousands of hours of our conversation with others, text we have
-                        written, our drawings and sketches and perhaps even our diary entries. Brains have many
-                        similarities from person to person -- you might remember how Cambridge Analytica were able to
-                        exploit the deepest fears of millions of Brits and Americans by finding correlations in
-                        innocuous data such as their Facebook "likes" and content consumption patterns -- but the
-                        unfathomable complexity of the brain means I believe they can be comfortably considered
-                        "stochastic" (random, non-repeatable, with certain probabilities) rather than "deterministic"
-                        (non-random, following a repeatable algorithm). When you marvel at the glorious colours of
-                        autumn, there is an incredible amount of data processing happening. The light from the scene is
-                        entering your eyes, focusing on the retina, which converts the photons into electrical signals
-                        which travel through multiple layers of processing to detect movement, edges, contrast,
-                        textures, clusters of colours -- and eventually towards recognising familiar objects such as
-                        leaves, grass, water, clouds, the sky, animals, and their placement within the scene -- which
-                        are all processed in context with countless memories, near and distant, evoking emotions,
-                        feelings of happiness, sadness or contentedness. Such a storm of processing is going on in a
-                        split second compared to GPT-3, yet somehow GPT-3 is able to do so much with so comparatively
-                        little.</p>
-                    <h3>Most people only knew OpenAI from DALLE-2 in early November 2022</h3>
-                    <p>I'll leave you with one of the most incredible pieces of artificial intelligence-based creativity
-                        of 2022. OpenAI, the creators of GPT-3, repurposed some of their algorithm to process natural
-                        language text prompts for image captions. For example, "an astronaut riding a horse". The
-                        algorithm is trained on millions of images and corresponding captions. Using a complex model
-                        architecture based in part on Transformers, this "DALL-E 2" algorithm is able to hallucinate
-                        beautiful and completely unique images from this prompt. Here is a link to OpenAI's website
-                        containing a few examples: <a
-                            href="https://openai.com/dall-e-2/">https://openai.com/dall-e-2/</a>.</p>
-                    <h3>Closing remarks</h3>
-                    <p>Wishing you the very best, and looking forward to seeing you at some point soon! Lots more
-                        interesting AI stuff to talk about, if you're interested. Thanks again for the Christmas
-                        pudding! Best regards, Joe</p>
-                </div>
+                <div hx-get="/posts/2022/an-email-to-a-relative-about-ai/post-content.html" hx-trigger="load"
+                    hx-swap="innerHTML"></div>
 
                 <footer class="post-footer">
                     <div class="post-navigation">
