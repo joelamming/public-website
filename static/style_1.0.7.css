@@ -522,6 +522,14 @@ a:focus-visible {
     }
 }
 
+.blog-post .htmx-indicator {
+    padding: var(--space-lg) 0;
+}
+
+.blog-post > div {
+    min-height: 50px;
+}
+
 /*----------------------------------------------------------------------------
   Profile/post image stuff
 ----------------------------------------------------------------------------*/

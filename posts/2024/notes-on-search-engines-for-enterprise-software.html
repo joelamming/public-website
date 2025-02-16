@@ -64,21 +64,30 @@
             </div>
         </noscript>
         <main id="main-content">
-            <div class="htmx-indicator" style="text-align:center;">
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                    <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12"
-                            dur="0.8s" repeatCount="indefinite" />
-                    </circle>
-                </svg>
-            </div>
-
             <article class="blog-post">
                 <div hx-get="/posts/2024/notes-on-search-engines-for-enterprise-software/post-header.html"
-                    hx-trigger="load" hx-swap="innerHTML"></div>
+                    hx-trigger="load" hx-swap="innerHTML">
+                    <div class="htmx-indicator" style="text-align:center;">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12"
+                                    dur="0.8s" repeatCount="indefinite" />
+                            </circle>
+                        </svg>
+                    </div>
+                </div>
 
                 <div hx-get="/posts/2024/notes-on-search-engines-for-enterprise-software/post-content.html"
-                    hx-trigger="load" hx-swap="innerHTML"></div>
+                    hx-trigger="load" hx-swap="innerHTML">
+                    <div class="htmx-indicator" style="text-align:center;">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12"
+                                    dur="0.8s" repeatCount="indefinite" />
+                            </circle>
+                        </svg>
+                    </div>
+                </div>
 
                 <footer class="post-footer">
                     <div class="post-navigation">
