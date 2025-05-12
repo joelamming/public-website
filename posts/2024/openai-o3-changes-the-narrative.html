@@ -35,24 +35,18 @@
     <div hx-get="/components/head-base.html" hx-trigger="revealed" hx-swap="none"></div>
     <div class="site-wrapper">
         <div id="header-container" hx-get="/components/header.html" hx-trigger="load" hx-swap="innerHTML">
-            <div class="htmx-indicator" style="text-align:center;">
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                    <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12"
-                            dur="0.8s" repeatCount="indefinite" />
-                    </circle>
-                </svg>
-            </div>
+            <header class="header-placeholder">
+                <div class="placeholder-block placeholder-header-title"></div>
+                <div class="placeholder-block placeholder-header-subtitle"></div>
+            </header>
         </div>
         <div id="nav-container" hx-get="/components/navigation.html" hx-trigger="revealed" hx-swap="innerHTML">
-            <div class="htmx-indicator" style="text-align:center;">
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                    <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12"
-                            dur="0.8s" repeatCount="indefinite" />
-                    </circle>
-                </svg>
-            </div>
+            <nav class="placeholder-nav-container">
+                <div class="placeholder-block placeholder-nav-item"></div>
+                <div class="placeholder-block placeholder-nav-item"></div>
+                <div class="placeholder-block placeholder-nav-item"></div>
+                <div class="placeholder-block placeholder-nav-item"></div>
+            </nav>
         </div>
         <noscript>
             <div class="no-js-warning">
@@ -65,26 +59,32 @@
             <article class="blog-post">
                 <div hx-get="/posts/2024/openai-o3-changes-the-narrative/post-header.html" hx-trigger="load"
                     hx-swap="innerHTML">
-                    <div class="htmx-indicator" style="text-align:center;">
-                        <svg viewBox="0 0 24 24" width="20" height="20">
-                            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5">
-                                <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12"
-                                    dur="0.8s" repeatCount="indefinite" />
-                            </circle>
-                        </svg>
-                    </div>
+                    <div class="placeholder-block placeholder-article-title"
+                        style="width: 70%; margin-top: var(--space-lg);"></div>
+                    <div class="placeholder-block placeholder-article-meta" style="width: 40%;"></div>
+                    <div class="placeholder-block placeholder-article-meta"
+                        style="width: 60%; margin-bottom: var(--space-lg);"></div>
                 </div>
 
                 <div hx-get="/posts/2024/openai-o3-changes-the-narrative/post-content.html" hx-trigger="load"
                     hx-swap="innerHTML">
-                    <div class="htmx-indicator" style="text-align:center;">
-                        <svg viewBox="0 0 24 24" width="20" height="20">
-                            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5">
-                                <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12"
-                                    dur="0.8s" repeatCount="indefinite" />
-                            </circle>
-                        </svg>
+                    <div class="placeholder-block placeholder-text-line long"></div>
+                    <div class="placeholder-block placeholder-text-line medium"></div>
+                    <div class="placeholder-block placeholder-text-line long"></div>
+                    <div class="placeholder-block placeholder-text-line short"></div>
+                    <div class="placeholder-block placeholder-text-line x-long"></div>
+
+                    <div class="placeholder-block placeholder-text-line medium" style="margin-top: var(--space-lg);">
                     </div>
+                    <div class="placeholder-block placeholder-text-line long"></div>
+                    <div class="placeholder-block placeholder-text-line x-long"></div>
+
+                    <div class="placeholder-block placeholder-image" style="margin-top: var(--space-lg);"></div>
+
+                    <div class="placeholder-block placeholder-text-line long" style="margin-top: var(--space-lg);">
+                    </div>
+                    <div class="placeholder-block placeholder-text-line medium"></div>
+                    <div class="placeholder-block placeholder-text-line x-long"></div>
                 </div>
 
                 <footer class="post-footer">
@@ -97,14 +97,11 @@
             </article>
         </main>
         <div id="footer-container" hx-get="/components/footer.html" hx-trigger="load" hx-swap="innerHTML">
-            <div class="htmx-indicator" style="text-align:center;">
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                    <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12"
-                            dur="0.8s" repeatCount="indefinite" />
-                    </circle>
-                </svg>
-            </div>
+            <footer class="footer-placeholder">
+                <div class="placeholder-block placeholder-footer-line"></div>
+                <div class="placeholder-block placeholder-footer-line short"
+                    style="width: 50%; margin-top: var(--space-sm);"></div>
+            </footer>
         </div>
     </div>
 </body>

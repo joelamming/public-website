@@ -27,9 +27,19 @@
 
     <div class="site-wrapper">
         <div id="header-container" hx-get="/components/header.html" hx-trigger="load" hx-swap="innerHTML">
+            <header class="header-placeholder">
+                <div class="placeholder-block placeholder-header-title"></div>
+                <div class="placeholder-block placeholder-header-subtitle"></div>
+            </header>
         </div>
 
         <div id="nav-container" hx-get="/components/navigation.html" hx-trigger="load" hx-swap="innerHTML">
+            <nav class="placeholder-nav-container">
+                <div class="placeholder-block placeholder-nav-item"></div>
+                <div class="placeholder-block placeholder-nav-item"></div>
+                <div class="placeholder-block placeholder-nav-item"></div>
+                <div class="placeholder-block placeholder-nav-item"></div>
+            </nav>
         </div>
 
         <main id="main-content">
@@ -54,6 +64,11 @@
         </main>
 
         <div id="footer-container" hx-get="/components/footer.html" hx-trigger="load" hx-swap="innerHTML">
+            <footer class="footer-placeholder">
+                <div class="placeholder-block placeholder-footer-line"></div>
+                <div class="placeholder-block placeholder-footer-line short"
+                    style="width: 50%; margin-top: var(--space-sm);"></div>
+            </footer>
         </div>
     </div>
 </body>

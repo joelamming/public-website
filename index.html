@@ -29,25 +29,17 @@
     <div class="site-wrapper">
         <div id="header-container" hx-get="/components/header.html" hx-trigger="load" hx-swap="innerHTML">
             <header class="header-placeholder">
-                <div class="htmx-indicator" style="text-align:center;">
-                    <svg viewBox="0 0 24 24" width="20" height="20">
-                        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12"
-                                dur="0.8s" repeatCount="indefinite" />
-                        </circle>
-                    </svg>
-                </div>
+                <div class="placeholder-block placeholder-header-title"></div>
+                <div class="placeholder-block placeholder-header-subtitle"></div>
             </header>
         </div>
         <div id="nav-container" hx-get="/components/navigation.html" hx-trigger="revealed" hx-swap="innerHTML">
-            <div class="htmx-indicator" style="text-align:center;">
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                    <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12"
-                            dur="0.8s" repeatCount="indefinite" />
-                    </circle>
-                </svg>
-            </div>
+            <nav class="placeholder-nav-container">
+                <div class="placeholder-block placeholder-nav-item"></div>
+                <div class="placeholder-block placeholder-nav-item"></div>
+                <div class="placeholder-block placeholder-nav-item"></div>
+                <div class="placeholder-block placeholder-nav-item"></div>
+            </nav>
         </div>
         <noscript>
             <div class="no-js-warning">
@@ -59,26 +51,24 @@
         <main id="main-content">
             <article class="homepage-content">
                 <div hx-get="/components/index-content.html" hx-trigger="load" hx-swap="innerHTML">
-                    <div class="htmx-indicator" style="text-align:center;">
-                        <svg viewBox="0 0 24 24" width="20" height="20">
-                            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5">
-                                <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12"
-                                    dur="0.8s" repeatCount="indefinite" />
-                            </circle>
-                        </svg>
-                    </div>
+                    <div class="placeholder-block placeholder-article-title"></div>
+                    <div class="placeholder-block placeholder-text-line medium"></div>
+                    <div class="placeholder-block placeholder-text-line long"></div>
+                    <div class="placeholder-block placeholder-text-line short"></div>
+                    <br>
+                    <div class="placeholder-block placeholder-article-title medium"></div>
+                    <div class="placeholder-block placeholder-text-line long"></div>
+                    <div class="placeholder-block placeholder-text-line medium"></div>
+                    <div class="placeholder-block placeholder-text-line x-long"></div>
                 </div>
             </article>
         </main>
         <div id="footer-container" hx-get="/components/footer.html" hx-trigger="load" hx-swap="innerHTML">
-            <div class="htmx-indicator" style="text-align:center;">
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                    <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12"
-                            dur="0.8s" repeatCount="indefinite" />
-                    </circle>
-                </svg>
-            </div>
+            <footer class="footer-placeholder">
+                <div class="placeholder-block placeholder-footer-line"></div>
+                <div class="placeholder-block placeholder-footer-line short"
+                    style="width: 50%; margin-top: var(--space-sm);"></div>
+            </footer>
         </div>
     </div>
 </body>

@@ -2,15 +2,19 @@
   Yes I've left comments in my CSS. Fight me.
 ----------------------------------------------------------------------------*/
 :root {
-    --color-bg: #000000;
-    --color-text: #ffffff;
-    --color-text-muted: #9ca3af;
-    --color-primary: #60a5fa;
-    --color-border: #374151;
-    --color-card-bg: #242937;
-    --color-card-hover: #2d3548;
-    --color-header: #ffffff;
-    --color-link: #8a2be2;
+    --colour-bg: #000000;
+    --colour-text: #ffffff;
+    --colour-text-muted: #9ca3af;
+    --colour-primary: #60a5fa;
+    --colour-border: #374151;
+    --colour-card-bg: #242937;
+    --colour-card-hover: #2d3548;
+    --colour-header: #ffffff;
+    --colour-link: #8a2be2;
+
+    --colour-placeholder-bg: #374151;
+    --colour-placeholder-shimmer-start: #242937;
+    --colour-placeholder-shimmer-end: #2d3548;
 
     --font-sans: 'IBM Plex Serif', -apple-system, BlinkMacSystemFont, system-ui, serif;
     --font-mono: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', Menlo, Monaco, Consolas, monospace;
@@ -47,8 +51,8 @@ body {
     margin: 0;
     padding: 0;
     min-width: 320px;
-    background-color: var(--color-bg);
-    color: var(--color-text);
+    background-color: var(--colour-bg);
+    color: var(--colour-text);
     font-family: var(--font-sans);
     font-weight: 400;
     line-height: 1.6;
@@ -74,7 +78,7 @@ body {
     font-family: 'Orbitron', sans-serif;
     margin: 0;
     font-size: clamp(1.5rem, 5vw, 2.5rem);
-    color: var(--color-header);
+    color: var(--colour-header);
     transition: color var(--transition-standard);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -82,7 +86,7 @@ body {
     margin: var(--space-sm) 0 0;
     font-size: clamp(0.875rem, 3vw, 1.2rem);
     font-weight: normal;
-    color: var(--color-text-muted);
+    color: var(--colour-text-muted);
 }
 
 /*----------------------------------------------------------------------------
@@ -101,14 +105,14 @@ body {
     justify-content: center;
 }
 #year-nav a {
-    color: var(--color-text);
+    color: var(--colour-text);
     text-decoration: none;
     padding: var(--space-sm) var(--space-md);
     border-radius: 0.25rem;
     transition: background-color var(--transition-standard);
 }
 #year-nav a:hover {
-    background-color: var(--color-card-hover);
+    background-color: var(--colour-card-hover);
 }
 
 /*----------------------------------------------------------------------------
@@ -116,17 +120,17 @@ body {
 ----------------------------------------------------------------------------*/
 .latest-post-banner {
     margin: var(--space-md) 0;
-    border-left: 4px solid var(--color-primary);
-    background-color: var(--color-card-bg);
+    border-left: 4px solid var(--colour-primary);
+    background-color: var(--colour-card-bg);
     transition: all var(--transition-standard);
 }
 .latest-post-banner a {
     display: block;
-    color: var(--color-text);
+    color: var(--colour-text);
     padding: var(--space-md) var(--space-lg);
 }
 .latest-post-banner:hover {
-    background-color: var(--color-card-hover);
+    background-color: var(--colour-card-hover);
     transform: translateX(4px);
 }
 .latest-post-content {
@@ -137,13 +141,13 @@ body {
 .latest-post-banner h4 {
     margin: 0;
     font-family: 'Orbitron', sans-serif;
-    color: var(--color-header);
+    color: var(--colour-header);
     font-size: 1.1rem;
 }
 .latest-label {
     text-transform: uppercase;
     font-size: 0.75rem;
-    color: var(--color-primary);
+    color: var(--colour-primary);
     letter-spacing: 0.05em;
     font-weight: 500;
 }
@@ -158,32 +162,32 @@ body {
 ----------------------------------------------------------------------------*/
 a > .blog-post-preview {
     margin: var(--space-md) 0;
-    border-left: 4px solid var(--color-link);
-    background-color: var(--color-card-bg);
+    border-left: 4px solid var(--colour-link);
+    background-color: var(--colour-card-bg);
     transition: all var(--transition-standard);
     padding: var(--space-md) var(--space-lg);
 }
 a:hover > .blog-post-preview {
-    background-color: var(--color-card-hover);
+    background-color: var(--colour-card-hover);
     transform: translateX(4px);
 }
 .blog-post-preview h3 {
     font-family: 'Orbitron', sans-serif;
-    color: var(--color-header);
+    color: var(--colour-header);
     font-weight: 500;
     margin-bottom: var(--space-sm);
 }
 .blog-post-preview time {
     display: inline-block;
-    background-color: var(--color-card-hover);
+    background-color: var(--colour-card-hover);
     padding: var(--space-xs) var(--space-sm);
     border-radius: 0.25rem;
     font-size: 0.875rem;
-    color: var(--color-text-muted);
+    color: var(--colour-text-muted);
     margin-bottom: var(--space-sm);
 }
 .blog-post-preview .excerpt {
-    color: var(--color-text);
+    color: var(--colour-text);
     font-family: var(--font-sans);
     font-size: 1rem;
     margin-top: var(--space-md);
@@ -199,7 +203,7 @@ a:hover > .blog-post-preview {
 }
 .preview-meta .icon {
     opacity: 0.7;
-    color: var(--color-text);
+    color: var(--colour-text);
 }
 
 /*----------------------------------------------------------------------------
@@ -238,13 +242,13 @@ a:hover > .blog-post-preview {
 #site-footer {
     text-align: center;
     padding: var(--space-xl) var(--space-md);
-    border-top: 1px solid var(--color-border);
-    color: var(--color-text-muted);
+    border-top: 1px solid var(--colour-border);
+    color: var(--colour-text-muted);
     font-size: 0.9rem;
 }
 #site-footer .footer-quote {
     font-size: 0.75em;
-    color: var(--color-text-muted);
+    color: var(--colour-text-muted);
     font-style: italic;
     margin-top: var(--space-md);
     opacity: 0.8;
@@ -256,7 +260,7 @@ a:hover > .blog-post-preview {
   Focus hover shit
 ----------------------------------------------------------------------------*/
 a:focus-visible {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid var(--colour-primary);
     outline-offset: 2px;
 }
 
@@ -267,12 +271,12 @@ a:focus-visible {
     position: fixed;
     bottom: var(--space-lg);
     right: var(--space-lg);
-    background-color: var(--color-card-bg);
-    color: var(--color-text);
+    background-color: var(--colour-card-bg);
+    color: var(--colour-text);
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--colour-border);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -313,7 +317,7 @@ a:focus-visible {
         font-size: 1rem;
     }
 }
-@media (prefers-color-scheme: dark) {
+@media (prefers-colour-scheme: dark) {
     #site-header h1 {
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
@@ -324,7 +328,7 @@ a:focus-visible {
 ----------------------------------------------------------------------------*/
 .blog-post {
     padding: var(--space-lg);
-    background-color: var(--color-card-bg);
+    background-color: var(--colour-card-bg);
     border-radius: 0.5rem;
     margin-bottom: var(--space-xl);
 }
@@ -336,7 +340,7 @@ a:focus-visible {
     font-family: 'Orbitron', sans-serif;
     font-size: clamp(2rem, 5vw, 3rem);
     margin: 0 0 var(--space-md);
-    color: var(--color-header);
+    color: var(--colour-header);
     line-height: 1.2;
 }
 .post-meta {
@@ -344,7 +348,7 @@ a:focus-visible {
     gap: var(--space-md);
     justify-content: flex-start;
     align-items: center;
-    color: var(--color-text-muted);
+    color: var(--colour-text-muted);
     font-size: 0.9rem;
     margin: var(--space-md) 0;
 }
@@ -354,10 +358,10 @@ a:focus-visible {
     align-items: center;
     gap: var(--space-xs);
     font-size: 0.85rem;
-    color: var(--color-text-muted);
+    color: var(--colour-text-muted);
 }
 .post-updated {
-    color: var(--color-text-muted);
+    color: var(--colour-text-muted);
 }
 .icon {
     opacity: 0.7;
@@ -372,29 +376,29 @@ a:focus-visible {
 }
 .tag {
     background-color: transparent;
-    color: var(--color-text-muted);
+    color: var(--colour-text-muted);
     padding: var(--space-xs) var(--space-sm);
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--colour-border);
     border-radius: 1rem;
     font-size: 0.8rem;
     transition: all var(--transition-standard);
 }
 .tag:hover {
-    background-color: var(--color-card-hover);
-    border-color: var(--color-primary);
-    color: var(--color-text);
+    background-color: var(--colour-card-hover);
+    border-color: var(--colour-primary);
+    color: var(--colour-text);
 }
 .post-content {
     max-width: 65ch;
     margin: 0 auto;
 }
 .post-content h2 {
-    color: var(--color-header);
+    color: var(--colour-header);
     margin-top: var(--space-xl);
     font-size: 1.5rem;
 }
 .post-content h3 {
-    color: var(--color-header);
+    color: var(--colour-header);
     margin-top: var(--space-lg);
     font-size: 1.25rem;
 }
@@ -408,7 +412,7 @@ a:focus-visible {
 }
 .post-content pre {
     position: relative;
-    background-color: var(--color-bg);
+    background-color: var(--colour-bg);
     padding: var(--space-md);
     border-radius: 0.3rem;
     overflow-x: auto;
@@ -418,7 +422,7 @@ a:focus-visible {
     font-family: var(--font-mono);
     font-size: 0.8em;
     line-height: 1.4;
-    color: var(--color-text);
+    color: var(--colour-text);
 }
 .code-block-header {
     position: absolute;
@@ -428,17 +432,17 @@ a:focus-visible {
     align-items: center;
     gap: var(--space-sm);
     padding: var(--space-xs) var(--space-sm);
-    background-color: var(--color-card-bg);
+    background-color: var(--colour-card-bg);
     border-radius: 0 0.5rem 0 0.5rem;
     font-size: 0.75rem;
-    color: var(--color-text-muted);
-    border-bottom: 1px solid var(--color-border);
-    border-left: 1px solid var(--color-border);
+    color: var(--colour-text-muted);
+    border-bottom: 1px solid var(--colour-border);
+    border-left: 1px solid var(--colour-border);
 }
 .copy-button {
     background: none;
-    border: 1px solid var(--color-border);
-    color: var(--color-text-muted);
+    border: 1px solid var(--colour-border);
+    color: var(--colour-text-muted);
     padding: var(--space-xs) var(--space-sm);
     border-radius: 0.25rem;
     cursor: pointer;
@@ -447,37 +451,37 @@ a:focus-visible {
     transition: all var(--transition-standard);
 }
 .copy-button:hover {
-    background-color: var(--color-card-hover);
-    color: var(--color-text);
+    background-color: var(--colour-card-hover);
+    color: var(--colour-text);
 }
 .copy-button.copied {
-    background-color: var(--color-primary);
-    color: var(--color-bg);
-    border-color: var(--color-primary);
+    background-color: var(--colour-primary);
+    color: var(--colour-bg);
+    border-color: var(--colour-primary);
 }
 .code-language {
     font-family: var(--font-mono);
     font-size: 0.9rem;
 }
 .post-content p code {
-    background-color: var(--color-bg);
+    background-color: var(--colour-bg);
     padding: 0.2em 0.1em;
     border-radius: 0.25rem;
     font-size: 0.85em;
-    color: var(--color-primary);
+    color: var(--colour-primary);
     word-break: break-word;
 }
 .post-content blockquote {
-    border-left: 4px solid var(--color-primary);
+    border-left: 4px solid var(--colour-primary);
     margin: var(--space-lg) 0;
     padding: var(--space-md) var(--space-lg);
-    background-color: var(--color-bg);
+    background-color: var(--colour-bg);
     font-style: italic;
 }
 .post-footer {
     margin-top: var(--space-xl);
     padding-top: var(--space-lg);
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--colour-border);
 }
 .post-navigation {
     text-align: center;
@@ -485,34 +489,85 @@ a:focus-visible {
 .back-to-posts {
     display: inline-block;
     padding: var(--space-sm) var(--space-md);
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--colour-border);
     border-radius: 0.25rem;
     transition: all var(--transition-standard);
-    color: var(--color-text);
+    color: var(--colour-text);
 }
 .back-to-posts:hover {
-    background-color: var(--color-card-hover);
+    background-color: var(--colour-card-hover);
     transform: translateY(-1px);
-    color: var(--color-header);
+    color: var(--colour-header);
 }
 
 /*----------------------------------------------------------------------------
   Loading placeholder, shimmer effects
 ----------------------------------------------------------------------------*/
-.loading-placeholder {
-    text-align: center;
-    padding: var(--space-xl) 0;
-}
-.shimmer-line {
-    height: 1rem;
-    background-color: var(--color-card-bg);
-    margin: var(--space-sm) auto;
-    width: 80%;
+
+/* Base for all shimmer blocks */
+.placeholder-block {
+    background-color: var(--colour-placeholder-bg);
     border-radius: 0.25rem;
     animation: shimmer 1.5s infinite linear;
-    background: linear-gradient(90deg, var(--color-card-bg) 0%, var(--color-card-hover) 50%, var(--color-card-bg) 100%);
+    background-image: linear-gradient(90deg, var(--colour-placeholder-shimmer-start) 0%, var(--colour-placeholder-shimmer-end) 50%, var(--colour-placeholder-shimmer-start) 100%);
     background-size: 200% 100%;
+    margin-bottom: var(--space-md);
 }
+
+/* Specific placeholder types */
+.placeholder-header-title {
+    height: 2.5rem;
+    width: 60%;
+    margin: 0 auto var(--space-sm) auto;
+}
+
+.placeholder-header-subtitle {
+    height: 1.2rem;
+    width: 40%;
+    margin: 0 auto var(--space-lg) auto; /* More bottom margin to push nav down */
+}
+
+.placeholder-nav-item {
+    height: 2rem; /* Approx height of a nav link */
+    width: 5rem;
+    display: inline-block; /* To sit them side-by-side */
+    margin-right: var(--space-sm);
+}
+.placeholder-nav-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-lg);
+}
+
+.placeholder-article-title {
+    height: 2.2rem; /* Approx from .post-header h1 */
+    width: 80%;
+    margin-bottom: var(--space-sm);
+}
+
+.placeholder-article-meta {
+    height: 1rem;
+    width: 50%;
+    margin-bottom: var(--space-lg);
+}
+
+.placeholder-text-line.short { width: 40%; }
+.placeholder-text-line.medium { width: 70%; }
+.placeholder-text-line.long { width: 100%; }
+.placeholder-text-line.x-long { width: 90%; margin-bottom: var(--space-lg); } /* For a last line of a paragraph block */
+
+.placeholder-image {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Common aspect ratio */
+    margin-bottom: var(--space-md);
+}
+
+.placeholder-footer-line {
+    height: 0.9rem; /* Approx from #site-footer */
+    width: 70%;
+    margin: 0 auto var(--space-sm) auto;
+}
+
 @keyframes shimmer {
     0% {
         background-position: -200% 0;
@@ -538,7 +593,7 @@ a:focus-visible {
     max-width: 768px;
     margin: var(--space-lg) 0;
     position: relative;
-    background: linear-gradient(90deg, var(--color-card-bg) 0%, var(--color-card-hover) 50%, var(--color-card-bg) 100%);
+    background: linear-gradient(90deg, var(--colour-card-bg) 0%, var(--colour-card-hover) 50%, var(--colour-card-bg) 100%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite linear;
     border-radius: 0.5rem;
@@ -567,7 +622,7 @@ a:focus-visible {
     max-width: 768px;
     margin: var(--space-sm) 0;
     position: relative;
-    background: linear-gradient(90deg, var(--color-card-bg) 0%, var(--color-card-hover) 50%, var(--color-card-bg) 100%);
+    background: linear-gradient(90deg, var(--colour-card-bg) 0%, var(--colour-card-hover) 50%, var(--colour-card-bg) 100%);
     background-size: 200% 100%;
     border-radius: 0.5rem;
     overflow: hidden;
@@ -588,7 +643,7 @@ a:focus-visible {
 }
 .image-caption {
     text-align: left;
-    color: var(--color-text-muted);
+    color: var(--colour-text-muted);
     font-size: 0.9rem;
     margin: var(--space-sm) 0 0;
     font-style: italic;
@@ -598,14 +653,13 @@ a:focus-visible {
   HTMX indicator stuff
 ----------------------------------------------------------------------------*/
 .htmx-indicator {
-    display: none;
-    opacity: 0;
-    transition: opacity var(--transition-standard);
-}
-.htmx-request .htmx-indicator {
     display: block;
     opacity: 1;
 }
+
+/* .htmx-indicator svg {
+/*    display: none;
+} */
 
 .no-js-warning {
     padding: 2rem !important;
@@ -637,9 +691,9 @@ a:focus-visible {
 ----------------------------------------------------------------------------*/
 .post-content a,
 .post-content a:visited {
-    color: var(--color-text);
+    color: var(--colour-text);
     text-decoration: none;
-    background-image: linear-gradient(var(--color-link), var(--color-link));
+    background-image: linear-gradient(var(--colour-link), var(--colour-link));
     background-repeat: no-repeat;
     background-size: 100% 2px;
     background-position: 0 100%;
