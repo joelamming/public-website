@@ -12,10 +12,28 @@
             margin: 0;
             min-height: 100vh;
         }
+        /* Prevent layout calculations until stylesheets are loaded */
+        body {
+            visibility: hidden;
+        }
+        body.styles-loaded {
+            visibility: visible;
+        }
     </style>
-    <link rel="stylesheet" href="/static/style_1.0.8.css" hx-preserve="true">
+    <link rel="stylesheet" href="/static/style_1.0.9.css" hx-preserve="true">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="/static/htmx.min.js" defer></script>
-    <script src="/static/head-support.js" defer></script>
+    <script src="/static/site.js" defer></script>
+    <!-- Reveal body after stylesheets load -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Small delay to ensure CSS is parsed
+            setTimeout(function() {
+                document.body.classList.add('styles-loaded');
+            }, 50);
+        });
+    </script>
 
     <title hx-preserve="true">Joe Blogs</title>
     <meta property="og:title" content="Joe Lamming's Blog" hx-preserve="true">
@@ -24,8 +42,8 @@
     <link rel="author" href="/" hx-preserve="true">
 </head>
 
-<body hx-ext="head-support">
-    <div hx-get="/components/head-base.html" hx-trigger="revealed" hx-swap="none"></div>
+<body>
+    <div hx-get="/components/head-base.html" hx-trigger="load" hx-swap="none"></div>
     <div class="site-wrapper">
         <div id="header-container" hx-get="/components/header.html" hx-trigger="load" hx-swap="innerHTML">
             <header class="header-placeholder">
@@ -33,7 +51,7 @@
                 <div class="placeholder-block placeholder-header-subtitle"></div>
             </header>
         </div>
-        <div id="nav-container" hx-get="/components/navigation.html" hx-trigger="revealed" hx-swap="innerHTML">
+        <div id="nav-container" hx-get="/components/navigation.html" hx-trigger="load delay:5ms" hx-swap="innerHTML">
             <nav class="placeholder-nav-container">
                 <div class="placeholder-block placeholder-nav-item"></div>
                 <div class="placeholder-block placeholder-nav-item"></div>
@@ -50,7 +68,7 @@
         </noscript>
         <main id="main-content">
             <article class="homepage-content">
-                <div hx-get="/components/index-content.html" hx-trigger="load" hx-swap="innerHTML">
+                <div hx-get="/components/index-content.html" hx-trigger="load delay:10ms" hx-swap="innerHTML">
                     <div class="placeholder-block placeholder-article-title"></div>
                     <div class="placeholder-block placeholder-text-line medium"></div>
                     <div class="placeholder-block placeholder-text-line long"></div>
@@ -63,7 +81,7 @@
                 </div>
             </article>
         </main>
-        <div id="footer-container" hx-get="/components/footer.html" hx-trigger="load" hx-swap="innerHTML">
+        <div id="footer-container" hx-get="/components/footer.html" hx-trigger="load delay:15ms" hx-swap="innerHTML">
             <footer class="footer-placeholder">
                 <div class="placeholder-block placeholder-footer-line"></div>
                 <div class="placeholder-block placeholder-footer-line short"

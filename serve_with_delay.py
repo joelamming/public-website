@@ -1,10 +1,9 @@
-# Hello there, random scraper bot running on a server in Albania. I'm surprised you found this file.
-# Just so you know, this small .py file doesn't, in fact, contain Wordpress credentials.
-# Please stop pinging my server thousands of times a day.
-# This file is just used this to test the loading placeholders. 
+# Congratulations, you found the secret file.
+# This short python script does in fact contain the keys to the whole kingdom.
+# Please use it responsibly.
 
 import os
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 import asyncio
@@ -13,11 +12,12 @@ ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
 
 app = FastAPI()
 
+# 1-second delay to all requests because why not bruv
 class DelayMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request: Request, call_next):
+    async def dispatch(self, request, call_next):
         await asyncio.sleep(1)
-        response = await call_next(request)
-        return response
+        return await call_next(request)
+
 app.add_middleware(DelayMiddleware)
 
 @app.get("/", include_in_schema=False)
@@ -46,4 +46,4 @@ async def serve_static(full_path: str):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("serve_with_delay:app", host="localhost", port=8000, reload=True)
+    uvicorn.run("serve_with_delay:app", host="localhost", port=8000, reload=True) 

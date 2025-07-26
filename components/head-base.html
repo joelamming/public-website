@@ -1,7 +1,9 @@
-<head hx-head="merge">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=IBM+Plex+Serif:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-    rel="stylesheet" hx-preserve="true">
+<head>
+  <!-- Async font loading to prevent layout shifts -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=IBM+Plex+Serif:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=IBM+Plex+Serif:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'" hx-preserve="true">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=IBM+Plex+Serif:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
+  
   <link rel="icon" type="image/x-icon" href="/favicon.ico" hx-preserve="true">
   <link rel="icon" type="image/png" sizes="32x32" href="/static/jl-favicon-32x32.png" hx-preserve="true">
 

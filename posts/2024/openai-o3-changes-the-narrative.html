@@ -13,9 +13,9 @@
             min-height: 100vh;
         }
     </style>
-    <link rel="stylesheet" href="/static/style_1.0.8.css" hx-preserve="true">
+    <link rel="stylesheet" href="/static/style_1.0.9.css" hx-preserve="true">
     <script src="/static/htmx.min.js"></script>
-    <script src="/static/head-support.js"></script>
+    <script src="/static/site.js"></script>
 
     <title hx-preserve="true">OpenAI's o3 changes the narrative</title>
     <meta property="og:title" content="OpenAI&#39;s o3 changes the narrative" hx-preserve="true">
@@ -31,8 +31,8 @@
     <link rel="author" href="/" hx-preserve="true">
 </head>
 
-<body hx-ext="head-support">
-    <div hx-get="/components/head-base.html" hx-trigger="revealed" hx-swap="none"></div>
+<body>
+    <div hx-get="/components/head-base.html" hx-trigger="load" hx-swap="none"></div>
     <div class="site-wrapper">
         <div id="header-container" hx-get="/components/header.html" hx-trigger="load" hx-swap="innerHTML">
             <header class="header-placeholder">

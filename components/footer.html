@@ -22,37 +22,6 @@
         </a>
     </p>
 </footer>
-<button class="back-to-top" hx-on:click="window.scrollTo({ top: 0, behavior: 'smooth' })" id="back-to-top-button">
+<button class="back-to-top" id="back-to-top-button">
     ↑
 </button>
-<style>
-    .footer-icon {
-        vertical-align: middle;
-        margin: 0 8px;
-        fill: white;
-        display: inline-block;
-    }
-
-    .social-links {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .social-links a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-</style>
-<script>
-    document.addEventListener('scroll', function () {
-        const button = document.getElementById('back-to-top-button');
-        if (window.scrollY > 100) {
-            button.classList.add('visible');
-        } else {
-            button.classList.remove('visible');
-        }
-    });
-</script>
