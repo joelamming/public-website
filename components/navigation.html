@@ -1,10 +1,11 @@
-<nav id="year-nav">
+<nav id="year-nav" aria-label="Year navigation">
     <ul>
         <li>
             <a href="/years/2024.html"
                hx-get="/years/2024.html"
                hx-select="#main-content"
                hx-target="#main-content"
+               hx-swap="innerHTML transition:true"
                hx-push-url="true">2024</a>
         </li>
         <li>
@@ -12,6 +13,7 @@
                hx-get="/years/2023.html"
                hx-select="#main-content"
                hx-target="#main-content"
+               hx-swap="innerHTML transition:true"
                hx-push-url="true">2023</a>
         </li>
         <li>
@@ -19,6 +21,7 @@
                hx-get="/years/2022.html"
                hx-select="#main-content"
                hx-target="#main-content"
+               hx-swap="innerHTML transition:true"
                hx-push-url="true">2022</a>
         </li>
     </ul>

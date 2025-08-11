@@ -45,6 +45,55 @@
                 mergeHeadContent(response);
             });
         });
+
+        // Enable view transitions when available/fallback gracefully
+        htmx.on('htmx:beforeSwap', function (evt) {
+            // If browser supports startViewTransition and swap targets main content, wrap it
+            const supportsVT = typeof document.startViewTransition === 'function';
+            if (!supportsVT) return;
+            const target = evt.detail.target;
+            if (!target || !target.id || target.id !== 'main-content') return;
+            // Prevent double execution: allow htmx to proceed, view-transition is set via hx-swap option already
+        });
+
+        // Reset scroll for swaps targeting main content on XHR-driven navigations
+        htmx.on('htmx:afterSwap', function (evt) {
+            const target = evt.detail.target;
+            if (target && target.id === 'main-content') {
+                // Skip when restoring from history (no XHR). History restore handler will set scroll.
+                if (!evt.detail.xhr) return;
+                requestAnimationFrame(function () {
+                    const hash = window.location.hash;
+                    if (hash && hash.length > 1) {
+                        const id = decodeURIComponent(hash.substring(1));
+                        const anchor = document.getElementById(id) || document.querySelector(`[name="${id}"]`);
+                        if (anchor) {
+                            anchor.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'nearest' });
+                            return;
+                        }
+                    }
+                    window.scrollTo({ top: 0, behavior: 'auto' });
+                });
+            }
+        });
+
+        // Preserve & restore scroll position for history navigation (back/forward)
+        htmx.on('htmx:beforeHistorySave', function (evt) {
+            try {
+                const y = window.scrollY || document.documentElement.scrollTop || 0;
+                evt.detail.historyElt.setAttribute('data-scroll-position', String(y));
+            } catch (_) { /* no-op */ }
+        });
+
+        htmx.on('htmx:historyRestore', function (evt) {
+            const saved = evt.detail.historyElt && evt.detail.historyElt.getAttribute('data-scroll-position');
+            if (saved != null) {
+                const y = parseInt(saved, 10) || 0;
+                requestAnimationFrame(function () {
+                    window.scrollTo({ top: y, behavior: 'auto' });
+                });
+            }
+        });
     }
 
     // Start initialisation when DOM is ready

@@ -1,7 +1,7 @@
 <div id="latest-post-banner" hx-get="/components/latest-post.html" hx-trigger="load delay:5ms" hx-swap="innerHTML">
 </div>
 <div id="profile-photo-container" class="profile-photo-wrapper">
-    <img src="/static/jnl2.png" class="profile-photo" loading="lazy" width="768" height="588">
+    <img src="/static/jnl2.png" class="profile-photo" width="768" height="588" decoding="async" fetchpriority="high">
 </div>
 <article class="post-content">
     <h3>Who has a blog site in 2025?</h3>

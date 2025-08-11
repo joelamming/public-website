@@ -14,8 +14,8 @@
         }
     </style>
     <link rel="stylesheet" href="/static/style_1.0.9.css" hx-preserve="true">
-    <script src="/static/htmx.min.js"></script>
-    <script src="/static/site.js"></script>
+    <script src="/static/htmx.min.js" defer></script>
+    <script src="/static/site.js" defer></script>
 
     <title hx-preserve="true">2024 Posts</title>
     <meta property="og:title" content="2024 Posts" hx-preserve="true">
@@ -42,12 +42,12 @@
             </nav>
         </div>
 
-        <main id="main-content">
+        <main id="main-content" role="main">
             <h2>Posts from 2024</h2>
             <div class="blog-posts">
                 <a href="/posts/2024/why-everyone-cant-run-their-own-deepseek-v3.html"
                     hx-get="/posts/2024/why-everyone-cant-run-their-own-deepseek-v3.html" hx-select="#main-content"
-                    hx-target="#main-content"
+                    hx-target="#main-content" hx-swap="innerHTML transition:true"
                     hx-push-url="/posts/2024/why-everyone-cant-run-their-own-deepseek-v3.html">
                     <article class="blog-post-preview">
                         <h3>Why running DeepSeek-V3 locally isn't for everyone</h3>
@@ -66,7 +66,8 @@
 
                 <a href="/posts/2024/openai-o3-changes-the-narrative.html"
                     hx-get="/posts/2024/openai-o3-changes-the-narrative.html" hx-select="#main-content"
-                    hx-target="#main-content" hx-push-url="/posts/2024/openai-o3-changes-the-narrative.html">
+                    hx-target="#main-content" hx-swap="innerHTML transition:true"
+                    hx-push-url="/posts/2024/openai-o3-changes-the-narrative.html">
                     <article class="blog-post-preview">
                         <h3>OpenAI's o3 changes the narrative</h3>
                         <div class="preview-meta">
@@ -83,7 +84,7 @@
 
                 <a href="/posts/2024/notes-on-search-engines-for-enterprise-software.html"
                     hx-get="/posts/2024/notes-on-search-engines-for-enterprise-software.html" hx-select="#main-content"
-                    hx-target="#main-content"
+                    hx-target="#main-content" hx-swap="innerHTML transition:true"
                     hx-push-url="/posts/2024/notes-on-search-engines-for-enterprise-software.html">
                     <article class="blog-post-preview">
                         <h3>Notes on search engines for enterprise software</h3>

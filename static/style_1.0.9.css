@@ -437,7 +437,7 @@ a:focus-visible {
     }
 }
 
-@media (prefers-colour-scheme: dark) {
+@media (prefers-color-scheme: dark) {
     #site-header h1 {
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
@@ -774,6 +774,12 @@ a:focus-visible {
 .no-js-warning a {
     color: #ffffff !important;
     text-decoration: underline !important;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .placeholder-block { animation: none !important; }
+    * { scroll-behavior: auto; }
 }
 
 /*----------------------------------------------------------------------------
