@@ -14,13 +14,41 @@
         }
     </style>
     <link rel="stylesheet" href="/static/style_1.0.10.css" hx-preserve="true">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=IBM+Plex+Serif:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="preload" as="image" href="/portfolio_768/jnl2_768.png">
     <script src="/static/htmx.min.js" defer></script>
     <script src="/static/site.js" defer></script>
 
     <title hx-preserve="true">Gallery</title>
     <meta property="og:title" content="Photography Gallery" hx-preserve="true">
     <meta property="og:description" content="Selected photography by Joe Lamming" hx-preserve="true">
+    <meta property="og:image" content="https://joelamming.com/portfolio_768/jnl2_768.png" hx-preserve="true">
+    <meta property="og:image:alt" content="Portrait of Joe Lamming (2018). Minolta X-700." hx-preserve="true">
 </head>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ImageObject",
+  "@id": "https://joelamming.com/gallery.html#joe-lamming-portrait-2018",
+  "name": "Portrait of Joe Lamming (2018)",
+  "description": "Portrait of Joe Lamming. Minolta X-700.",
+  "contentUrl": "https://joelamming.com/portfolio_768/jnl2_768.png",
+  "url": "https://joelamming.com/gallery.html#joe-lamming-portrait-2018",
+  "dateCreated": "2018",
+  "creator": {
+    "@type": "Person",
+    "name": "Joe Lamming"
+  },
+  "subjectOf": {
+    "@type": "Person",
+    "name": "Joe Lamming",
+    "url": "https://joelamming.com/"
+  }
+}
+</script>
 
 <body>
     <div hx-get="/components/head-base.html" hx-trigger="load" hx-swap="none"></div>
@@ -41,6 +69,14 @@
                 <div class="placeholder-block placeholder-nav-item"></div>
             </nav>
         </div>
+
+        <noscript>
+            <div class="no-js-warning">
+                <h2>Yep, HTMX is a JavaScript library</h2>
+                <p>It's extremely lightweight, but it's still a JavaScript library. My site requires HTMX to function.
+                    You'll need to enable it, sorry. It's also really good for deflecting low-effort crawlers (and LLM search tools!).</p>
+            </div>
+        </noscript>
 
         <main id="main-content" role="main">
             <section class="gallery-intro">
