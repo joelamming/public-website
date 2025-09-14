@@ -1,7 +1,8 @@
 /**
  * Simplified head-support.js stolen from HTMX
  * Custom implementation focused on my specific head-base.html merging
- * Also other random JS needed because spaghetti tastes great
+ * Also other random JS needed because sometimes need to pretend to be a dynamic webserver
+ * and spaghetti tastes great
  */
 (function () {
     function mergeHeadContent(newContent) {
@@ -142,4 +143,119 @@
     } else {
         setupBackToTop();
     }
+})();
+
+(function () {
+    function openLightbox(data) {
+        // Build overlay markup client-side
+        const overlay = document.createElement('div');
+        overlay.className = 'lb-overlay';
+        overlay.id = 'lb-overlay';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+
+        const backdrop = document.createElement('div');
+        backdrop.className = 'lb-backdrop';
+        overlay.appendChild(backdrop);
+
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'lb-close';
+        closeBtn.setAttribute('aria-label', 'Close');
+        closeBtn.textContent = '×';
+        overlay.appendChild(closeBtn);
+
+        const root = document.createElement('div');
+        root.className = 'lb-root';
+        overlay.appendChild(root);
+
+        const figure = document.createElement('figure');
+        figure.className = 'lb-panel';
+        root.appendChild(figure);
+
+        const img = document.createElement('img');
+        img.className = 'lb-media';
+        img.src = data.src;
+        img.alt = '';
+        figure.appendChild(img);
+
+        const caption = document.createElement('figcaption');
+        caption.className = 'lb-caption';
+        caption.innerHTML = `
+            <span class="image-title"></span>
+            <span class="image-date"></span>
+            <span class="image-desc"></span>
+        `;
+        caption.querySelector('.image-title').textContent = data.title || '';
+        caption.querySelector('.image-date').textContent = data.date ? ` · ${data.date}` : '';
+        caption.querySelector('.image-desc').textContent = data.desc || '';
+        figure.appendChild(caption);
+
+        document.body.appendChild(overlay);
+
+        // prevent page position change while overlay is open
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+        document.documentElement.style.top = `-${scrollY}px`;
+        document.documentElement.classList.add('lb-lock');
+    }
+
+    function closeLightbox() {
+        const overlay = document.getElementById('lb-overlay');
+        if (overlay) overlay.remove();
+        if (document.documentElement.classList.contains('lb-lock')) {
+            const offset = document.documentElement.style.top;
+            document.documentElement.classList.remove('lb-lock');
+            document.documentElement.style.top = '';
+            const y = offset ? parseInt(offset.replace('-', '').replace('px', ''), 10) : 0;
+            window.scrollTo({ top: y, behavior: 'auto' });
+        }
+    }
+
+    // style for body lock (avoid layout shift)
+    const style = document.createElement('style');
+    style.textContent = `.lb-lock { position: fixed; width: 100%; }`;
+    document.head.appendChild(style);
+
+    // Delegate click from gallery images
+    document.addEventListener('click', function (e) {
+        const img = e.target && e.target.closest('.gallery-card .post-image');
+        if (!img) return;
+        e.preventDefault();
+        const card = img.closest('.gallery-card');
+        const caption = card && card.querySelector('.image-caption');
+        openLightbox({
+            src: img.currentSrc || img.src,
+            title: (caption && (caption.querySelector('.image-title')?.textContent || '')) || '',
+            date: (caption && (caption.querySelector('.image-date')?.textContent || '').replace('·', '').trim()) || '',
+            desc: (caption && (caption.querySelector('.image-desc')?.textContent || '')) || ''
+        });
+    });
+
+    // Allow programmatic close
+    document.addEventListener('click', function (e) {
+        const btn = e.target && e.target.closest('#lb-overlay .lb-close');
+        if (btn) {
+            e.preventDefault();
+            closeLightbox();
+        }
+    });
+
+    // Close on backdrop
+    document.addEventListener('click', function (e) {
+        if (e.target && e.target.classList && e.target.classList.contains('lb-backdrop')) {
+            closeLightbox();
+        }
+    });
+
+    // Close on custom events (backdrop and Esc handled in fragment, but ensure here too)
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeLightbox();
+    });
+
+    // When an overlay fragment is removed by htmx action, restore scroll
+    document.addEventListener('htmx:afterSwap', function () {
+        const overlay = document.getElementById('lb-overlay');
+        if (!overlay && document.documentElement.classList.contains('lb-lock')) {
+            closeLightbox();
+        }
+    });
 })();

@@ -17,9 +17,9 @@
     <script src="/static/htmx.min.js" defer></script>
     <script src="/static/site.js" defer></script>
 
-    <title hx-preserve="true">2022 Posts</title>
-    <meta property="og:title" content="2022 Posts" hx-preserve="true">
-    <meta property="og:description" content="Blog posts from 2022" hx-preserve="true">
+    <title hx-preserve="true">Gallery</title>
+    <meta property="og:title" content="Photography Gallery" hx-preserve="true">
+    <meta property="og:description" content="Selected photography by Joe Lamming" hx-preserve="true">
 </head>
 
 <body>
@@ -43,24 +43,22 @@
         </div>
 
         <main id="main-content" role="main">
-            <h2>Posts from 2022</h2>
-            <div class="blog-posts">
-                <a href="/posts/2022/an-email-to-a-relative-about-ai.html"
-                    hx-get="/posts/2022/an-email-to-a-relative-about-ai.html" hx-select="#main-content"
-                    hx-target="#main-content" hx-swap="innerHTML transition:true" hx-push-url="true">
-                    <article class="blog-post-preview">
-                        <h3>An email to a relative about AI, three weeks before GPT-3.5</h3>
-                        <div class="preview-meta">
-                            <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
-                                <path fill="currentColor"
-                                    d="M19,4H17V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H5A2,2,0,0,0,3,6V20a2,2,0,0,0,2,2H19a2,2,0,0,0,2-2V6A2,2,0,0,0,19,4ZM19,20H5V9H19Z" />
-                            </svg>
-                            <time datetime="2022-11-03">3 Nov 2022</time>
-                        </div>
-                        <p class="excerpt">An email to a relative about AI, three weeks before GPT-3.5</p>
-                    </article>
-                </a>
-            </div>
+            <section class="gallery-intro">
+                <h2>Gallery of non-technical things</h2>
+                <p class="gallery-tagline">A selection of photographs taken with actual cameras, toned with old school
+                    Lightroom Classic and a bit of Darktable. No Photoshop, no AI, no Flux Kontext, no Nano-Banana.
+                    Photographs captured over the last decade with Nikon D60, Canon 60D, Mamiya C330, Minolta X-700,
+                    Sony A7C-II, Samsung
+                    Galaxy S8 and iPhone 13 Pro.</p>
+            </section>
+
+            <section aria-label="Photo gallery">
+                <div id="gallery-grid" class="gallery-grid" hx-get="/components/gallery-content.html"
+                    hx-trigger="load delay:25ms" hx-swap="innerHTML">
+                    <div class="placeholder-block placeholder-image"></div>
+                    <div class="placeholder-block placeholder-image"></div>
+                </div>
+            </section>
         </main>
 
         <div id="footer-container" hx-get="/components/footer.html" hx-trigger="load" hx-swap="innerHTML">
