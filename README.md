@@ -8,18 +8,26 @@ Static site, see?
 
 # Changelogs
 
+## 2025-09-15:
+
+- Gallery
+  - Added Gallery tab in navigation.
+  - Gallery layout/styles: Single-column layout; `aspect-ratio` sizing to prevent CLS; lazy-loaded images with `decoding="async"` and tuned `fetchpriority`.
+  - Lightbox: Click images to open overlay with caption, scroll lock/restored on close.
+- Homepage image: switched to `/static/jnl3_768.png`.
+
 ## 2025-08-11:
  
 - HTMX UX
   - Scroll reset on `#main-content` swaps; history restores prior scroll on back/forward.
   - Anchor hash support after swaps (e.g., `/post#section`).
-  - Removed `show:#main-content:top` from year links; logic centralized in `static/site.js`.
+  - Removed `show:#main-content:top` from year links; logic centralised in `static/site.js`.
 
 ## 2025-08-07
 
 - HTMX UX
   - Year and post links now swap with view transitions: `hx-swap="innerHTML transition:true"`.
-  - Scroll-to-top on navigations is centralized in `static/site.js` (listens to `htmx:afterSwap`). No inline JS.
+  - Scroll-to-top on navigations is centralised in `static/site.js` (listens to `htmx:afterSwap`). No inline JS.
   - Still no `hx-boost`. Explicit HTMX everywhere.
 
 - Performance / LCP
