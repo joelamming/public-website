@@ -318,6 +318,36 @@ a:hover>.blog-post-preview {
     font-size: 0.95rem;
     margin-left: var(--space-sm);
 }
+.gallery-licensing {
+    margin: var(--space-lg) 0;
+    padding: var(--space-md);
+    background-color: var(--colour-card-bg);
+    border-left: 4px solid var(--colour-primary);
+}
+.gallery-licensing h3 {
+    margin-top: 0;
+    font-family: 'Orbitron', sans-serif;
+    color: var(--colour-header);
+}
+.gallery-licensing p {
+    margin: var(--space-sm) 0;
+    color: var(--colour-text-muted);
+}
+.gallery-licensing a,
+.gallery-licensing a:visited {
+    color: var(--colour-text);
+    text-decoration: none;
+    background-image: linear-gradient(var(--colour-link), var(--colour-link));
+    background-repeat: no-repeat;
+    background-size: 100% 2px;
+    background-position: 0 100%;
+    transition: background-size 0.1s ease;
+}
+.gallery-licensing a:hover,
+.gallery-licensing a:focus {
+    background-size: 100% 100%;
+    background-position: 0 100%;
+}
 
 /*----------------------------------------------------------------------------
   Lightbox
